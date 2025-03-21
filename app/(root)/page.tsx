@@ -25,13 +25,13 @@ async function Home() {
     <>
       <section className="card-cta">
         <div className="flex flex-col gap-6 max-w-lg">
-          <h2>Get Interview-Ready with AI-Powered Practice & Feedback</h2>
+          <h2>Get English-Ready with AI-Powered Practice & Feedback</h2>
           <p className="text-lg">
-            Practice real interview questions & get instant feedback
+            Practice real English conversations & get instant feedback
           </p>
 
           <Button asChild className="btn-primary max-sm:w-full">
-            <Link href="/interview">Start an Interview</Link>
+            <Link href="/interview">Start a Class</Link>
           </Button>
         </div>
 
@@ -45,7 +45,7 @@ async function Home() {
       </section>
 
       <section className="flex flex-col gap-6 mt-8">
-        <h2>Your Interviews</h2>
+        <h2>Your Classes</h2>
 
         <div className="interviews-section">
           {hasPastInterviews ? (
@@ -54,20 +54,20 @@ async function Home() {
                 key={interview.id}
                 userId={user?.id}
                 interviewId={interview.id}
-                role={interview.role}
+                level={interview.level}
                 type={interview.type}
-                techstack={interview.techstack}
+                topic={interview.topic}
                 createdAt={interview.createdAt}
               />
             ))
           ) : (
-            <p>You haven&apos;t taken any interviews yet</p>
+            <p>You haven&apos;t taken any classes yet</p>
           )}
         </div>
       </section>
 
       <section className="flex flex-col gap-6 mt-8">
-        <h2>Take Interviews</h2>
+        <h2>Take Classes</h2>
 
         <div className="interviews-section">
           {hasUpcomingInterviews ? (
@@ -76,14 +76,14 @@ async function Home() {
                 key={interview.id}
                 userId={user?.id}
                 interviewId={interview.id}
-                role={interview.role}
+                level={interview.level}
                 type={interview.type}
-                techstack={interview.techstack}
+                topic={interview.topic}
                 createdAt={interview.createdAt}
               />
             ))
           ) : (
-            <p>There are no interviews available</p>
+            <p>There are no classes available</p>
           )}
         </div>
       </section>

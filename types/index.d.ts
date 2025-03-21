@@ -15,10 +15,9 @@ interface Feedback {
 
 interface Interview {
   id: string;
-  role: string;
   level: string;
   questions: string[];
-  techstack: string[];
+  topic: string[];
   createdAt: string;
   userId: string;
   type: string;
@@ -41,9 +40,9 @@ interface User {
 interface InterviewCardProps {
   interviewId?: string;
   userId?: string;
-  role: string;
+  level: string;
   type: string;
-  techstack: string[];
+  topic: string[];
   createdAt?: string;
 }
 
@@ -87,13 +86,12 @@ type FormType = "sign-in" | "sign-up";
 
 interface InterviewFormProps {
   interviewId: string;
-  role: string;
   level: string;
   type: string;
-  techstack: string[];
+  topic: string[];
   amount: number;
 }
 
 interface TechIconProps {
-  techStack: string[];
+  topic: string[];
 }

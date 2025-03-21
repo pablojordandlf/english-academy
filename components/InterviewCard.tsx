@@ -11,9 +11,9 @@ import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 const InterviewCard = async ({
   interviewId,
   userId,
-  role,
+  level,
   type,
-  techstack,
+  topic,
   createdAt,
 }: InterviewCardProps) => {
   const feedback =
@@ -61,7 +61,7 @@ const InterviewCard = async ({
           />
 
           {/* Interview Role */}
-          <h3 className="mt-5 capitalize">{role} Interview</h3>
+          <h3 className="mt-5 capitalize">{level} Class</h3>
 
           {/* Date & Score */}
           <div className="flex flex-row gap-5 mt-3">
@@ -84,12 +84,11 @@ const InterviewCard = async ({
           {/* Feedback or Placeholder Text */}
           <p className="line-clamp-2 mt-5">
             {feedback?.finalAssessment ||
-              "You haven't taken this interview yet. Take it now to improve your skills."}
+              "You haven't taken this class yet. Take it now to improve your skills."}
           </p>
         </div>
 
         <div className="flex flex-row justify-between">
-          <DisplayTechIcons techStack={techstack} />
 
           <Button className="btn-primary">
             <Link
