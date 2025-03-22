@@ -33,7 +33,6 @@ const Agent = ({
   const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
-  const [lastMessage, setLastMessage] = useState<string>("");
 
   useEffect(() => {
     const onCallStart = () => {
@@ -83,10 +82,6 @@ const Agent = ({
   }, []);
 
   useEffect(() => {
-    if (messages.length > 0) {
-      setLastMessage(messages[messages.length - 1].content);
-    }
-
     const handleGenerateFeedback = async (messages: SavedMessage[]) => {
       console.log("handleGenerateFeedback");
 
@@ -160,7 +155,7 @@ const Agent = ({
             />
             {isSpeaking && <span className="animate-speak" />}
           </div>
-          <h3>AI Teacher</h3>
+          <h3>AI English Teacher</h3>
         </div>
 
         {/* User Profile Card */}
@@ -171,18 +166,22 @@ const Agent = ({
         </div>
       </div>
 
+      {/* Full Transcript Section */}
       {messages.length > 0 && (
         <div className="transcript-border">
-          <div className="transcript">
-            <p
-              key={lastMessage}
-              className={cn(
-                "transition-opacity duration-500 opacity-0",
-                "animate-fadeIn opacity-100"
-              )}
-            >
-              {lastMessage}
-            </p>
+          <div className="transcript flex flex-col-reverse overflow-y-auto max-h-[300px]">
+            {messages.map((message, index) => (
+              <p
+                key={index}
+                className={cn(
+                  "transition-opacity duration-500 opacity-0",
+                  "animate-fadeIn opacity-100 mb-2 p-2 rounded-lg"
+                )}
+              >
+                {message.role === "user" ? `${userName}: ` : `AI: `}
+                {message.content}
+              </p>
+            ))}
           </div>
         </div>
       )}

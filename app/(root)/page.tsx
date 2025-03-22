@@ -66,7 +66,7 @@ async function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col gap-6 mt-8">
+      {/*<section className="flex flex-col gap-6 mt-8">
         <h2>Take Classes</h2>
 
         <div className="interviews-section">
@@ -86,7 +86,7 @@ async function Home() {
             <p>There are no classes available</p>
           )}
         </div>
-      </section>
+      </section>*/}
     </>
   );
 }
