@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "./ui/button";
-import DisplayTechIcons from "./DisplayTechIcons";
 
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
@@ -71,6 +70,12 @@ const InterviewCard = async ({
             </div>
           </div>
 
+          {/* Topics */}
+          <p className="line-clamp-2 mt-5">
+            Topics: {topic ||
+              "You haven't taken this class yet. Take it now to improve your skills."}
+          </p>
+
           {/* Feedback or Placeholder Text */}
           <p className="line-clamp-2 mt-5">
             {feedback?.finalAssessment ||
@@ -88,7 +93,7 @@ const InterviewCard = async ({
                   : `/interview/${interviewId}`
               }
             >
-              {feedback ? "Check Feedback" : "View Interview"}
+              {feedback ? "Check Feedback" : "Take class"}
             </Link>
           </Button>
         </div>
