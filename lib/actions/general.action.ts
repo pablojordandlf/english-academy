@@ -23,19 +23,19 @@ export async function createFeedback(params: CreateFeedbackParams) {
       }),
       schema: feedbackSchema,
       prompt: `
-        You are an AI interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories. Be thorough and detailed in your analysis. Don't be lenient with the candidate. If there are mistakes or areas for improvement, point them out.
+        You are an AI teaching coach analyzing a recorded or mock English class. Your task is to evaluate the teacher's performance based on structured categories. Be thorough and detailed in your analysis. Don't be overly lenient. If there are mistakes or areas for improvement, point them out clearly and constructively.
         Transcript:
         ${formattedTranscript}
 
-        Please score the candidate from 0 to 100 in the following areas. Do not add categories other than the ones provided:
-        - **Communication Skills**: Clarity, articulation, structured responses.
-        - **Technical Knowledge**: Understanding of key concepts for the role.
-        - **Problem-Solving**: Ability to analyze problems and propose solutions.
-        - **Cultural & Role Fit**: Alignment with company values and job role.
-        - **Confidence & Clarity**: Confidence in responses, engagement, and clarity.
+        Please score the teacher from 0 to 100 in the following areas. Do not add categories other than the ones provided:
+        - **Lesson Structure**: Clarity of objectives, logical flow, and time management.
+        - **Engagement**: Ability to capture and maintain students' interest through interactive activities or discussions.
+        - **Clarity of Explanation**: Effectiveness in explaining concepts, use of examples, and addressing questions.
+        - **Student Interaction**: Encouraging participation, addressing individual needs, and fostering a supportive environment.
+        - **Classroom Management**: Handling disruptions, maintaining focus, and ensuring smooth transitions between activities.
         `,
       system:
-        "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
+        "You are a professional teaching coach analyzing a recorded or mock English class. Your task is to evaluate the teacher's performance based on structured categories.",
     });
 
     const feedback = {

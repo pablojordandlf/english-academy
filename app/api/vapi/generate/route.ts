@@ -5,37 +5,33 @@ import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
-  const { type, role, level, techstack, amount, userid } = await request.json();
+  const { topic, level, userid } = await request.json();
 
   try {
     const { text: questions } = await generateText({
       model: google("gemini-2.0-flash-001"),
-      prompt: `Prepare questions for a job interview.
-        The job role is ${role}.
-        The job experience level is ${level}.
-        The tech stack used in the job is: ${techstack}.
-        The focus between behavioural and technical questions should lean towards: ${type}.
-        The amount of questions required is: ${amount}.
-        Please return only the questions, without any additional text.
-        The questions are going to be read by a voice assistant so do not use "/" or "*" or any other special characters which might break the voice assistant.
-        Return the questions formatted like this:
-        ["Question 1", "Question 2", "Question 3"]
+      prompt: `Prepare an English class plan.
+        The proficiency level of the students is ${level}.
+        The topic or theme of the class is: ${topic}.
+        Please return only the class plan, without any additional text.
+        The plan should be formatted as a structured list like this:
+        ["Warm-up Activity", "Introduction to Topic", "Guided Practice", "Freer Practice", "Review and Wrap-up"]
         
         Thank you! <3
-    `,
+      `
     });
 
     const interview = {
-      role: role,
-      type: type,
       level: level,
-      techstack: techstack.split(","),
+      topic: topic.split(","),
       questions: JSON.parse(questions),
       userId: userid,
       finalized: true,
       coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),
     };
+    
+    console.log("Interview:", interview);
 
     await db.collection("interviews").add(interview);
 

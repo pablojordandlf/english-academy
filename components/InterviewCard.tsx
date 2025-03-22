@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "./ui/button";
-import DisplayTechIcons from "./DisplayTechIcons";
 
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
@@ -11,9 +10,9 @@ import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
 const InterviewCard = async ({
   interviewId,
   userId,
-  role,
+  level,
   type,
-  techstack,
+  topic,
   createdAt,
 }: InterviewCardProps) => {
   const feedback =
@@ -41,16 +40,6 @@ const InterviewCard = async ({
     <div className="card-border w-[360px] max-sm:w-full min-h-96">
       <div className="card-interview">
         <div>
-          {/* Type Badge */}
-          <div
-            className={cn(
-              "absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg",
-              badgeColor
-            )}
-          >
-            <p className="badge-text ">{normalizedType}</p>
-          </div>
-
           {/* Cover Image */}
           <Image
             src={getRandomInterviewCover()}
@@ -61,7 +50,7 @@ const InterviewCard = async ({
           />
 
           {/* Interview Role */}
-          <h3 className="mt-5 capitalize">{role} Interview</h3>
+          <h3 className="mt-5 capitalize">{level} Class</h3>
 
           {/* Date & Score */}
           <div className="flex flex-row gap-5 mt-3">
@@ -81,15 +70,20 @@ const InterviewCard = async ({
             </div>
           </div>
 
+          {/* Topics */}
+          <p className="line-clamp-2 mt-5">
+            Topics: {topic ||
+              "You haven't taken this class yet. Take it now to improve your skills."}
+          </p>
+
           {/* Feedback or Placeholder Text */}
           <p className="line-clamp-2 mt-5">
             {feedback?.finalAssessment ||
-              "You haven't taken this interview yet. Take it now to improve your skills."}
+              "You haven't taken this class yet. Take it now to improve your skills."}
           </p>
         </div>
 
         <div className="flex flex-row justify-between">
-          <DisplayTechIcons techStack={techstack} />
 
           <Button className="btn-primary">
             <Link
@@ -99,7 +93,7 @@ const InterviewCard = async ({
                   : `/interview/${interviewId}`
               }
             >
-              {feedback ? "Check Feedback" : "View Interview"}
+              {feedback ? "Check Feedback" : "Take class"}
             </Link>
           </Button>
         </div>
