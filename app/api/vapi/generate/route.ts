@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         The topic or theme of the class is: ${topic}.
         Please return only the class plan, without any additional text.
         The plan should be formatted as a structured list like this:
-        ["Warm-up Activity", "Introduction to Topic", "Guided Practice", "Freer Practice", "Review and Wrap-up"]
+        ["Introduction to Topic", "Guided Practice", "Freer Practice", "Review and Wrap-up"]
         
         Thank you! <3
       `
@@ -30,7 +30,7 @@ export async function POST(request: Request) {
       coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),
     };
-    
+
     console.log("Interview:", interview);
 
     await db.collection("interviews").add(interview);
