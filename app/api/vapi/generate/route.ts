@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         The topic or theme of the class is: ${topic}.
         Please return only the class plan, without any additional text.
         The plan should be formatted as a structured list like this:
-        ["Introduction to Topic", "Guided Practice", "Freer Practice", "Review and Wrap-up"]
+        ["Introduction to Topic", "Speaking activity", "Review and Wrap-up"]
         
         Thank you! <3
       `
