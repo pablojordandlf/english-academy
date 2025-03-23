@@ -17,15 +17,6 @@ export default function Footer() {
       ]
     },
     {
-      title: "Compañía",
-      links: [
-        { name: "Sobre Nosotros", href: "#" },
-        { name: "Blog", href: "#" },
-        { name: "Empleo", href: "#" },
-        { name: "Contacto", href: "#" }
-      ]
-    },
-    {
       title: "Legal",
       links: [
         { name: "Términos y Condiciones", href: "/legal/terminos" },
