@@ -1,6 +1,7 @@
 import { Toaster } from "sonner";
 import type { Metadata, Viewport } from "next";
 import { Mona_Sans } from "next/font/google";
+import CookieConsent from "@/components/CookieConsent";
 
 import "./globals.css";
 
@@ -10,8 +11,8 @@ const monaSans = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "PrepWise - AI English Tutor",
-  description: "AI-powered English tutoring platform for students and professionals",
+  title: "English Academy - Tu Profesor de Inglés con IA",
+  description: "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales",
   manifest: "/manifest.json",
   icons: {
     apple: [
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "PrepWise",
+    title: "English Academy",
   },
 };
 
@@ -40,12 +41,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="es" className="dark">
       <head>
-        <meta name="application-name" content="PrepWise" />
+        <meta name="application-name" content="English Academy" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="PrepWise" />
+        <meta name="apple-mobile-web-app-title" content="English Academy" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="shortcut icon" href="/favicon.ico" />
@@ -54,6 +55,7 @@ export default function RootLayout({
         {children}
 
         <Toaster />
+        <CookieConsent />
       </body>
     </html>
   );
