@@ -6,8 +6,6 @@ import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/actions/auth.action";
 import LogoutButton from "@/components/LogoutButton";
 
-import Footer from "@/components/landing/Footer";
-
 const Layout = async ({ children }: { children: ReactNode }) => {
   const isUserAuthenticated = await isAuthenticated();
   if (!isUserAuthenticated) redirect("/sign-in");
@@ -21,7 +19,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         </Link>
         
         <div className="flex items-center gap-4">
-          {/*<Link href="/dashboard" className="text-gray-300 hover:text-white">Dashboard</Link>*/}
+          <Link href="/dashboard" className="text-gray-300 hover:text-white">Dashboard</Link>
           <LogoutButton />
         </div>
       </nav>
@@ -29,8 +27,6 @@ const Layout = async ({ children }: { children: ReactNode }) => {
       <main className="p-4">
         {children}
       </main>
-
-      <Footer />
     </div>
   );
 };

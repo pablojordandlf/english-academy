@@ -1,4 +1,4 @@
-import { generateText } from "ai";
+  import { generateText } from "ai";
 import { google } from "@ai-sdk/google";
 
 import { db } from "@/firebase/admin";
@@ -14,8 +14,17 @@ export async function POST(request: Request) {
         The proficiency level of the students is ${level}.
         The topic or theme of the class is: ${topic}.
         Please return only the class plan, without any additional text.
-        The plan should be formatted as a structured list like this:
-        ["Introduction to Topic", "Speaking activity", "Review and Wrap-up"]
+        The plan should be formatted as a structured list like this, and only include the followin sections:
+        [
+          "Introduction to Topic", 
+          "Speaking activity 1", 
+          "Vocabulary practice", 
+          "Speaking activity 2", 
+          "Grammar focus and practice", 
+          "Speaking activity 3", 
+          "Pronunciation practice", 
+          "Review and Wrap-up"
+        ]
         
         Thank you! <3
       `
