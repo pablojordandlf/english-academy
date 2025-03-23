@@ -155,7 +155,7 @@ const Agent = ({
           <div className="card-interviewer">
             <div className="avatar">
               <Image
-                src="/avatar.png"
+                src="/ai-avatar.png"
                 alt="AI Teacher"
                 width={65}
                 height={54}
