@@ -262,7 +262,7 @@ const Page = () => {
         </p>
         
         <Button asChild className="btn-primary">
-          <Link href="/dashboard">
+          <Link href="/dashboard/interview">
             Iniciar tu primera clase
           </Link>
         </Button>
