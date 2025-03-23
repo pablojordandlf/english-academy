@@ -31,7 +31,7 @@ async function Home() {
           </p>
 
           <Button asChild className="btn-primary max-sm:w-full">
-            <Link href="/interview">Start a Class</Link>
+            <Link href="/dashboard/interview">Start a Class</Link>
           </Button>
         </div>
 

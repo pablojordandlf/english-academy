@@ -26,8 +26,8 @@ const Feedback = async ({ params }: RouteParams) => {
     <section className="section-feedback">
       <div className="flex flex-row justify-center">
         <h1 className="text-4xl font-semibold">
-          Feedback on the Class -{" "}
-          <span className="capitalize">{interview.role}</span> Interview
+          eedback on the Class -{" "}
+          <span className="capitalize">{interview.level}</span> Interview
         </h1>
       </div>
 
@@ -94,7 +94,7 @@ const Feedback = async ({ params }: RouteParams) => {
 
       <div className="buttons">
         <Button className="btn-secondary flex-1">
-          <Link href="/" className="flex w-full justify-center">
+          <Link href="/dashboard" className="flex w-full justify-center">
             <p className="text-sm font-semibold text-primary-200 text-center">
               Back to dashboard
             </p>
@@ -103,7 +103,7 @@ const Feedback = async ({ params }: RouteParams) => {
 
         <Button className="btn-primary flex-1">
           <Link
-            href={`/interview/${id}`}
+            href={`/dashboard/interview/${id}`}
             className="flex w-full justify-center"
           >
             <p className="text-sm font-semibold text-black text-center">
