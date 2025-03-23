@@ -60,6 +60,15 @@ const UserMenu = ({ user }: Props) => {
           </Link>
         </DropdownMenuItem>
         
+        <DropdownMenuItem className="flex gap-3 text-gray-300 hover:text-white focus:text-white hover:bg-gray-700/50 focus:bg-gray-700/50 cursor-pointer p-3 rounded-lg">
+          <Link href="/dashboard/progress" className="flex items-center gap-3 w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            Mi progreso
+          </Link>
+        </DropdownMenuItem>
+        
         <DropdownMenuItem 
           className="flex gap-3 text-gray-300 hover:text-white focus:text-white hover:bg-gray-700/50 focus:bg-gray-700/50 cursor-pointer p-3 rounded-lg"
           asChild

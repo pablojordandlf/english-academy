@@ -38,9 +38,20 @@ async function Home() {
             Practica conversaciones reales en inglés con nuestro profesor de IA y recibe retroalimentación detallada instantáneamente.
           </p>
 
-          <Button asChild className="btn-primary w-fit">
-            <Link href="/dashboard/interview">Iniciar nueva clase</Link>
-          </Button>
+          <div className="flex flex-wrap gap-4">
+            <Button asChild className="btn-primary">
+              <Link href="/dashboard/interview">Iniciar nueva clase</Link>
+            </Button>
+            
+            <Button asChild variant="outline" className="border-gray-700 hover:border-primary-500 text-gray-300 hover:text-primary-300">
+              <Link href="/dashboard/progress" className="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                Ver mi progreso
+              </Link>
+            </Button>
+          </div>
         </div>
 
         <div className="relative w-full lg:w-2/5 h-[300px]">
@@ -139,7 +150,10 @@ async function Home() {
               </svg>
             </div>
             <h3 className="text-lg font-medium mb-1 text-white">Seguimiento del progreso</h3>
-            <p className="text-sm text-center text-gray-400">Monitorea tu mejora con análisis detallado</p>
+            <p className="text-sm text-center text-gray-400 mb-3">Monitorea tu mejora con análisis detallado</p>
+            <Button asChild variant="outline" size="sm" className="mt-auto border-gray-700 hover:border-primary-500 text-gray-300 hover:text-primary-300">
+              <Link href="/dashboard/progress">Ver mi progreso</Link>
+            </Button>
           </div>
         </div>
       </section>

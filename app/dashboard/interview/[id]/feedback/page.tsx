@@ -167,16 +167,25 @@ const Feedback = async ({ params }: RouteParams) => {
           </ul>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild variant="outline" className="btn-secondary">
+        <div className="flex flex-wrap justify-center gap-4 mt-10">
+          <Button asChild variant="outline" className="border-gray-700 hover:border-primary-500 text-gray-300 hover:text-primary-300">
             <Link href="/dashboard">
               Volver al Dashboard
             </Link>
           </Button>
-
+          
           <Button asChild className="btn-primary">
-            <Link href={`/dashboard/interview/${id}`}>
-              Repetir Clase
+            <Link href="/dashboard/interview">
+              Tomar otra clase
+            </Link>
+          </Button>
+          
+          <Button asChild variant="outline" className="border-gray-700 hover:border-primary-500 text-gray-300 hover:text-primary-300">
+            <Link href="/dashboard/progress" className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Ver mi progreso
             </Link>
           </Button>
         </div>

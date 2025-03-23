@@ -129,3 +129,65 @@ export async function getInterviewsByUserId(
     ...doc.data(),
   })) as Interview[];
 }
+
+export async function getAllInterviewsByUserId(userId: string): Promise<Interview[] | null> {
+  try {
+    const interviews = await db
+      .collection("interviews")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "asc")
+      .get();
+
+    return interviews.docs.map((doc) => {
+      const data = doc.data();
+      
+      // Normalizar los timestamps de Firestore a strings ISO
+      let createdAt = data.createdAt;
+      if (createdAt && typeof createdAt.toDate === 'function') {
+        createdAt = createdAt.toDate().toISOString();
+      }
+      
+      return {
+        id: doc.id,
+        ...data,
+        createdAt
+      };
+    }) as Interview[];
+  } catch (error) {
+    console.error("Error fetching all interviews:", error);
+    return null;
+  }
+}
+
+export const getAllFeedbackByUserId = async (userId: string): Promise<Feedback[]> => {
+  try {
+    const feedbackSnapshot = await db
+      .collection("feedback")
+      .where("userId", "==", userId)
+      .orderBy("createdAt", "asc")
+      .get();
+    
+    if (feedbackSnapshot.empty) {
+      return [];
+    }
+
+    return feedbackSnapshot.docs.map(doc => {
+      const data = doc.data();
+      
+      // Normalizar los timestamps de Firestore a strings ISO
+      let createdAt = data.createdAt;
+      if (createdAt && typeof createdAt.toDate === 'function') {
+        createdAt = createdAt.toDate().toISOString();
+      }
+      
+      return {
+        id: doc.id,
+        ...data,
+        createdAt
+      };
+    }) as Feedback[];
+  } catch (error) {
+    console.error("Error fetching all feedback:", error);
+    return [];
+  }
+};
