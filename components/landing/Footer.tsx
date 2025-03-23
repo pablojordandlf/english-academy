@@ -8,30 +8,21 @@ export default function Footer() {
   
   const footerLinks = [
     {
-      title: "Product",
+      title: "Producto",
       links: [
-        { name: "Features", href: "#features" },
-        { name: "Pricing", href: "#pricing" },
-        { name: "Testimonials", href: "#testimonials" },
+        { name: "Características", href: "#features" },
+        { name: "Precios", href: "#pricing" },
+        { name: "Testimonios", href: "#testimonials" },
         { name: "FAQ", href: "#faq" }
       ]
     },
     {
-      title: "Company",
+      title: "Legal",
       links: [
-        { name: "About Us", href: "#" },
-        { name: "Blog", href: "#" },
-        { name: "Careers", href: "#" },
-        { name: "Contact", href: "#" }
-      ]
-    },
-    {
-      title: "Resources",
-      links: [
-        { name: "Support", href: "#" },
-        { name: "Terms", href: "#" },
-        { name: "Privacy", href: "#" },
-        { name: "Cookie Policy", href: "#" }
+        { name: "Términos y Condiciones", href: "/legal/terminos" },
+        { name: "Política de Privacidad", href: "/legal/privacidad" },
+        { name: "Política de Cookies", href: "/legal/cookies" },
+        { name: "Aviso Legal", href: "/legal/aviso-legal" }
       ]
     }
   ];
@@ -42,11 +33,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Image src="/logo.svg" alt="PrepWise Logo" width={32} height={28} />
-              <h3 className="text-xl font-bold text-primary-100">PrepWise</h3>
+              <Image src="/academy-logo.svg" alt="English Academy Logo" width={32} height={28} />
+              <h3 className="text-xl font-bold text-primary-100">English Academy</h3>
             </div>
             <p className="text-gray-400 mb-4">
-              AI-powered English tutoring platform for students and professionals.
+              Plataforma de enseñanza de inglés con IA para estudiantes y profesionales.
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-gray-400 hover:text-primary-100">
@@ -72,7 +63,7 @@ export default function Footer() {
           
           {footerLinks.map((column, idx) => (
             <div key={idx}>
-              <h3 className="text-lg font-semibold mb-4">{column.title}</h3>
+              <h3 className="text-lg font-semibold text-white mb-4">{column.title}</h3>
               <ul className="space-y-3">
                 {column.links.map((link, linkIdx) => (
                   <li key={linkIdx}>
@@ -91,7 +82,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-800 pt-8">
           <p className="text-gray-400 text-center">
-            &copy; {currentYear} PrepWise. All rights reserved.
+            &copy; {currentYear} English Academy. Todos los derechos reservados.
           </p>
         </div>
       </div>

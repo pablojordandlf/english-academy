@@ -186,21 +186,6 @@ export default function Pricing() {
           ))}
         </div>
         
-        <div className="mt-16 bg-gray-800/50 border border-gray-700 rounded-xl p-6 max-w-3xl mx-auto">
-          <div className="flex flex-col md:flex-row gap-6 items-center">
-            <div className="bg-gray-900 rounded-full p-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <div>
-              <h4 className="text-xl font-semibold mb-2">Garantía de satisfacción de 30 días</h4>
-              <p className="text-gray-300">
-                Si no estás completamente satisfecho con nuestro servicio dentro de los primeros 30 días, te reembolsaremos el 100% de tu suscripción sin hacer preguntas.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

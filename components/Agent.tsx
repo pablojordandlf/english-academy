@@ -155,7 +155,7 @@ const Agent = ({
           <div className="card-interviewer">
             <div className="avatar">
               <Image
-                src="/ai-avatar.png"
+                src="/avatar.png"
                 alt="AI Teacher"
                 width={65}
                 height={54}
@@ -175,13 +175,7 @@ const Agent = ({
           {/* User Profile Card */}
           <div className="card-border">
             <div className="card-content">
-              <Image 
-                src="/user-avatar.png" 
-                alt="user" 
-                width={65} 
-                height={65} 
-                className="rounded-full mb-4"
-              />
+              
               <h3 className="text-xl font-medium">{userName}</h3>
               <p className="text-gray-400 text-sm">Estudiante</p>
             </div>

@@ -112,7 +112,7 @@ export default function Hero() {
             <div className="absolute inset-y-0 inset-x-4 bg-gray-900/50 backdrop-blur-sm rounded-xl -z-5 transform rotate-3"></div>
             <div className="absolute inset-0 flex items-center justify-center">
               <Image
-                src="/robot.png"
+                src="/avatar.png"
                 alt="AI English Conversation"
                 width={500}
                 height={400}
