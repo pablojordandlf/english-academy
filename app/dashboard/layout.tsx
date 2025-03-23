@@ -4,6 +4,7 @@ import { ReactNode } from "react";
 import { redirect } from "next/navigation";
 
 import { isAuthenticated } from "@/lib/actions/auth.action";
+import LogoutButton from "@/components/LogoutButton";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const isUserAuthenticated = await isAuthenticated();
@@ -11,14 +12,22 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="root-layout">
-      <nav>
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="MockMate Logo" width={38} height={32} />
-          <h2 className="text-primary-100">PrepWise</h2>
+      <nav className="flex justify-between items-center p-4 bg-gray-900 border-b border-gray-800">
+        <Link href="/dashboard" className="flex items-center gap-2">
+          <Image src="/logo.svg" alt="PrepWise Logo" width={38} height={32} />
+          <h2 className="text-primary-100 font-bold">PrepWise</h2>
         </Link>
+        
+        <div className="flex items-center gap-4">
+          <Link href="/dashboard" className="text-gray-300 hover:text-white">Dashboard</Link>
+          <Link href="/dashboard/interview" className="text-gray-300 hover:text-white">Classes</Link>
+          <LogoutButton />
+        </div>
       </nav>
 
-      {children}
+      <main className="p-4">
+        {children}
+      </main>
     </div>
   );
 };

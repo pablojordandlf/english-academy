@@ -4,8 +4,18 @@ import Pricing from "../components/landing/Pricing";
 import Footer from "../components/landing/Footer";
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { isAuthenticated } from "@/lib/actions/auth.action";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  // Check if the user is authenticated
+  const isUserAuthenticated = await isAuthenticated();
+  
+  // If authenticated, redirect to the dashboard
+  if (isUserAuthenticated) {
+    redirect("/dashboard");
+  }
+
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "Features", href: "#features" },
