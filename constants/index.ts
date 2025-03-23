@@ -5,6 +5,10 @@ interface ExtendedCreateAssistantDTO extends CreateAssistantDTO {
   backchannelingEnabled?: boolean;
 }
 
+export const mappings = {
+  "react.js": "react",
+};
+
 export const teacher: ExtendedCreateAssistantDTO = {
   name: "teacher",
   firstMessage:
