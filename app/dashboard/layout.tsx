@@ -21,7 +21,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         </Link>
         
         <div className="flex items-center gap-4">
-          <Link href="/dashboard" className="text-gray-300 hover:text-white">Dashboard</Link>
+          {/*<Link href="/dashboard" className="text-gray-300 hover:text-white">Dashboard</Link>*/}
           <LogoutButton />
         </div>
       </nav>
