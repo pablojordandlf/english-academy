@@ -10,7 +10,7 @@ export default function Hero() {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const phrases = [
-    "clases conversacionales",
+    "clases de conversiación",
     "reuniones de trabajo",
     "viajes al extranjero",
     "entrevistas de trabajo",
