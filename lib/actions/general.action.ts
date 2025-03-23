@@ -23,19 +23,25 @@ export async function createFeedback(params: CreateFeedbackParams) {
       }),
       schema: feedbackSchema,
       prompt: `
-        You are an AI teaching coach analyzing a recorded or mock English class. Your task is to evaluate the teacher's performance based on structured categories. Be thorough and detailed in your analysis. Don't be overly lenient. If there are mistakes or areas for improvement, point them out clearly and constructively.
-        Transcript:
+        Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es analizar el desempeño del estudiante y proporcionar retroalimentación detallada basada en categorías específicas. Sé minucioso y específico en tu análisis. No seas demasiado indulgente. Si hay errores o áreas que necesitan mejorar, señálalos de manera clara y constructiva.
+        
+        Transcripción de la clase:
         ${formattedTranscript}
 
-        Please score the teacher from 0 to 100 in the following areas. Do not add categories other than the ones provided:
-        - **Lesson Structure**: Clarity of objectives, logical flow, and time management.
-        - **Engagement**: Ability to capture and maintain students' interest through interactive activities or discussions.
-        - **Clarity of Explanation**: Effectiveness in explaining concepts, use of examples, and addressing questions.
-        - **Student Interaction**: Encouraging participation, addressing individual needs, and fostering a supportive environment.
-        - **Classroom Management**: Handling disruptions, maintaining focus, and ensuring smooth transitions between activities.
+        Por favor, evalúa al estudiante en una escala de 0 a 100 en las siguientes áreas. No agregues categorías adicionales a las proporcionadas:
+        
+        - **Fluidez y Pronunciación**: Capacidad para hablar con naturalidad, con buena entonación y pronunciación correcta de palabras y sonidos.
+        
+        - **Gramática y Estructura**: Uso correcto de tiempos verbales, estructuras gramaticales y orden de palabras en oraciones.
+        
+        - **Vocabulario y Expresiones**: Riqueza y variedad del vocabulario utilizado, uso apropiado de expresiones idiomáticas y frases conversacionales.
+        
+        - **Comprensión Auditiva**: Capacidad para entender preguntas, instrucciones y comentarios sin necesidad de repeticiones excesivas.
+        
+        - **Participación y Confianza**: Iniciativa para hablar, hacer preguntas y mantener la conversación, demostrando confianza al expresarse.
         `,
       system:
-        "You are a professional teaching coach analyzing a recorded or mock English class. Your task is to evaluate the teacher's performance based on structured categories.",
+        "Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es proporcionar retroalimentación detallada y constructiva para ayudar al estudiante a mejorar sus habilidades.",
     });
 
     const feedback = {
