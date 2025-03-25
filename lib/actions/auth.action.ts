@@ -1,14 +1,15 @@
 "use server";
 
-import { auth, db } from "@/firebase/admin";
+import { auth, db } from "@/lib/firebase-admin";
 import { cookies } from "next/headers";
+import { createId } from "@paralleldrive/cuid2";
 
 // Session duration (1 week)
 const SESSION_DURATION = 60 * 60 * 24 * 7;
 
 // Set session cookie
 export async function setSessionCookie(idToken: string) {
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
 
   // Create session cookie
   const sessionCookie = await auth.createSessionCookie(idToken, {
@@ -26,7 +27,7 @@ export async function setSessionCookie(idToken: string) {
 }
 
 export async function signUp(params: SignUpParams) {
-  const { uid, name, email } = params;
+  const { uid, name, email, planInfo } = params;
 
   try {
     // check if user exists in db
@@ -34,20 +35,43 @@ export async function signUp(params: SignUpParams) {
     if (userRecord.exists)
       return {
         success: false,
-        message: "User already exists. Please sign in.",
+        message: "El usuario ya existe. Por favor, inicia sesión.",
       };
 
-    // save user to db
-    await db.collection("users").doc(uid).set({
+    // Crear un objeto base de usuario
+    const userData: any = {
       name,
       email,
-      // profileURL,
-      // resumeURL,
-    });
+      createdAt: new Date().toISOString(),
+    };
+
+    // Si hay información del plan, crear una suscripción pendiente
+    if (planInfo) {
+      // Establecer la fecha de prueba (7 días desde hoy)
+      const trialEndDate = new Date();
+      trialEndDate.setDate(trialEndDate.getDate() + 7);
+      
+      userData.pendingSubscription = {
+        plan: planInfo.plan,
+        billingCycle: planInfo.billingCycle,
+        createdAt: new Date().toISOString()
+      };
+      
+      userData.trialEndsAt = trialEndDate.toISOString();
+    } else {
+      // Si no hay plan, asignar una clase de prueba
+      userData.trialClass = {
+        available: true,
+        used: false
+      };
+    }
+
+    // save user to db
+    await db.collection("users").doc(uid).set(userData);
 
     return {
       success: true,
-      message: "Account created successfully. Please sign in.",
+      message: "Cuenta creada correctamente.",
     };
   } catch (error: any) {
     console.error("Error creating user:", error);
@@ -56,13 +80,13 @@ export async function signUp(params: SignUpParams) {
     if (error.code === "auth/email-already-exists") {
       return {
         success: false,
-        message: "This email is already in use",
+        message: "Este email ya está en uso",
       };
     }
 
     return {
       success: false,
-      message: "Failed to create account. Please try again.",
+      message: "Error al crear la cuenta. Por favor, inténtalo de nuevo.",
     };
   }
 }
@@ -75,30 +99,31 @@ export async function signIn(params: SignInParams) {
     if (!userRecord)
       return {
         success: false,
-        message: "User does not exist. Create an account.",
+        message: "El usuario no existe. Crea una cuenta.",
       };
 
     await setSessionCookie(idToken);
+    
+    return { success: true };
   } catch (error: any) {
-    console.log("");
+    console.log("Error en signIn:", error);
 
     return {
       success: false,
-      message: "Failed to log into account. Please try again.",
+      message: "Error al iniciar sesión. Por favor, inténtalo de nuevo.",
     };
   }
 }
 
 // Sign out user by clearing the session cookie
 export async function signOut() {
-  const cookieStore = await cookies();
-
+  const cookieStore = cookies();
   cookieStore.delete("session");
 }
 
 // Get current user from session cookie
 export async function getCurrentUser(): Promise<User | null> {
-  const cookieStore = await cookies();
+  const cookieStore = cookies();
 
   const sessionCookie = cookieStore.get("session")?.value;
   if (!sessionCookie) return null;

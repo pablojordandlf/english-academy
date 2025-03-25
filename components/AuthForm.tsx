@@ -6,7 +6,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import { auth } from "@/firebase/client";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -30,6 +30,11 @@ const authFormSchema = (type: FormType) => {
 
 const AuthForm = ({ type }: { type: FormType }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Obtenemos información del plan de los parámetros de búsqueda
+  const plan = searchParams.get('plan');
+  const billingCycle = searchParams.get('billing') as 'monthly' | 'yearly';
 
   const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,11 +57,18 @@ const AuthForm = ({ type }: { type: FormType }) => {
           password
         );
 
+        // Preparamos la información del plan si está disponible
+        const planInfo = plan && billingCycle ? {
+          plan,
+          billingCycle
+        } : undefined;
+
         const result = await signUp({
           uid: userCredential.user.uid,
           name: name!,
           email,
           password,
+          planInfo
         });
 
         if (!result.success) {
@@ -64,8 +76,27 @@ const AuthForm = ({ type }: { type: FormType }) => {
           return;
         }
 
-        toast.success("Account created successfully. Please sign in.");
-        router.push("/sign-in");
+        // Obtenemos el token para la sesión
+        const idToken = await userCredential.user.getIdToken();
+        if (!idToken) {
+          toast.error("Error al iniciar sesión. Inténtalo de nuevo.");
+          return;
+        }
+
+        // Iniciamos sesión con el token obtenido
+        await signIn({
+          email,
+          idToken,
+        });
+
+        toast.success("Cuenta creada correctamente.");
+
+        // Si tiene información del plan, redirigimos al checkout
+        if (planInfo) {
+          router.push(`/checkout?plan=${plan}&billing=${billingCycle}`);
+        } else {
+          router.push("/dashboard");
+        }
       } else {
         const { email, password } = data;
 
@@ -77,7 +108,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
         const idToken = await userCredential.user.getIdToken();
         if (!idToken) {
-          toast.error("Sign in Failed. Please try again.");
+          toast.error("Error al iniciar sesión. Inténtalo de nuevo.");
           return;
         }
 
@@ -86,12 +117,22 @@ const AuthForm = ({ type }: { type: FormType }) => {
           idToken,
         });
 
-        toast.success("Signed in successfully.");
-        router.push("/dashboard");
+        toast.success("Sesión iniciada correctamente.");
+        
+        // Verificar si hay una URL de redirección almacenada en sessionStorage
+        const redirectUrl = typeof window !== 'undefined' ? sessionStorage.getItem('redirectAfterLogin') : null;
+        
+        if (redirectUrl) {
+          // Eliminar la URL almacenada
+          sessionStorage.removeItem('redirectAfterLogin');
+          router.push(redirectUrl);
+        } else {
+          router.push("/dashboard");
+        }
       }
     } catch (error) {
       console.log(error);
-      toast.error(`There was an error: ${error}`);
+      toast.error(`Ha ocurrido un error: ${error}`);
     }
   };
 
@@ -102,10 +143,22 @@ const AuthForm = ({ type }: { type: FormType }) => {
       <div className="flex flex-col gap-6 card py-14 px-10">
         <div className="flex flex-row gap-2 justify-center">
           <Image src="/logo.svg" alt="logo" height={32} width={38} />
-          <h2 className="text-primary-100">PrepWise</h2>
+          <h2 className="text-primary-100">MyBubbly</h2>
         </div>
 
-        <h3>Practice job interviews with AI</h3>
+        <h3>Practica conversaciones en inglés con IA</h3>
+
+        {plan && billingCycle && type === "sign-up" && (
+          <div className="bg-gray-800/50 p-4 rounded-lg mb-2">
+            <p className="text-primary-300 font-medium mb-1">Plan seleccionado: {plan}</p>
+            <p className="text-gray-300 text-sm">
+              Ciclo de facturación: {billingCycle === 'monthly' ? 'Mensual' : 'Anual'}
+            </p>
+            <p className="text-gray-400 text-sm mt-2">
+              Primero crea tu cuenta y luego te guiaremos al proceso de pago.
+            </p>
+          </div>
+        )}
 
         <Form {...form}>
           <form
@@ -116,8 +169,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
               <FormField
                 control={form.control}
                 name="name"
-                label="Name"
-                placeholder="Your Name"
+                label="Nombre"
+                placeholder="Tu nombre"
                 type="text"
               />
             )}
@@ -126,31 +179,31 @@ const AuthForm = ({ type }: { type: FormType }) => {
               control={form.control}
               name="email"
               label="Email"
-              placeholder="Your email address"
+              placeholder="Tu dirección de email"
               type="email"
             />
 
             <FormField
               control={form.control}
               name="password"
-              label="Password"
-              placeholder="Enter your password"
+              label="Contraseña"
+              placeholder="Introduce tu contraseña"
               type="password"
             />
 
             <Button className="btn" type="submit">
-              {isSignIn ? "Sign In" : "Create an Account"}
+              {isSignIn ? "Iniciar Sesión" : "Crear Cuenta"}
             </Button>
           </form>
         </Form>
 
         <p className="text-center">
-          {isSignIn ? "No account yet?" : "Have an account already?"}
+          {isSignIn ? "¿No tienes cuenta?" : "¿Ya tienes una cuenta?"}
           <Link
             href={!isSignIn ? "/sign-in" : "/sign-up"}
             className="font-bold text-user-primary ml-1"
           >
-            {!isSignIn ? "Sign In" : "Sign Up"}
+            {!isSignIn ? "Iniciar Sesión" : "Registrarse"}
           </Link>
         </p>
       </div>
