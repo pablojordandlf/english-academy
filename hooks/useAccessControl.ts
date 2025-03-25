@@ -59,8 +59,15 @@ export function useAccessControl() {
           needsRefresh: data.user.needsRefresh
         });
 
-        // Verificar primero si tiene una suscripción activa
-        const hasActiveSubscription = !!data.user.subscription && data.user.subscription.status === 'active';
+        // Verificar si tiene una suscripción
+        const hasSubscription = !!data.user.subscription;
+        
+        // Una suscripción está activa si:
+        // 1. Existe AND
+        // 2. Su status es 'active' O 'trialing'
+        const hasActiveSubscription = hasSubscription && 
+          (data.user.subscription.status === 'active' || 
+           data.user.subscription.status === 'trialing');
         
         // Verificar si tiene un período de prueba activo
         const hasTrial = !!data.user.trialEndsAt && data.user.trialActive === true;
@@ -72,19 +79,23 @@ export function useAccessControl() {
         let planDetails = null;
 
         console.log("useAccessControl: Evaluando estado de acceso", {
+          hasSubscription,
           hasActiveSubscription,
           hasTrial,
           trialEndsAt,
           now,
           trialIsValid: trialEndsAt ? trialEndsAt > now : false,
           subscriptionDetails: data.user.subscription,
+          subscriptionStatus: hasSubscription ? data.user.subscription.status : 'none'
         });
 
         // Si tiene una suscripción activa, tendrá acceso independientemente del estado de la prueba
         if (hasActiveSubscription) {
           canAccessClasses = true;
-          subscriptionStatus = 'active';
-          console.log("useAccessControl: Usuario con suscripción activa, acceso permitido");
+          subscriptionStatus = data.user.subscription.status === 'trialing' ? 'trialing' : 'active';
+          console.log("useAccessControl: Usuario con suscripción activa, acceso permitido", {
+            status: subscriptionStatus
+          });
           
           // Guardar detalles del plan
           planDetails = {

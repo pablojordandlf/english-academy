@@ -17,9 +17,8 @@ export async function POST(request: Request) {
       // Simular la validación del cupón con códigos predefinidos
       // En producción, esto se conectaría a tu base de datos o a Stripe
       const validCoupons: Record<string, { discount: number, validBillingCycles: string[] }> = {
-        "WELCOME10": { discount: 10, validBillingCycles: ["monthly", "yearly"] },
-        "SUMMER20": { discount: 20, validBillingCycles: ["yearly"] },
-        "FIRST15": { discount: 15, validBillingCycles: ["monthly", "yearly"] }
+        "WELCOME50": { discount: 50, validBillingCycles: ["monthly", "yearly"] },
+        
       };
 
       // Verificar si el cupón existe

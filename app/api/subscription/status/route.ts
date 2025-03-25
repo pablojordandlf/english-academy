@@ -36,8 +36,8 @@ export async function GET() {
       if (userSubscription.status === 'active' || userSubscription.status === 'trialing') {
         const isTrialing = userSubscription.status === 'trialing';
         const planName = userSubscription.planId === 'PREMIUM' 
-          ? (isTrialing ? 'Plan Premium (Prueba)' : 'Plan Premium') 
-          : (isTrialing ? 'Plan Básico (Prueba)' : 'Plan Básico');
+          ? (isTrialing ? 'Plan Premium' : 'Plan Premium') 
+          : (isTrialing ? 'Plan Básico' : 'Plan Básico');
           
         console.log("API subscription/status: Usuario con suscripción activa en documento", {
           planId: userSubscription.planId,
