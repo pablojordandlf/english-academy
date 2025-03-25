@@ -27,7 +27,7 @@ export async function POST(request: Request) {
         trialActive: user.trialActive,
         trialStartedAt: user.trialStartedAt,
         trialPlan: user.trialPlan,
-        pendingSubscription: user.pendingSubscription
+        pendingSubscription: (user as any).pendingSubscription
       }
     });
     
