@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { createCheckoutSession } from "@/lib/actions/subscription.action";
@@ -9,7 +9,8 @@ import { Loader2, Check, ShieldCheck, Tag } from "lucide-react";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 
-export default function CheckoutPage() {
+// Componente que usa useSearchParams debe estar dentro de Suspense
+function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [loading, setLoading] = useState(false);
@@ -371,5 +372,21 @@ export default function CheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// Componente principal con Suspense para useSearchParams
+export default function CheckoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 pt-20 pb-16 flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="h-10 w-10 animate-spin text-primary mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-white">Cargando información de tu plan...</h2>
+        </div>
+      </div>
+    }>
+      <CheckoutContent />
+    </Suspense>
   );
 } 
