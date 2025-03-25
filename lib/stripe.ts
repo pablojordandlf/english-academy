@@ -5,7 +5,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 }
 
 export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2023-10-16', // Versión más reciente de la API de Stripe
+  apiVersion: '2025-02-24.acacia', // Versión más reciente de la API de Stripe
   appInfo: {
     name: 'MyBubbly',
     version: '0.1.0',
