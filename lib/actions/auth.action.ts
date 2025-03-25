@@ -30,13 +30,17 @@ export async function signUp(params: SignUpParams) {
   const { uid, name, email, planInfo } = params;
 
   try {
+    console.log("signUp: Iniciando registro de usuario", { uid, email, hasPlanInfo: !!planInfo });
+    
     // check if user exists in db
     const userRecord = await db.collection("users").doc(uid).get();
-    if (userRecord.exists)
+    if (userRecord.exists) {
+      console.log("signUp: El usuario ya existe en la base de datos");
       return {
         success: false,
         message: "El usuario ya existe. Por favor, inicia sesión.",
       };
+    }
 
     // Crear un objeto base de usuario
     const userData: any = {
@@ -47,6 +51,8 @@ export async function signUp(params: SignUpParams) {
 
     // Si hay información del plan, crear una suscripción pendiente
     if (planInfo) {
+      console.log("signUp: El usuario se registra con información de plan", planInfo);
+      
       // Establecer la fecha de prueba (7 días desde hoy)
       const trialEndDate = new Date();
       trialEndDate.setDate(trialEndDate.getDate() + 7);
@@ -58,7 +64,20 @@ export async function signUp(params: SignUpParams) {
       };
       
       userData.trialEndsAt = trialEndDate.toISOString();
+      userData.trialActive = true;
+      userData.trialStartedAt = new Date().toISOString();
+      userData.trialPlan = {
+        planId: planInfo.plan,
+        billingCycle: planInfo.billingCycle
+      };
+      
+      console.log("signUp: Configurado período de prueba para el usuario", { 
+        trialEndsAt: userData.trialEndsAt,
+        trialActive: userData.trialActive,
+        trialStartedAt: userData.trialStartedAt,
+      });
     } else {
+      console.log("signUp: El usuario se registra sin plan, asignando clase de prueba");
       // Si no hay plan, asignar una clase de prueba
       userData.trialClass = {
         available: true,
@@ -68,6 +87,7 @@ export async function signUp(params: SignUpParams) {
 
     // save user to db
     await db.collection("users").doc(uid).set(userData);
+    console.log("signUp: Usuario guardado en la base de datos correctamente");
 
     return {
       success: true,

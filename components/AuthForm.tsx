@@ -48,6 +48,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      console.log("Iniciando proceso de autenticación:", { type, hasPlanInfo: !!plan });
+      
       if (type === "sign-up") {
         const { name, email, password } = data;
 
@@ -60,9 +62,15 @@ const AuthForm = ({ type }: { type: FormType }) => {
         // Preparamos la información del plan si está disponible
         const planInfo = plan && billingCycle ? {
           plan,
-          billingCycle
-        } : undefined;
+          billingCycle: billingCycle as 'monthly' | 'yearly'
+        } : {
+          // Configuramos un plan predeterminado si no hay uno seleccionado
+          plan: 'PREMIUM',
+          billingCycle: 'monthly' as const
+        };
 
+        console.log("Registrando usuario con planInfo:", planInfo);
+        
         const result = await signUp({
           uid: userCredential.user.uid,
           name: name!,
@@ -90,11 +98,41 @@ const AuthForm = ({ type }: { type: FormType }) => {
         });
 
         toast.success("Cuenta creada correctamente.");
+        console.log("Usuario registrado correctamente. Redirigiendo...");
 
-        // Si tiene información del plan, redirigimos al checkout
-        if (planInfo) {
+        // Si tiene información del plan específica de los parámetros, redirigimos al checkout
+        if (plan && billingCycle) {
+          console.log("Redirigiendo al checkout con plan:", { plan, billingCycle });
           router.push(`/checkout?plan=${plan}&billing=${billingCycle}`);
         } else {
+          // Activamos el período de prueba automáticamente
+          try {
+            console.log("Activando período de prueba automáticamente");
+            const trialResponse = await fetch('/api/subscription/activate-trial', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                planId: 'PREMIUM',
+                billingCycle: 'monthly',
+              }),
+            });
+
+            const trialData = await trialResponse.json();
+            
+            if (trialData.success) {
+              console.log("Período de prueba activado correctamente:", trialData);
+              toast.success("¡Período de prueba activado correctamente!");
+            } else {
+              console.error("Error al activar período de prueba:", trialData);
+            }
+          } catch (trialError) {
+            console.error("Error en la activación de la prueba:", trialError);
+          }
+          
+          // Redirigimos al dashboard
+          console.log("Redirigiendo al dashboard");
           router.push("/dashboard");
         }
       } else {
@@ -125,13 +163,15 @@ const AuthForm = ({ type }: { type: FormType }) => {
         if (redirectUrl) {
           // Eliminar la URL almacenada
           sessionStorage.removeItem('redirectAfterLogin');
+          console.log("Redirigiendo a URL guardada:", redirectUrl);
           router.push(redirectUrl);
         } else {
+          console.log("Redirigiendo al dashboard");
           router.push("/dashboard");
         }
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error en el proceso de autenticación:", error);
       toast.error(`Ha ocurrido un error: ${error}`);
     }
   };

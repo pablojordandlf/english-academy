@@ -111,18 +111,61 @@ export async function createCheckoutSession({
 // Obtener la información de suscripción del usuario
 export async function getUserSubscription(userId: string) {
   try {
+    console.log("getUserSubscription: Iniciando para userId", userId);
+    
+    // Obtener el documento del usuario
     const userRef = db.collection("users").doc(userId);
     const userDoc = await userRef.get();
     
     if (!userDoc.exists) {
+      console.log("getUserSubscription: Usuario no encontrado", { userId });
       throw new Error("Usuario no encontrado");
     }
     
-    const user = userDoc.data();
-    const stripeCustomerId = user?.stripeCustomerId;
+    const userData = userDoc.data();
+    console.log("getUserSubscription: Datos del usuario recuperados", { 
+      userId,
+      hasActiveSubscription: userData?.hasActiveSubscription,
+      hasSubscriptionInUserData: !!userData?.subscription
+    });
+    
+    // IMPORTANTE: Verificar primero si el usuario tiene el flag de suscripción activa
+    // y los datos de suscripción ya almacenados en el documento del usuario
+    if (userData?.hasActiveSubscription === true && userData?.subscription) {
+      console.log("getUserSubscription: Suscripción encontrada en datos del usuario", userData.subscription);
+      
+      // Obtener más detalles de la colección de suscripciones si es necesario
+      const subscriptionId = userData.subscription.id;
+      if (subscriptionId) {
+        const subscriptionDoc = await db.collection("subscriptions").doc(subscriptionId).get();
+        if (subscriptionDoc.exists) {
+          return {
+            id: subscriptionId,
+            ...subscriptionDoc.data()
+          };
+        }
+      }
+      
+      // Si no encontramos la suscripción en la colección, devolvemos los datos del usuario
+      // Esto permite que la función siga funcionando incluso si la suscripción aún no se ha 
+      // sincronizado completamente con la colección de suscripciones
+      return {
+        id: userData.subscription.id || createId(),
+        userId: userId,
+        planId: userData.subscription.planId,
+        status: userData.subscription.status,
+        currentPeriodEnd: userData.subscription.currentPeriodEnd,
+        billingCycle: userData.subscription.billingCycle,
+      };
+    }
+    
+    // Si no encontramos datos en el documento del usuario, intentamos el método anterior
+    console.log("getUserSubscription: Buscando en colección de suscripciones", { userId });
+    const stripeCustomerId = userData?.stripeCustomerId;
     
     // Si el usuario no tiene un ID de cliente de Stripe, no tiene suscripción
     if (!stripeCustomerId) {
+      console.log("getUserSubscription: Usuario sin ID de cliente Stripe", { userId });
       return null;
     }
     
@@ -130,15 +173,67 @@ export async function getUserSubscription(userId: string) {
     const subscriptionsRef = db.collection("subscriptions");
     const snapshot = await subscriptionsRef.where("userId", "==", userId).where("status", "in", ["active", "trialing"]).limit(1).get();
     
-    if (snapshot.empty) {
-      return null;
+    if (!snapshot.empty) {
+      // Devolver la primera suscripción activa o en periodo de prueba
+      const subscription = {
+        id: snapshot.docs[0].id,
+        ...snapshot.docs[0].data(),
+      };
+      
+      console.log("getUserSubscription: Suscripción encontrada en colección", subscription);
+      return subscription;
     }
     
-    // Devolver la primera suscripción activa o en periodo de prueba
-    return {
-      id: snapshot.docs[0].id,
-      ...snapshot.docs[0].data(),
-    };
+    // Si no encontramos nada en la base de datos, verificar directamente en Stripe
+    console.log("getUserSubscription: Verificando directamente en Stripe", { stripeCustomerId });
+    
+    try {
+      // Verificar suscripciones activas
+      const activeSubscriptions = await stripe.subscriptions.list({
+        customer: stripeCustomerId,
+        status: 'active',
+        limit: 1
+      });
+      
+      if (activeSubscriptions.data.length > 0) {
+        console.log("getUserSubscription: Suscripción activa encontrada en Stripe, sincronizando datos");
+        
+        // Hay una discrepancia, el usuario tiene una suscripción activa en Stripe pero no en nuestra base de datos
+        // Llamamos a manuallyUpdateSubscriptionStatus para sincronizar los datos
+        const syncResult = await manuallyUpdateSubscriptionStatus(userId);
+        
+        if (syncResult.success && syncResult.hasSubscription) {
+          // Volvemos a intentar obtener la suscripción después de la sincronización
+          return await getUserSubscription(userId);
+        }
+      }
+      
+      // Verificar suscripciones en período de prueba
+      const trialSubscriptions = await stripe.subscriptions.list({
+        customer: stripeCustomerId,
+        status: 'trialing',
+        limit: 1
+      });
+      
+      if (trialSubscriptions.data.length > 0) {
+        console.log("getUserSubscription: Suscripción en período de prueba encontrada en Stripe, sincronizando datos");
+        
+        // Hay una discrepancia, el usuario tiene una suscripción en período de prueba en Stripe pero no en nuestra base de datos
+        // Llamamos a manuallyUpdateSubscriptionStatus para sincronizar los datos
+        const syncResult = await manuallyUpdateSubscriptionStatus(userId);
+        
+        if (syncResult.success && syncResult.hasSubscription) {
+          // Volvemos a intentar obtener la suscripción después de la sincronización
+          return await getUserSubscription(userId);
+        }
+      }
+    } catch (stripeError) {
+      console.error("Error al verificar suscripciones en Stripe:", stripeError);
+      // Continuamos con el flujo normal incluso si hay un error al consultar Stripe
+    }
+    
+    console.log("getUserSubscription: No se encontraron suscripciones activas", { userId });
+    return null;
   } catch (error) {
     console.error("Error al obtener la suscripción del usuario:", error);
     throw error;
@@ -176,6 +271,12 @@ export async function canUserTakeClasses(userId: string) {
     
     const userData = userDoc.data();
     
+    // Verificar directamente si el usuario tiene el flag hasActiveSubscription
+    if (userData?.hasActiveSubscription === true) {
+      console.log("canUserTakeClasses: Usuario con suscripción activa según flag", { userId });
+      return true;
+    }
+    
     // Comprobar si el usuario tiene una suscripción activa
     const subscription = await getUserSubscription(userId);
     if (subscription && ('status' in subscription) && 
@@ -205,5 +306,163 @@ export async function canUserTakeClasses(userId: string) {
   } catch (error) {
     console.error("Error al verificar si el usuario puede tomar clases:", error);
     return false;
+  }
+}
+
+// Función para actualizar manualmente el estado de suscripción de un usuario
+export async function manuallyUpdateSubscriptionStatus(userId: string) {
+  try {
+    console.log("manuallyUpdateSubscriptionStatus: Iniciando para userId", userId);
+    
+    // Obtener el documento del usuario
+    const userRef = db.collection("users").doc(userId);
+    const userDoc = await userRef.get();
+    
+    if (!userDoc.exists) {
+      console.log("manuallyUpdateSubscriptionStatus: Usuario no encontrado", { userId });
+      return { success: false, message: "Usuario no encontrado" };
+    }
+    
+    const userData = userDoc.data();
+    const stripeCustomerId = userData?.stripeCustomerId;
+    
+    // Si el usuario no tiene un ID de cliente de Stripe, no puede tener suscripción
+    if (!stripeCustomerId) {
+      console.log("manuallyUpdateSubscriptionStatus: Usuario sin ID de cliente Stripe", { userId });
+      return { success: false, message: "Usuario sin ID de cliente en Stripe" };
+    }
+    
+    // Obtener suscripciones del cliente directamente desde Stripe
+    const stripeSubscriptions = await stripe.subscriptions.list({
+      customer: stripeCustomerId,
+      status: 'active',
+      limit: 1
+    });
+    
+    console.log("manuallyUpdateSubscriptionStatus: Resultado de Stripe", {
+      hasSubscription: stripeSubscriptions.data.length > 0,
+      subscriptionCount: stripeSubscriptions.data.length
+    });
+    
+    if (stripeSubscriptions.data.length === 0) {
+      // No hay suscripciones activas en Stripe
+      // Verificar si hay suscripciones en período de prueba
+      const trialSubscriptions = await stripe.subscriptions.list({
+        customer: stripeCustomerId,
+        status: 'trialing',
+        limit: 1
+      });
+      
+      if (trialSubscriptions.data.length === 0) {
+        // No hay suscripciones activas ni en período de prueba
+        // Actualizar el documento del usuario para reflejar esto
+        await userRef.update({
+          hasActiveSubscription: false,
+          'subscription.status': 'inactive',
+          lastSubscriptionUpdate: new Date().toISOString()
+        });
+        
+        console.log("manuallyUpdateSubscriptionStatus: Usuario sin suscripciones activas en Stripe", { userId });
+        return { success: true, message: "Usuario actualizado: sin suscripción activa", hasSubscription: false };
+      }
+      
+      const trialSubscription = trialSubscriptions.data[0];
+      // Procesar la suscripción en período de prueba
+      const subscriptionData = {
+        id: createId(),
+        userId,
+        planId: userData?.pendingSubscription?.plan || 'PREMIUM',
+        billingCycle: userData?.pendingSubscription?.billingCycle || 'monthly',
+        status: 'trialing',
+        currentPeriodStart: new Date(trialSubscription.current_period_start * 1000).toISOString(),
+        currentPeriodEnd: new Date(trialSubscription.current_period_end * 1000).toISOString(),
+        cancelAtPeriodEnd: trialSubscription.cancel_at_period_end,
+        stripeCustomerId: stripeCustomerId,
+        stripeSubscriptionId: trialSubscription.id,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      
+      // Guardar en la colección de suscripciones
+      await db.collection("subscriptions").doc(subscriptionData.id).set(subscriptionData);
+      
+      // Actualizar el documento del usuario
+      await userRef.update({
+        hasActiveSubscription: true,
+        subscription: {
+          id: subscriptionData.id,
+          planId: subscriptionData.planId,
+          status: subscriptionData.status,
+          currentPeriodEnd: subscriptionData.currentPeriodEnd,
+          billingCycle: subscriptionData.billingCycle,
+        },
+        lastSubscriptionUpdate: new Date().toISOString()
+      });
+      
+      console.log("manuallyUpdateSubscriptionStatus: Usuario con suscripción en prueba en Stripe", { 
+        userId,
+        subscriptionId: subscriptionData.id,
+        status: subscriptionData.status
+      });
+      
+      return { 
+        success: true, 
+        message: "Usuario actualizado: suscripción en período de prueba", 
+        hasSubscription: true, 
+        status: 'trialing' 
+      };
+    }
+    
+    // Hay una suscripción activa
+    const activeSubscription = stripeSubscriptions.data[0];
+    
+    // Crear datos de la suscripción
+    const subscriptionData = {
+      id: createId(),
+      userId,
+      planId: userData?.pendingSubscription?.plan || 'PREMIUM',
+      billingCycle: userData?.pendingSubscription?.billingCycle || 'monthly',
+      status: 'active',
+      currentPeriodStart: new Date(activeSubscription.current_period_start * 1000).toISOString(),
+      currentPeriodEnd: new Date(activeSubscription.current_period_end * 1000).toISOString(),
+      cancelAtPeriodEnd: activeSubscription.cancel_at_period_end,
+      stripeCustomerId: stripeCustomerId,
+      stripeSubscriptionId: activeSubscription.id,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    
+    // Guardar en la colección de suscripciones
+    await db.collection("subscriptions").doc(subscriptionData.id).set(subscriptionData);
+    
+    // Actualizar el documento del usuario
+    await userRef.update({
+      hasActiveSubscription: true,
+      subscription: {
+        id: subscriptionData.id,
+        planId: subscriptionData.planId,
+        status: subscriptionData.status,
+        currentPeriodEnd: subscriptionData.currentPeriodEnd,
+        billingCycle: subscriptionData.billingCycle,
+      },
+      lastSubscriptionUpdate: new Date().toISOString()
+    });
+    
+    console.log("manuallyUpdateSubscriptionStatus: Usuario con suscripción activa en Stripe", { 
+      userId,
+      subscriptionId: subscriptionData.id,
+      status: 'active'
+    });
+    
+    return { 
+      success: true, 
+      message: "Usuario actualizado con suscripción activa", 
+      hasSubscription: true, 
+      status: 'active' 
+    };
+    
+  } catch (error) {
+    console.error("Error al actualizar manualmente el estado de suscripción:", error);
+    return { success: false, message: "Error al verificar suscripciones: " + (error as Error).message };
   }
 } 

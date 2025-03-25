@@ -1,13 +1,17 @@
+"use client";
+
 import dayjs from "dayjs";
 import Link from "next/link";
 import Image from "next/image";
+import { useAccessControl } from "@/hooks/useAccessControl";
+import { useEffect, useState } from "react";
 
 import { Button } from "./ui/button";
-
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+import { Lock } from "lucide-react";
 
-const InterviewCard = async ({
+const InterviewCard = ({
   interviewId,
   userId,
   level,
@@ -15,13 +19,36 @@ const InterviewCard = async ({
   topic,
   createdAt,
 }: InterviewCardProps) => {
-  const feedback =
-    userId && interviewId
-      ? await getFeedbackByInterviewId({
+  const { userAccess, handleAccessAttempt } = useAccessControl();
+  const [feedback, setFeedback] = useState<any>(null);
+
+  useEffect(() => {
+    const fetchFeedback = async () => {
+      if (userId && interviewId) {
+        const feedbackData = await getFeedbackByInterviewId({
           interviewId,
           userId,
-        })
-      : null;
+        });
+        setFeedback(feedbackData);
+      }
+    };
+
+    fetchFeedback();
+  }, [userId, interviewId]);
+
+  const handleClassAccess = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (handleAccessAttempt()) {
+      window.location.href = `/dashboard/interview/${interviewId}`;
+    }
+  };
+
+  const handleRepeatClass = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (handleAccessAttempt()) {
+      window.location.href = `/dashboard/interview/${interviewId}`;
+    }
+  };
 
   const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
 
@@ -32,12 +59,43 @@ const InterviewCard = async ({
       Technical: "bg-green-500/20 text-green-300",
     }[normalizedType] || "bg-primary-500/20 text-primary-300";
 
-  const formattedDate = dayjs(
-    feedback?.createdAt || createdAt || Date.now()
-  ).format("DD MMM, YYYY");
+  const formattedDate = dayjs(createdAt || Date.now()).format("DD MMM, YYYY");
+
+  const getButtonText = () => {
+    if (!userAccess.canAccessClasses) {
+      switch (userAccess.subscriptionStatus) {
+        case 'none':
+          return "Activar prueba gratuita";
+        case 'expired':
+          return "Período de prueba expirado";
+        default:
+          return "Activar suscripción";
+      }
+    }
+    return "Tomar clase";
+  };
 
   return (
-    <div className="bg-gray-800/70 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-primary-500 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10 group">
+    <div className={cn(
+      "bg-gray-800/70 backdrop-blur-sm p-6 rounded-xl border border-gray-700 transition-all duration-300 group",
+      userAccess.canAccessClasses 
+        ? "hover:border-primary-500 hover:shadow-lg hover:shadow-primary-500/10"
+        : "border-red-500/30 opacity-80"
+    )}>
+      {!userAccess.canAccessClasses && (
+        <div className="absolute top-0 right-0 left-0 bottom-0 bg-black/20 backdrop-blur-[1px] rounded-xl flex items-center justify-center z-10">
+          <div className="bg-gray-900/80 p-4 rounded-lg text-center">
+            <Lock className="h-8 w-8 mx-auto mb-2 text-red-500" />
+            <p className="text-red-400 font-medium">Acceso restringido</p>
+            <p className="text-gray-400 text-sm mt-1">
+              {userAccess.subscriptionStatus === 'expired' 
+                ? "Tu período de prueba ha expirado" 
+                : "Necesitas una suscripción activa"}
+            </p>
+          </div>
+        </div>
+      )}
+      
       <div className="flex items-start gap-4 mb-4">
         <div className="relative h-16 w-16 rounded-full overflow-hidden border-2 border-primary-500 flex-shrink-0">
           <Image
@@ -65,7 +123,6 @@ const InterviewCard = async ({
               </svg>
               <span>{formattedDate}</span>
             </div>
-            
             {feedback && (
               <div className="flex items-center gap-1">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,26 +152,41 @@ const InterviewCard = async ({
       )}
       
       <div className="mt-auto">
-        {feedback ? (
-          <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3">
+          <Button 
+            onClick={handleClassAccess}
+            className={cn(
+              "btn-primary relative overflow-hidden",
+              !userAccess.canAccessClasses && "!bg-gray-700 !text-gray-400 border-red-500/30 hover:!bg-gray-700"
+            )}
+            disabled={!userAccess.canAccessClasses}
+          >
+            {!userAccess.canAccessClasses && (
+              <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
+            )}
+            {getButtonText()}
+          </Button>
+          {feedback && (
             <Button asChild variant="outline" className="btn-secondary">
               <Link href={`/dashboard/interview/${interviewId}/feedback`}>
                 Ver evaluación
               </Link>
             </Button>
-            <Button asChild className="btn-primary">
-              <Link href={`/dashboard/interview/${interviewId}`}>
-                Repetir clase
-              </Link>
-            </Button>
-          </div>
-        ) : (
-          <Button asChild className="btn-primary">
-            <Link href={`/dashboard/interview/${interviewId}`}>
-              Tomar clase
-            </Link>
+          )}
+          <Button 
+            onClick={handleRepeatClass}
+            className={cn(
+              "btn-primary relative overflow-hidden",
+              !userAccess.canAccessClasses && "!bg-gray-700 !text-gray-400 border-red-500/30 hover:!bg-gray-700"
+            )}
+            disabled={!userAccess.canAccessClasses}
+          >
+            {!userAccess.canAccessClasses && (
+              <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
+            )}
+            Repetir clase
           </Button>
-        )}
+        </div>
       </div>
     </div>
   );

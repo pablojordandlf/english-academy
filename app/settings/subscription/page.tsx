@@ -101,15 +101,13 @@ export default function SubscriptionPage() {
     if (!subscription) return { name: 'N/A', price: 'N/A' };
     
     const planNames: Record<string, string> = {
-      'BASIC': 'Básico',
+      
       'PREMIUM': 'Premium',
-      'BUSINESS': 'Empresas'
+      
     };
     
     const prices: Record<string, Record<string, string>> = {
-      'BASIC': { 'monthly': '€9.99', 'yearly': '€7.99' },
-      'PREMIUM': { 'monthly': '€19.99', 'yearly': '€15.99' },
-      'BUSINESS': { 'monthly': '€49.99', 'yearly': '€39.99' }
+      'PREMIUM': { 'monthly': '€19.99', 'yearly': '€15.99' }
     };
     
     return {
@@ -267,25 +265,7 @@ export default function SubscriptionPage() {
                   </ul>
                 </div>
                 
-                <div className="pt-6">
-                  <Button
-                    onClick={handleManageSubscription}
-                    disabled={redirecting}
-                    className="w-full bg-primary-500 hover:bg-primary-600 text-white"
-                  >
-                    {redirecting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Redirigiendo...
-                      </>
-                    ) : (
-                      "Gestionar suscripción"
-                    )}
-                  </Button>
-                  <p className="text-gray-400 text-sm text-center mt-3">
-                    Serás redirigido al portal de gestión de Stripe para cambiar o cancelar tu suscripción.
-                  </p>
-                </div>
+                
               </div>
             </div>
           )}

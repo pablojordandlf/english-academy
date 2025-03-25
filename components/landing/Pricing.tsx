@@ -28,91 +28,154 @@ const premiumPlan = {
   planId: "PREMIUM",
 };
 
+type UserStatus = {
+  isAuthenticated: boolean;
+  hasActiveSubscription: boolean;
+  hasTrial: boolean;
+  trialEndsAt: Date | null;
+  canAccessClasses: boolean;
+};
+
 export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
-  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
-  const [hasTrial, setHasTrial] = useState(false);
-  const [buttonText, setButtonText] = useState("Comenzar prueba gratuita");
+  const [userStatus, setUserStatus] = useState<UserStatus>({
+    isAuthenticated: false,
+    hasActiveSubscription: false,
+    hasTrial: false,
+    trialEndsAt: null,
+    canAccessClasses: false,
+  });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    // Verificar si el usuario está autenticado y su estado de suscripción
     const checkUserStatus = async () => {
       try {
         const response = await fetch('/api/auth/me');
         const data = await response.json();
         
         const isUserAuthenticated = !!data.user;
-        setIsAuthenticated(isUserAuthenticated);
-        
+        let canAccessClasses = false;
+
         if (isUserAuthenticated) {
-          setHasActiveSubscription(!!data.user.subscription);
-          setHasTrial(!!data.user.trialEndsAt);
-          
-          if (data.user.subscription) {
-            setButtonText("Acceder a mi cuenta");
-          } else if (data.user.trialEndsAt) {
-            const trialEndDate = new Date(data.user.trialEndsAt);
+          const hasActiveSubscription = !!data.user.subscription;
+          const hasTrial = !!data.user.trialEndsAt && data.user.trialActive === true;
+          const trialEndsAt = data.user.trialEndsAt ? new Date(data.user.trialEndsAt) : null;
+
+          // Verificar si el usuario puede acceder a las clases
+          if (hasActiveSubscription) {
+            canAccessClasses = true;
+          } else if (hasTrial && trialEndsAt) {
             const now = new Date();
-            
-            if (trialEndDate > now) {
-              setButtonText("Continuar con mi prueba");
-            } else {
-              setButtonText("Suscribirme ahora");
-            }
-          } else {
-            setButtonText("Comenzar prueba gratuita");
+            canAccessClasses = trialEndsAt > now;
           }
+
+          setUserStatus({
+            isAuthenticated: true,
+            hasActiveSubscription,
+            hasTrial,
+            trialEndsAt,
+            canAccessClasses,
+          });
         } else {
-          setButtonText("Comenzar prueba gratuita");
+          setUserStatus({
+            isAuthenticated: false,
+            hasActiveSubscription: false,
+            hasTrial: false,
+            trialEndsAt: null,
+            canAccessClasses: false,
+          });
         }
       } catch (error) {
         console.error("Error al verificar estado del usuario:", error);
-        setIsAuthenticated(false);
-        setButtonText("Comenzar prueba gratuita");
+        setUserStatus({
+          isAuthenticated: false,
+          hasActiveSubscription: false,
+          hasTrial: false,
+          trialEndsAt: null,
+          canAccessClasses: false,
+        });
       }
     };
 
     checkUserStatus();
   }, []);
 
-  const handlePlanSelection = async () => {
+  const handleTrialStart = async () => {
     setIsLoading(true);
-    
     try {
-      if (isAuthenticated) {
-        if (hasActiveSubscription) {
-          // Usuario con suscripción activa: ir al dashboard
+      if (userStatus.isAuthenticated) {
+        if (userStatus.hasActiveSubscription) {
+          console.log("Usuario con suscripción activa, redirigiendo al dashboard");
           router.push('/dashboard');
-        } else if (hasTrial) {
-          // Usuario con período de prueba: ir al dashboard o al checkout según si la prueba expiró
-          const response = await fetch('/api/auth/me');
-          const data = await response.json();
-          
-          if (data.user?.trialEndsAt) {
-            const trialEndDate = new Date(data.user.trialEndsAt);
+        } else if (userStatus.hasTrial) {
+          // Si tiene período de prueba
+          if (userStatus.trialEndsAt) {
             const now = new Date();
-            
-            if (trialEndDate > now) {
+            if (userStatus.trialEndsAt > now) {
+              console.log("Usuario con prueba activa, redirigiendo al dashboard");
               router.push('/dashboard');
             } else {
+              console.log("Usuario con prueba expirada, redirigiendo al checkout");
               router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}`);
             }
-          } else {
-            router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}`);
           }
         } else {
-          // Usuario sin suscripción ni prueba: ir al checkout
+          // Si está autenticado pero no tiene período de prueba, activarlo
+          console.log("Usuario sin prueba, activando prueba gratuita");
+          try {
+            const response = await fetch('/api/subscription/activate-trial', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                planId: premiumPlan.planId,
+                billingCycle,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+              toast.success("¡Período de prueba activado correctamente!");
+              router.push("/dashboard");
+            } else {
+              toast.error(data.message || "No se pudo activar el período de prueba");
+              console.error("Error al activar la prueba:", data);
+            }
+          } catch (error) {
+            console.error("Error al activar la prueba:", error);
+            toast.error("Error al activar la prueba. Inténtalo de nuevo.");
+          }
+        }
+      } else {
+        // Si no está autenticado, redirigir al registro
+        console.log("Usuario no autenticado, redirigiendo al registro");
+        router.push('/sign-up');
+      }
+    } catch (error) {
+      console.error("Error al iniciar la prueba:", error);
+      toast.error("Error al procesar tu solicitud. Inténtalo de nuevo.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubscription = async () => {
+    setIsLoading(true);
+    try {
+      if (userStatus.isAuthenticated) {
+        if (userStatus.hasActiveSubscription) {
+          router.push('/dashboard');
+        } else {
           router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}`);
         }
       } else {
-        // Usuario no autenticado: ir al registro con parámetros del plan
         router.push(`/sign-up?plan=${premiumPlan.planId}&billing=${billingCycle}`);
       }
     } catch (error) {
-      console.error("Error al procesar la selección de plan:", error);
+      console.error("Error al procesar la suscripción:", error);
       toast.error("Error al procesar tu solicitud. Inténtalo de nuevo.");
     } finally {
       setIsLoading(false);
@@ -221,23 +284,53 @@ export default function Pricing() {
               ))}
             </ul>
 
-            <Button
-              onClick={handlePlanSelection}
-              disabled={isLoading}
-              className="w-full py-6 text-lg font-semibold transition-all duration-300 bg-primary-500 hover:bg-primary-600 text-white"
-            >
-              {isLoading ? (
-                <>
-                  <span className="animate-spin mr-2">⟳</span>
-                  Procesando...
-                </>
-              ) : (
-                buttonText
-              )}
-            </Button>
+            <div className="space-y-4">
+              <Button
+                onClick={handleTrialStart}
+                disabled={isLoading}
+                className="w-full py-6 text-lg font-semibold transition-all duration-300 bg-primary-500 hover:bg-primary-600 text-white"
+              >
+                {isLoading ? (
+                  <>
+                    <span className="animate-spin mr-2">⟳</span>
+                    Procesando...
+                  </>
+                ) : userStatus.hasActiveSubscription ? (
+                  "Acceder a mi cuenta"
+                ) : userStatus.hasTrial ? (
+                  userStatus.canAccessClasses ? "Continuar con mi prueba" : "Renovar suscripción"
+                ) : (
+                  "Comenzar prueba gratuita"
+                )}
+              </Button>
+
+              <Button
+                onClick={handleSubscription}
+                disabled={isLoading}
+                variant="outline"
+                className="w-full py-6 text-lg font-semibold transition-all duration-300 border-primary-500 text-primary-500 hover:bg-primary-500/10"
+              >
+                {isLoading ? (
+                  <>
+                    <span className="animate-spin mr-2">⟳</span>
+                    Procesando...
+                  </>
+                ) : userStatus.hasActiveSubscription ? (
+                  "Gestionar suscripción"
+                ) : !userStatus.canAccessClasses ? (
+                  "Activar suscripción"
+                ) : (
+                  "Suscribirme ahora"
+                )}
+              </Button>
+            </div>
             
             <p className="text-xs text-center text-gray-400 mt-3">
-              Incluye 7 días de prueba gratuita. Cancela cuando quieras.
+              {userStatus.hasTrial && !userStatus.canAccessClasses ? (
+                "Tu período de prueba ha expirado. Activa tu suscripción para continuar."
+              ) : (
+                "Incluye 7 días de prueba gratuita. Cancela cuando quieras."
+              )}
             </p>
           </motion.div>
         </div>
