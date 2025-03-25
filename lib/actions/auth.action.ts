@@ -9,7 +9,7 @@ const SESSION_DURATION = 60 * 60 * 24 * 7;
 
 // Set session cookie
 export async function setSessionCookie(idToken: string) {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   // Create session cookie
   const sessionCookie = await auth.createSessionCookie(idToken, {
@@ -137,13 +137,13 @@ export async function signIn(params: SignInParams) {
 
 // Sign out user by clearing the session cookie
 export async function signOut() {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   cookieStore.delete("session");
 }
 
 // Get current user from session cookie
 export async function getCurrentUser(): Promise<User | null> {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
 
   const sessionCookie = cookieStore.get("session")?.value;
   if (!sessionCookie) return null;
