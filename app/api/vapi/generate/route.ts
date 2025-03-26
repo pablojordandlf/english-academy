@@ -10,8 +10,8 @@ export async function POST(request: Request) {
   try {
     const { text: questions } = await generateText({
       model: google("gemini-2.0-flash-001"),
-      prompt: `Prepare an English class plan.
-        The proficiency level of the students is ${level}.
+      prompt: `Prepare an English class plan for a 1:1 conversation class with only one student.
+        The proficiency level of the student is ${level}.
         The topic or theme of the class is: ${topic}.
         Please return only the class plan, without any additional text.
         The plan should be formatted as a structured list like this:
@@ -30,6 +30,8 @@ export async function POST(request: Request) {
         - Speaking activity 2
         - Pronunciation practice
         - Review and Wrap-up
+
+      Avoid creating group activities, as there is only one student.
 
         Thank you! <3
       `

@@ -144,10 +144,7 @@ const Agent = ({
     <div className="bg-gray-800/70 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 shadow-lg">
       <div className="flex flex-col gap-8">
         <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2 text-white">Clase de conversación en tiempo real</h2>
-          <p className="text-gray-400 max-w-xl mx-auto">
-            Habla con nuestro profesor de IA para practicar tu inglés. La conversación será evaluada y recibirás retroalimentación detallada al finalizar.
-          </p>
+          <h2 className="text-2xl font-bold mb-2 text-white">Clase de conversación</h2> 
         </div>
         
         <div className="call-view">
@@ -155,7 +152,7 @@ const Agent = ({
           <div className="card-interviewer">
             <div className="avatar">
               <Image
-                src="/ai-avatar.png"
+                src="/mybubbly_2.png"
                 alt="AI Teacher"
                 width={65}
                 height={54}
@@ -242,7 +239,7 @@ const Agent = ({
                     <div className="size-10 rounded-full overflow-hidden flex-shrink-0 mr-3">
                       {message.role === "user" ? (
                         <Image 
-                          src="/user-avatar.png" 
+                          src="/mybubbly_2.png" 
                           alt="user" 
                           width={40} 
                           height={40} 
