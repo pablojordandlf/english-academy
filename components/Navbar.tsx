@@ -13,13 +13,13 @@ const Navbar = async () => {
           <div className="relative w-8 h-8">
             <Image 
               src="/academy-logo.svg" 
-              alt="English Academy Logo" 
+              alt="MyBubbly Logo" 
               fill 
               className="object-contain"
             />
           </div>
           <h1 className="text-xl font-bold bg-gradient-to-r from-primary-300 to-primary-500 bg-clip-text text-transparent">
-            English Academy
+            MyBubbly
           </h1>
         </Link>
 

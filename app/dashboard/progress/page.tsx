@@ -7,6 +7,11 @@ import Link from "next/link";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import { getAllFeedbackByUserId, getAllInterviewsByUserId } from "@/lib/actions/general.action";
 import { Button } from "@/components/ui/button";
+import { useAccessControl } from "@/hooks/useAccessControl";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+import { Lock } from "lucide-react";
 
 interface User {
   id: string;
@@ -67,6 +72,8 @@ const Page = () => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [stats, setStats] = useState<ProgressStats | null>(null);
+  const { userAccess, handleAccessAttempt } = useAccessControl();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -231,6 +238,13 @@ const Page = () => {
 
     fetchData();
   }, []);
+
+  const handleStartClass = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (handleAccessAttempt()) {
+      router.push('/dashboard/interview');
+    }
+  };
 
   if (isLoading) {
     return (
@@ -485,10 +499,18 @@ const Page = () => {
             </Link>
           </Button>
 
-          <Button asChild className="btn-primary">
-            <Link href="/dashboard">
-              Tomar nueva clase
-            </Link>
+          <Button 
+            onClick={handleStartClass}
+            className={cn(
+              "btn-primary relative overflow-hidden",
+              !userAccess.canAccessClasses && "!bg-gray-700 !text-gray-400 border-red-500/30 hover:!bg-gray-700"
+            )}
+            disabled={!userAccess.canAccessClasses}
+          >
+            {!userAccess.canAccessClasses && (
+              <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
+            )}
+            Tomar nueva clase
           </Button>
         </div>
       </div>

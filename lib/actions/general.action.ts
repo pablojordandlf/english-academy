@@ -17,14 +17,22 @@ export async function createFeedback(params: CreateFeedbackParams) {
       )
       .join("");
 
+    console.log(formattedTranscript);
+
     const { object } = await generateObject({
       model: google("gemini-2.0-flash-001", {
         structuredOutputs: false,
       }),
       schema: feedbackSchema,
       prompt: `
-        Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es analizar el desempeño del estudiante y proporcionar retroalimentación detallada basada en categorías específicas. Sé minucioso y específico en tu análisis. No seas demasiado indulgente. Si hay errores o áreas que necesitan mejorar, señálalos de manera clara y constructiva.
-        
+        Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es analizar el desempeño del estudiante y proporcionar feedback detallado basado en categorías específicas. Sé minucioso y específico en tu análisis. Se realista. Si hay errores o áreas que necesitan mejorar, señálalos de manera clara y constructiva. Es muy importante que ayudes al estudiante a mejorar su inglés con comentarios específicos y ejemplos.
+
+        Claves de la calificación: 
+        - La calificación del estudiante debe ser entre 0 y 100, donde 0 es un nivel muy bajo y 100 es un nivel bilingüe.
+        - Suspende al estudiante si crees que no el nivel de inglés es bajo.
+        - Si el estudiante no participa en la conversación, suspenda al estudiante.
+
+
         Transcripción de la clase:
         ${formattedTranscript}
 

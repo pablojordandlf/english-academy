@@ -1,7 +1,8 @@
 "use server";
 
-import { auth, db } from "@/firebase/admin";
+import { auth, db } from "@/lib/firebase-admin";
 import { cookies } from "next/headers";
+import { createId } from "@paralleldrive/cuid2";
 
 // Session duration (1 week)
 const SESSION_DURATION = 60 * 60 * 24 * 7;
@@ -26,28 +27,71 @@ export async function setSessionCookie(idToken: string) {
 }
 
 export async function signUp(params: SignUpParams) {
-  const { uid, name, email } = params;
+  const { uid, name, email, planInfo } = params;
 
   try {
+    console.log("signUp: Iniciando registro de usuario", { uid, email, hasPlanInfo: !!planInfo });
+    
     // check if user exists in db
     const userRecord = await db.collection("users").doc(uid).get();
-    if (userRecord.exists)
+    if (userRecord.exists) {
+      console.log("signUp: El usuario ya existe en la base de datos");
       return {
         success: false,
-        message: "User already exists. Please sign in.",
+        message: "El usuario ya existe. Por favor, inicia sesión.",
       };
+    }
 
-    // save user to db
-    await db.collection("users").doc(uid).set({
+    // Crear un objeto base de usuario
+    const userData: any = {
       name,
       email,
-      // profileURL,
-      // resumeURL,
-    });
+      createdAt: new Date().toISOString(),
+    };
+
+    // Si hay información del plan, crear una suscripción pendiente
+    if (planInfo) {
+      console.log("signUp: El usuario se registra con información de plan", planInfo);
+      
+      // Establecer la fecha de prueba (7 días desde hoy)
+      const trialEndDate = new Date();
+      trialEndDate.setDate(trialEndDate.getDate() + 7);
+      
+      userData.pendingSubscription = {
+        plan: planInfo.plan,
+        billingCycle: planInfo.billingCycle,
+        createdAt: new Date().toISOString()
+      };
+      
+      userData.trialEndsAt = trialEndDate.toISOString();
+      userData.trialActive = true;
+      userData.trialStartedAt = new Date().toISOString();
+      userData.trialPlan = {
+        planId: planInfo.plan,
+        billingCycle: planInfo.billingCycle
+      };
+      
+      console.log("signUp: Configurado período de prueba para el usuario", { 
+        trialEndsAt: userData.trialEndsAt,
+        trialActive: userData.trialActive,
+        trialStartedAt: userData.trialStartedAt,
+      });
+    } else {
+      console.log("signUp: El usuario se registra sin plan, asignando clase de prueba");
+      // Si no hay plan, asignar una clase de prueba
+      userData.trialClass = {
+        available: true,
+        used: false
+      };
+    }
+
+    // save user to db
+    await db.collection("users").doc(uid).set(userData);
+    console.log("signUp: Usuario guardado en la base de datos correctamente");
 
     return {
       success: true,
-      message: "Account created successfully. Please sign in.",
+      message: "Cuenta creada correctamente.",
     };
   } catch (error: any) {
     console.error("Error creating user:", error);
@@ -56,13 +100,13 @@ export async function signUp(params: SignUpParams) {
     if (error.code === "auth/email-already-exists") {
       return {
         success: false,
-        message: "This email is already in use",
+        message: "Este email ya está en uso",
       };
     }
 
     return {
       success: false,
-      message: "Failed to create account. Please try again.",
+      message: "Error al crear la cuenta. Por favor, inténtalo de nuevo.",
     };
   }
 }
@@ -75,16 +119,18 @@ export async function signIn(params: SignInParams) {
     if (!userRecord)
       return {
         success: false,
-        message: "User does not exist. Create an account.",
+        message: "El usuario no existe. Crea una cuenta.",
       };
 
     await setSessionCookie(idToken);
+    
+    return { success: true };
   } catch (error: any) {
-    console.log("");
+    console.log("Error en signIn:", error);
 
     return {
       success: false,
-      message: "Failed to log into account. Please try again.",
+      message: "Error al iniciar sesión. Por favor, inténtalo de nuevo.",
     };
   }
 }
@@ -92,7 +138,6 @@ export async function signIn(params: SignInParams) {
 // Sign out user by clearing the session cookie
 export async function signOut() {
   const cookieStore = await cookies();
-
   cookieStore.delete("session");
 }
 

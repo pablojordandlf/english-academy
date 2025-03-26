@@ -35,6 +35,15 @@ interface User {
   name: string;
   email: string;
   id: string;
+  subscription?: Subscription;
+  trialEndsAt?: string;
+  trialActive?: boolean;
+  trialStartedAt?: string;
+  trialPlan?: {
+    planId: string;
+    billingCycle: 'monthly' | 'yearly';
+  };
+  trialUsed?: boolean;
 }
 
 interface InterviewCardProps {
@@ -80,6 +89,10 @@ interface SignUpParams {
   name: string;
   email: string;
   password: string;
+  planInfo?: {
+    plan: string;
+    billingCycle: 'monthly' | 'yearly';
+  };
 }
 
 type FormType = "sign-in" | "sign-up";
@@ -94,4 +107,33 @@ interface InterviewFormProps {
 
 interface TechIconProps {
   topic: string[];
+}
+
+interface Subscription {
+  id: string;
+  userId: string;
+  status: 'active' | 'canceled' | 'incomplete' | 'incomplete_expired' | 'past_due' | 'trialing' | 'unpaid';
+  planId: string;
+  currentPeriodStart: string;
+  currentPeriodEnd: string;
+  cancelAtPeriodEnd: boolean;
+  stripeCustomerId: string;
+  stripeSubscriptionId: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface CreateCheckoutSessionParams {
+  userId: string;
+  planId: string;
+  billingCycle: 'monthly' | 'yearly';
+  successUrl: string;
+  cancelUrl: string;
+  couponCode?: string;
+}
+
+interface ManageSubscriptionParams {
+  userId: string;
+  stripeCustomerId: string;
+  returnUrl: string;
 }

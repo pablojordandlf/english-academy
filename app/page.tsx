@@ -32,8 +32,8 @@ export default async function LandingPage() {
       <header className="sticky top-0 z-50 backdrop-blur-md bg-gray-900/80 border-b border-gray-800">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="English Academy Logo" width={40} height={32} />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-300 to-primary-500 bg-clip-text text-transparent">English Academy</h1>
+            <Image src="/logo.svg" alt="MyBubbly Logo" width={40} height={32} />
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-300 to-primary-500 bg-clip-text text-transparent">MyBubbly</h1>
           </div>
           
           <nav className="hidden md:flex items-center gap-6">

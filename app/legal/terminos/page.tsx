@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Términos y Condiciones | English Academy",
-  description: "Términos y condiciones de uso de English Academy, la plataforma de enseñanza de inglés con IA.",
+  title: "Términos y Condiciones | MyBubbly",
+  description: "Términos y condiciones de uso de MyBubbly, la plataforma de enseñanza de inglés con IA.",
 };
 
 export default function TerminosCondiciones() {
@@ -24,8 +24,8 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">1. Introducción</h2>
               <p>
-                Bienvenido a English Academy. Estos Términos y Condiciones rigen el uso de nuestra plataforma educativa, 
-                incluyendo el sitio web, aplicación y todos los servicios relacionados ofrecidos por English Academy.
+                Bienvenido a MyBubbly. Estos Términos y Condiciones rigen el uso de nuestra plataforma educativa, 
+                incluyendo el sitio web, aplicación y todos los servicios relacionados ofrecidos por MyBubbly.
               </p>
               <p className="mt-2">
                 Al acceder o utilizar nuestra plataforma, usted acepta estos términos en su totalidad. Si no está de acuerdo 
@@ -36,8 +36,8 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">2. Definiciones</h2>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>"English Academy"</strong>, "nosotros" o "nuestro" se refiere a la plataforma English Academy.</li>
-                <li><strong>"Plataforma"</strong> se refiere al sitio web, aplicación y servicios ofrecidos por English Academy.</li>
+                <li><strong>"MyBubbly"</strong>, "nosotros" o "nuestro" se refiere a la plataforma MyBubbly.</li>
+                <li><strong>"Plataforma"</strong> se refiere al sitio web, aplicación y servicios ofrecidos por MyBubbly.</li>
                 <li><strong>"Usuario"</strong>, "usted" o "su" se refiere a cualquier persona que acceda o utilice nuestra plataforma.</li>
                 <li><strong>"Contenido"</strong> se refiere a todo texto, audio, video, imágenes y datos disponibles a través de nuestra plataforma.</li>
                 <li><strong>"Servicio"</strong> se refiere a las clases de inglés, evaluaciones y demás funcionalidades ofrecidas a través de nuestra plataforma.</li>
@@ -61,7 +61,7 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">4. Suscripciones y Pagos</h2>
               <p>
-                English Academy ofrece diversos planes de suscripción para acceder a nuestros servicios. Los detalles 
+                MyBubbly ofrece diversos planes de suscripción para acceder a nuestros servicios. Los detalles 
                 de estos planes, incluyendo precios y características, están disponibles en nuestra plataforma.
               </p>
               <p className="mt-2">
@@ -80,7 +80,7 @@ export default function TerminosCondiciones() {
               <p>
                 Todo el contenido disponible en nuestra plataforma, incluyendo pero no limitado a textos, gráficos, 
                 logotipos, íconos, imágenes, clips de audio, descargas digitales y compilaciones de datos, es propiedad 
-                de English Academy o de nuestros proveedores de contenido y está protegido por las leyes de propiedad 
+                de MyBubbly o de nuestros proveedores de contenido y está protegido por las leyes de propiedad 
                 intelectual aplicables.
               </p>
               <p className="mt-2">
@@ -92,12 +92,12 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">6. Limitación de Responsabilidad</h2>
               <p>
-                En la medida máxima permitida por la ley, English Academy no será responsable por daños directos, 
+                En la medida máxima permitida por la ley, MyBubbly no será responsable por daños directos, 
                 indirectos, incidentales, consecuentes, especiales o punitivos, incluida la pérdida de ganancias, 
                 que resulten del uso o la imposibilidad de usar nuestra plataforma.
               </p>
               <p className="mt-2">
-                English Academy no garantiza que la plataforma esté libre de errores o que el acceso a la misma sea 
+                MyBubbly no garantiza que la plataforma esté libre de errores o que el acceso a la misma sea 
                 continuo e ininterrumpido. Nos esforzamos por proporcionar una experiencia educativa de alta calidad, 
                 pero no podemos garantizar resultados específicos de aprendizaje.
               </p>
