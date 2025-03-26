@@ -4,6 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { LogOut } from "lucide-react";
 
 interface HeaderProps {
   isDashboard?: boolean;
@@ -13,6 +16,23 @@ interface HeaderProps {
 
 export default function Header({ isDashboard = false, navLinks = [], userData }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      const response = await fetch('/api/auth/sign-out', {
+        method: 'POST',
+      });
+      
+      if (response.ok) {
+        window.location.href = '/';
+      } else {
+        console.error('Error al cerrar sesión: respuesta no ok');
+      }
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-md bg-gray-900/80 border-b border-gray-800">
@@ -26,9 +46,7 @@ export default function Header({ isDashboard = false, navLinks = [], userData }:
             </h1>
           </div>
 
-          {/* Desktop Navigation */}
           
-
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
             {isDashboard ? (
@@ -36,6 +54,15 @@ export default function Header({ isDashboard = false, navLinks = [], userData }:
                 <span className="text-gray-300 text-sm">
                   {userData?.name}
                 </span>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={handleSignOut}
+                  className="text-gray-300 hover:text-white hover:bg-gray-800"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  <span>Cerrar sesión</span>
+                </Button>
               </div>
             ) : (
               <>
@@ -84,7 +111,15 @@ export default function Header({ isDashboard = false, navLinks = [], userData }:
                     <span className="text-gray-300 text-sm py-2">
                       {userData?.name}
                     </span>
-                    
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={handleSignOut}
+                      className="text-gray-300 hover:text-white hover:bg-gray-800"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      <span className="hidden sm:inline">Cerrar sesión</span>
+                    </Button>
                   </>
                 ) : (
                   <>
