@@ -12,7 +12,7 @@ export default function Cta() {
         <div className="max-w-4xl mx-auto bg-gradient-to-r from-gray-800 to-gray-900 rounded-3xl p-8 md:p-12 shadow-xl border border-gray-700">
           <div className="text-center mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-primary-100 to-primary-500 bg-clip-text text-transparent">
-              Comienza tu viaje hacia la fluidez en inglés hoy mismo
+              Da el paso que no te habías atrevido a dar
             </h2>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
               7 días de prueba gratuita. Sin compromiso. Cancela cuando quieras.
@@ -36,7 +36,7 @@ export default function Cta() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                 </svg>
               </div>
-              <h3 className="font-semibold mb-1">Retroalimentación detallada</h3>
+              <h3 className="font-semibold mb-1">Feedback detallado</h3>
               <p className="text-sm text-center text-gray-400">Análisis personalizado tras cada sesión</p>
             </div>
             
@@ -47,7 +47,7 @@ export default function Cta() {
                 </svg>
               </div>
               <h3 className="font-semibold mb-1">Progreso garantizado</h3>
-              <p className="text-sm text-center text-gray-400">Mejora notable en 30 días o te devolvemos el dinero</p>
+              <p className="text-sm text-center text-gray-400">Mejora y gana confianza en tu inglés</p>
             </div>
           </div>
           

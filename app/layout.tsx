@@ -11,7 +11,7 @@ const monaSans = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "English Academy - Tu Profesor de Inglés con IA",
+  title: "MyBubbly - Tu Profesor de Inglés con IA",
   description: "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales",
   manifest: "/manifest.json",
   icons: {
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "English Academy",
+    title: "MyBubbly",
   },
 };
 
@@ -43,10 +43,10 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark">
       <head>
-        <meta name="application-name" content="English Academy" />
+        <meta name="application-name" content="MyBubbly" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="English Academy" />
+        <meta name="apple-mobile-web-app-title" content="MyBubbly" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="shortcut icon" href="/favicon.ico" />

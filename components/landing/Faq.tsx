@@ -51,15 +51,15 @@ export default function Faq() {
   const faqs = [
     {
       question: "¿Cómo funciona la plataforma de clases de inglés con IA?",
-      answer: "Nuestra plataforma utiliza inteligencia artificial avanzada para simular conversaciones naturales con un profesor de inglés. A diferencia de los chatbots tradicionales, nuestro sistema puede hablar y escuchar, proporcionando una experiencia de inmersión completa. Simplemente inicias sesión, eliges el tipo de clase que deseas tomar, y comienzas a conversar con tu profesor AI. Después de cada clase, recibirás una evaluación detallada con puntos fuertes y áreas de mejora."
+      answer: "Nuestra plataforma utiliza inteligencia artificial generativa para simular conversaciones naturales con un profesor de inglés. A diferencia de los chatbots tradicionales, nuestro sistema puede hablar y escuchar, proporcionando una experiencia de inmersión completa. Simplemente inicias sesión, eliges el tipo de clase que deseas tomar, y comienzas a conversar con tu profesor AI. Después de cada clase, recibirás una evaluación detallada con puntos fuertes y áreas de mejora."
     },
     {
       question: "¿Es efectivo aprender inglés con un profesor de IA?",
-      answer: "¡Absolutamente! Nuestra plataforma está diseñada por expertos en lingüística y educación. El profesor AI se adapta a tu nivel, identifica tus errores específicos y proporciona correcciones personalizadas. Los estudios muestran que la práctica conversacional regular es clave para dominar un idioma, y nuestra plataforma te permite practicar en cualquier momento sin miedo a cometer errores. Además, las métricas de nuestros usuarios muestran mejoras significativas en fluidez, pronunciación y confianza en tan solo 2-3 meses de uso regular."
+      answer: "¡Absolutamente! El profesor AI se adapta a tu nivel, identifica tus errores específicos y proporciona correcciones personalizadas. Los estudios muestran que la práctica regular es clave para dominar un idioma, y nuestra plataforma te permite practicar en cualquier momento sin miedo a cometer errores. Además, las métricas de nuestros usuarios muestran mejoras significativas en fluidez, pronunciación y confianza en tan solo 2-3 meses de uso regular."
     },
     {
       question: "¿Qué nivel de inglés necesito para empezar?",
-      answer: "Nuestra plataforma es adecuada para todos los niveles, desde principiantes hasta avanzados. El profesor AI evaluará tu nivel inicial y adaptará las conversaciones y el vocabulario según tus habilidades actuales. A medida que mejores, las lecciones se volverán progresivamente más desafiantes para seguir estimulando tu crecimiento."
+      answer: "Nuestra plataforma es adecuada para todos los niveles, desde principiantes hasta avanzados. El profesor de IA evaluará tu nivel inicial y adaptará las conversaciones y el vocabulario según tus habilidades actuales. A medida que mejores, las lecciones se volverán progresivamente más desafiantes para seguir estimulando tu crecimiento."
     },
     {
       question: "¿Cuánto tiempo necesito dedicar para ver resultados?",
@@ -67,11 +67,11 @@ export default function Faq() {
     },
     {
       question: "¿Puedo cancelar mi suscripción en cualquier momento?",
-      answer: "Sí, puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario. No hay contratos de largo plazo ni penalizaciones por cancelación. Ofrecemos una garantía de satisfacción de 30 días, así que si no estás completamente satisfecho con el servicio dentro del primer mes, te reembolsaremos el 100% de tu suscripción."
+      answer: "Sí, puedes cancelar tu suscripción en cualquier momento desde tu panel de usuario. No hay contratos de largo plazo ni penalizaciones por cancelación."
     },
     {
       question: "¿La plataforma funciona en todos los dispositivos?",
-      answer: "Sí, nuestra plataforma es compatible con ordenadores, tablets y smartphones. Solo necesitas un dispositivo con micrófono y conexión a internet estable. También tenemos aplicaciones nativas para iOS y Android que ofrecen funcionalidades adicionales para practicar incluso sin conexión."
+      answer: "Sí, nuestra plataforma es compatible con ordenadores, tablets y smartphones. Solo necesitas un dispositivo con micrófono y conexión a internet estable."
     }
   ];
 
