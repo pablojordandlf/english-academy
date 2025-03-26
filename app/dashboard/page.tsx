@@ -9,7 +9,7 @@ import Header from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import ClientInterviewCard from "@/components/ClientInterviewCard";
 import { useAccessControl } from "@/hooks/useAccessControl";
-import { Lock, ArrowRight, BarChart, Settings, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart, Lock, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +31,7 @@ export default function Home() {
 
   const dashboardNavLinks = [
     { name: "Inicio", href: "/dashboard" },
+    { name: "Clases", href: "/dashboard/interviews" },
     { name: "Progreso", href: "/dashboard/progress" },
   ];
 
@@ -114,7 +115,7 @@ export default function Home() {
               </div>
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Mejora tu inglés practicando con Bubbly
+                Mejora tu inglés practicando con Babbly
               </h1>
               
               <p className="text-base sm:text-lg text-gray-300 mb-8">
@@ -190,6 +191,7 @@ export default function Home() {
                   level={interview.level}
                   type={interview.type}
                   topic={interview.topic}
+                  duration={interview.duration}
                   createdAt={interview.createdAt}
                 />
               ))

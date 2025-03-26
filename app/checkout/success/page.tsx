@@ -25,7 +25,7 @@ export default function CheckoutSuccessPage() {
           </h1>
           
           <p className="text-gray-300 mb-8">
-            Gracias por suscribirte a MyBubbly. Tu período de prueba de 7 días ha comenzado.
+            Gracias por suscribirte a MyBabbly. Tu período de prueba de 7 días ha comenzado.
             Disfruta de todas las funcionalidades premium de nuestra plataforma.
           </p>
           

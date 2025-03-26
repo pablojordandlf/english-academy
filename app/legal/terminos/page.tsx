@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Términos y Condiciones | MyBubbly",
-  description: "Términos y condiciones de uso de MyBubbly, la plataforma de enseñanza de inglés con IA.",
+  title: "Términos y Condiciones | MyBabbly",
+  description: "Términos y condiciones de uso de MyBabbly, la plataforma de enseñanza de inglés con IA.",
 };
 
 export default function TerminosCondiciones() {
@@ -24,8 +24,8 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">1. Introducción</h2>
               <p>
-                Bienvenido a MyBubbly. Estos Términos y Condiciones rigen el uso de nuestra plataforma educativa, 
-                incluyendo el sitio web, aplicación y todos los servicios relacionados ofrecidos por MyBubbly.
+                Bienvenido a MyBabbly. Estos Términos y Condiciones rigen el uso de nuestra plataforma educativa, 
+                incluyendo el sitio web, aplicación y todos los servicios relacionados ofrecidos por MyBabbly.
               </p>
               <p className="mt-2">
                 Al acceder o utilizar nuestra plataforma, usted acepta estos términos en su totalidad. Si no está de acuerdo 
@@ -36,8 +36,8 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">2. Definiciones</h2>
               <ul className="list-disc pl-6 space-y-2">
-                <li><strong>"MyBubbly"</strong>, "nosotros" o "nuestro" se refiere a la plataforma MyBubbly.</li>
-                <li><strong>"Plataforma"</strong> se refiere al sitio web, aplicación y servicios ofrecidos por MyBubbly.</li>
+                <li><strong>"MyBabbly"</strong>, "nosotros" o "nuestro" se refiere a la plataforma MyBabbly.</li>
+                <li><strong>"Plataforma"</strong> se refiere al sitio web, aplicación y servicios ofrecidos por MyBabbly.</li>
                 <li><strong>"Usuario"</strong>, "usted" o "su" se refiere a cualquier persona que acceda o utilice nuestra plataforma.</li>
                 <li><strong>"Contenido"</strong> se refiere a todo texto, audio, video, imágenes y datos disponibles a través de nuestra plataforma.</li>
                 <li><strong>"Servicio"</strong> se refiere a las clases de inglés, evaluaciones y demás funcionalidades ofrecidas a través de nuestra plataforma.</li>
@@ -61,7 +61,7 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">4. Suscripciones y Pagos</h2>
               <p>
-                MyBubbly ofrece diversos planes de suscripción para acceder a nuestros servicios. Los detalles 
+                MyBabbly ofrece diversos planes de suscripción para acceder a nuestros servicios. Los detalles 
                 de estos planes, incluyendo precios y características, están disponibles en nuestra plataforma.
               </p>
               <p className="mt-2">
@@ -80,7 +80,7 @@ export default function TerminosCondiciones() {
               <p>
                 Todo el contenido disponible en nuestra plataforma, incluyendo pero no limitado a textos, gráficos, 
                 logotipos, íconos, imágenes, clips de audio, descargas digitales y compilaciones de datos, es propiedad 
-                de MyBubbly o de nuestros proveedores de contenido y está protegido por las leyes de propiedad 
+                de MyBabbly o de nuestros proveedores de contenido y está protegido por las leyes de propiedad 
                 intelectual aplicables.
               </p>
               <p className="mt-2">
@@ -92,12 +92,12 @@ export default function TerminosCondiciones() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">6. Limitación de Responsabilidad</h2>
               <p>
-                En la medida máxima permitida por la ley, MyBubbly no será responsable por daños directos, 
+                En la medida máxima permitida por la ley, MyBabbly no será responsable por daños directos, 
                 indirectos, incidentales, consecuentes, especiales o punitivos, incluida la pérdida de ganancias, 
                 que resulten del uso o la imposibilidad de usar nuestra plataforma.
               </p>
               <p className="mt-2">
-                MyBubbly no garantiza que la plataforma esté libre de errores o que el acceso a la misma sea 
+                MyBabbly no garantiza que la plataforma esté libre de errores o que el acceso a la misma sea 
                 continuo e ininterrumpido. Nos esforzamos por proporcionar una experiencia educativa de alta calidad, 
                 pero no podemos garantizar resultados específicos de aprendizaje.
               </p>

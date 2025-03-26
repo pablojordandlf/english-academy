@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const premiumPlan = {
   name: "Premium",
   icon: Zap,
-  price: "19.99",
+  price: "9.99",
   description: "Acceso completo a todas las funcionalidades",
   features: [
     "Clases ilimitadas",
@@ -200,7 +200,7 @@ export default function Pricing() {
             <span className="text-primary-300 text-sm font-medium">PLAN PREMIUM</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-            Desbloquea tu potencial con MyBubbly
+            Desbloquea tu potencial con MyBabbly
           </h2>
           <p className="text-gray-300 max-w-2xl mx-auto text-lg">
             Incluye 7 días de prueba gratuita. Cancela cuando quieras.

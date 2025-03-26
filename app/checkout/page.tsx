@@ -23,8 +23,8 @@ function CheckoutContent() {
   const [activatingTrial, setActivatingTrial] = useState(false);
 
   // Obtener la información del plan de los parámetros de búsqueda
-  const plan = searchParams.get('plan');
-  const billing = searchParams.get('billing') as 'monthly' | 'yearly';
+  const plan = searchParams?.get('plan');
+  const billing = searchParams?.get('billing') as 'monthly' | 'yearly';
 
   useEffect(() => {
     // Verificar que existan los parámetros necesarios
@@ -139,9 +139,9 @@ function CheckoutContent() {
     let basePrice = 0;
     
     if (billing === 'yearly') {
-      basePrice = 15.99; // Precio anual con 20% de descuento ya aplicado
+      basePrice = 7.99; // Precio anual con 20% de descuento ya aplicado
     } else {
-      basePrice = 19.99; // Precio mensual
+      basePrice = 9.99; // Precio mensual
     }
     
     // Si hay un cupón aplicado y válido, aplicar el descuento
@@ -200,7 +200,7 @@ function CheckoutContent() {
               Finaliza tu compra
             </h1>
             <p className="text-gray-300">
-              Estás a un paso de mejorar tu inglés con MyBubbly
+              Estás a un paso de mejorar tu inglés con MyBabbly
             </p>
           </div>
 
@@ -275,18 +275,18 @@ function CheckoutContent() {
                 <div className="space-y-3">
                   <div className="flex justify-between text-gray-300">
                     <span>Subtotal</span>
-                    <span>€{billing === 'yearly' ? '19.99' : '19.99'}</span>
+                    <span>€{billing === 'yearly' ? '9.99' : '9.99'}</span>
                   </div>
                   {billing === 'yearly' && (
                     <div className="flex justify-between text-green-500">
                       <span>Descuento plan anual (20%)</span>
-                      <span>-€4.00</span>
+                      <span>-€2.00</span>
                     </div>
                   )}
                   {appliedCoupon && isCouponValid && (
                     <div className="flex justify-between text-green-500">
                       <span>Cupón de descuento ({discount}%)</span>
-                      <span>-€{((billing === 'yearly' ? 15.99 : 19.99) * discount / 100).toFixed(2)}</span>
+                      <span>-€{((billing === 'yearly' ? 7.99 : 9.99) * discount / 100).toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between font-medium text-white pt-3 border-t border-gray-700">

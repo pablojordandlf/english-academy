@@ -141,18 +141,15 @@ const Agent = ({
   };
 
   return (
-    <div className="bg-gray-800/70 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 shadow-lg">
+    
       <div className="flex flex-col gap-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-2 text-white">Clase de conversación</h2> 
-        </div>
         
         <div className="call-view">
           {/* AI Teacher Card */}
           <div className="card-interviewer">
             <div className="avatar">
               <Image
-                src="/mybubbly_2.png"
+                src="/myBabbly_2.png"
                 alt="AI Teacher"
                 width={65}
                 height={54}
@@ -160,7 +157,7 @@ const Agent = ({
               />
               {isSpeaking && <span className="animate-speak" />}
             </div>
-            <h3 className="text-xl font-medium text-primary-300 mt-4">Profesor de Inglés IA</h3>
+            <h3 className="text-xl font-medium text-primary-300 mt-4">Babbly</h3>
             
             {isSpeaking && (
               <div className="bg-primary-500/10 rounded-full px-3 py-1 text-primary-300 text-sm font-medium mt-2">
@@ -203,7 +200,7 @@ const Agent = ({
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                   </svg>
-                  Iniciar clase
+                  Iniciar
                 </>
               )}
             </button>
@@ -222,24 +219,27 @@ const Agent = ({
 
         {/* Full Transcript Section */}
         {messages.length > 0 && (
-          <div className="transcript-border mt-6">
-            <div className="transcript flex flex-col-reverse overflow-y-auto max-h-[400px] p-6">
+          <div className="transcript-border mt-6 w-full rounded-lg overflow-hidden shadow-md">
+            <div className="bg-primary-500/5 px-3 py-2 border-b border-primary-500/20">
+              <h4 className="text-primary-300 font-medium text-sm">Transcripción de la conversación</h4>
+            </div>
+            <div className="transcript flex flex-col-reverse overflow-y-auto p-3 sm:p-4 md:p-6 max-h-[300px] sm:max-h-[350px] md:max-h-[400px]">
               {messages.map((message, index) => (
                 <div
                   key={index}
                   className={cn(
                     "transition-opacity duration-500 opacity-0",
-                    "animate-fadeIn opacity-100 mb-4 p-4 rounded-lg",
+                    "animate-fadeIn opacity-100 mb-3 p-3 rounded-xl max-w-[92%] md:max-w-[85%]",
                     message.role === "user" 
-                      ? "bg-gray-900/70 ml-12" 
-                      : "bg-primary-500/10 mr-12"
+                      ? "bg-gray-900/70 ml-auto" 
+                      : "bg-primary-500/10 mr-auto"
                   )}
                 >
-                  <div className="flex items-start">
-                    <div className="size-10 rounded-full overflow-hidden flex-shrink-0 mr-3">
+                  <div className="flex items-start gap-2">
+                    <div className="size-8 sm:size-10 rounded-full overflow-hidden flex-shrink-0 hidden sm:block">
                       {message.role === "user" ? (
                         <Image 
-                          src="/mybubbly_2.png" 
+                          src="/myBabbly_2.png" 
                           alt="user" 
                           width={40} 
                           height={40} 
@@ -256,19 +256,30 @@ const Agent = ({
                       )}
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium mb-1 text-primary-300">
+                      <p className="text-xs sm:text-sm font-medium mb-1 text-primary-300">
                         {message.role === "user" ? `${userName}` : `Profesor`}
                       </p>
-                      <p className="text-sm text-gray-300">{message.content}</p>
+                      <p className="text-xs sm:text-sm text-gray-300 leading-relaxed break-words">{message.content}</p>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
+            
+            {callStatus === "ACTIVE" && (
+              <div className="bg-primary-500/5 p-2 border-t border-primary-500/20 flex items-center justify-center">
+                <div className="text-xs text-primary-300/70 flex items-center gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                  <span>La conversación se está grabando automáticamente</span>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
-    </div>
+    
   );
 };
 

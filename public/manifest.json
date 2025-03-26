@@ -1,6 +1,6 @@
 {
-  "name": "MyBubbly - AI English Tutor",
-  "short_name": "MyBubbly",
+  "name": "MyBabbly - AI English Tutor",
+  "short_name": "MyBabbly",
   "description": "AI-powered English tutoring platform for students and professionals",
   "start_url": "/",
   "display": "standalone",
