@@ -12,7 +12,7 @@ const Navbar = async () => {
         <Link href="/" className="flex items-center gap-2">
           <div className="relative w-8 h-8">
             <Image 
-              src="/academy-logo.svg" 
+              src="/mybubbly_2.png" 
               alt="MyBubbly Logo" 
               fill 
               className="object-contain"

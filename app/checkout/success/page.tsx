@@ -59,11 +59,6 @@ export default function CheckoutSuccessPage() {
               </Link>
             </Button>
             
-            <Button asChild variant="outline" className="border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-white">
-              <Link href="/settings/subscription">
-                Gestionar suscripción
-              </Link>
-            </Button>
           </div>
         </div>
       </div>

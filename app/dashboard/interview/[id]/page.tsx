@@ -29,6 +29,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
     <div className="flex flex-col gap-8">
       <div className="bg-gray-800/70 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 shadow-lg">
         <div className="flex justify-between items-start mb-8 flex-col md:flex-row gap-6">
+          
           <div className="flex items-center gap-6">
             <div className="relative h-20 w-20 rounded-full overflow-hidden border-2 border-primary-500">
               <Image
@@ -42,13 +43,13 @@ const InterviewDetails = async ({ params }: RouteParams) => {
             <div>
               <div className="flex items-center gap-3 mb-1">
                 <h2 className="text-2xl font-bold text-white capitalize">
-                  Clase de Inglés {interview.level}
+                  Clase: {interview.level}
                 </h2>
                 <span className="bg-primary-500/20 text-primary-300 text-sm font-medium px-3 py-1 rounded-full">
                   {interview.type}
                 </span>
               </div>
-              <p className="text-gray-400">Práctica de conversación interactiva con nuestro profesor de IA</p>
+              <p className="text-gray-400">Practica tu inglés con Bubbly</p>
             </div>
           </div>
           
@@ -114,9 +115,9 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h4 className="font-medium text-white">Tipo</h4>
+              <h4 className="font-medium text-white">Temática</h4>
             </div>
-            <p className="text-sm text-gray-400 pl-8">{interview.type}</p>
+            <p className="text-sm text-gray-400 pl-8">{interview.topic}</p>
           </div>
         </div>
 

@@ -99,7 +99,7 @@ const Page = () => {
     <>
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-          Nueva clase de conversación
+          Crear nueva clase
         </h2>
         <Button
           onClick={() => router.push('/dashboard')}
@@ -111,8 +111,11 @@ const Page = () => {
           Volver
         </Button>
       </div>
-
+      
       <div className="bg-gray-800/70 backdrop-blur-sm p-6 rounded-xl border border-gray-700">
+        <p className="text-center text-gray-400 max-w-xl mx-auto mb-8">
+          Habla con nuestro profesor Bubbly para definir tu nivel de inglés y los temas de conversación que quieres practicar.
+        </p>
         <Agent
           userName={user?.name}
           userId={user?.id}
