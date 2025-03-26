@@ -25,18 +25,18 @@ export default function Features() {
       icon: "⚡"
     },
     {
-      title: "Retroalimentación en Tiempo Real",
+      title: "Feedback en Tiempo Real",
       description: "Recibe correcciones instantáneas sobre pronunciación, gramática y vocabulario mientras hablas, permitiéndote mejorar durante la conversación.",
       icon: "🔍"
     },
     {
-      title: "Aprendizaje Personalizado",
-      description: "Planes de lecciones diseñados específicamente para tus objetivos, intereses y progreso, adaptándose continuamente a tu evolución.",
+      title: "Clases Personalizadas",
+      description: "Clases de conversación diseñadas específicamente para tus intereses, adaptándose continuamente a tu evolución.",
       icon: "🎯"
     },
     {
       title: "Práctica Flexible",
-      description: "Entrena en cualquier momento y lugar con conversaciones diseñadas para escenarios de la vida real, desde situaciones informales hasta profesionales.",
+      description: "Entrena en cualquier momento y lugar, sin tener que reservar la sesión de antemano o cuadrar horarios con tu profesor.",
       icon: "🌐"
     },
     {
@@ -68,7 +68,7 @@ export default function Features() {
           </h2>
           
           <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-            Nuestra plataforma de enseñanza de inglés con IA ofrece una experiencia de aprendizaje única adaptada a tus necesidades.
+            Nuestra plataforma de clases de conversación con IA ofrece una experiencia de aprendizaje única adaptada  a ti.
           </p>
         </div>
 
@@ -81,10 +81,8 @@ export default function Features() {
         <div className="mt-20 bg-gray-800/70 backdrop-blur-sm rounded-2xl p-8 border border-gray-700">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
             <div className="lg:col-span-1">
-              <h3 className="text-2xl font-bold mb-4 text-primary-100">Metodología de enseñanza basada en la práctica real</h3>
-              <p className="text-gray-300 mb-6">
-                Nuestra plataforma se basa en los principios de aprendizaje activo e inmersión lingüística, combinando la tecnología más avanzada con métodos pedagógicos probados.
-              </p>
+              <h3 className="text-2xl font-bold mb-4 text-primary-100">Metodología basada en la práctica de conversaciones reales</h3>
+              
             </div>
             
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -107,8 +105,8 @@ export default function Features() {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium mb-1">Práctica espaciada</h4>
-                  <p className="text-sm text-gray-400">Algoritmos que ajustan la frecuencia de repaso para optimizar la retención a largo plazo</p>
+                  <h4 className="text-lg font-medium mb-1">Temas de actualidad</h4>
+                  <p className="text-sm text-gray-400">Haz que las conversaciones sean interesantes, actuales y útiles en tu día a día</p>
                 </div>
               </div>
               
@@ -119,7 +117,7 @@ export default function Features() {
                   </svg>
                 </div>
                 <div>
-                  <h4 className="text-lg font-medium mb-1">Ciclos de retroalimentación</h4>
+                  <h4 className="text-lg font-medium mb-1">Feedback instantáneo</h4>
                   <p className="text-sm text-gray-400">Correcciones inmediatas que permiten ajustar patrones lingüísticos en tiempo real</p>
                 </div>
               </div>
@@ -132,7 +130,7 @@ export default function Features() {
                 </div>
                 <div>
                   <h4 className="text-lg font-medium mb-1">Aprendizaje basado en tareas</h4>
-                  <p className="text-sm text-gray-400">Escenarios del mundo real que te preparan para aplicar el idioma en situaciones cotidianas</p>
+                  <p className="text-sm text-gray-400">Nuestro profesor de conversación te propondrá ejercicios para mejorar tu inglés </p>
                 </div>
               </div>
             </div>
