@@ -129,7 +129,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-xl sm:text-2xl text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Mejora tu inglés en clases de conversación con nuestro profesor de IA Bubbly. Se adapta a tu nivel y te da feedback instantáneo.
+              Mejora tu inglés en clases de conversación con nuestro profesor de IA Gabby. Se adapta a tu nivel y te da feedback instantáneo.
             </motion.p>
             
             <motion.div 
