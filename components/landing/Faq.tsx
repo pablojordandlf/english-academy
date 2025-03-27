@@ -51,7 +51,7 @@ export default function Faq() {
   const faqs = [
     {
       question: "¿Cómo funciona la plataforma de clases de inglés con IA?",
-      answer: "Nuestra plataforma utiliza inteligencia artificial generativa para simular conversaciones naturales con un profesor de inglés. A diferencia de los chatbots tradicionales, nuestro sistema puede hablar y escuchar, proporcionando una experiencia de inmersión completa. Simplemente inicias sesión, eliges el tipo de clase que deseas tomar, y comienzas a conversar con tu profesor AI. Después de cada clase, recibirás una evaluación detallada con puntos fuertes y áreas de mejora."
+      answer: "Nuestra plataforma utiliza inteligencia artificial generativa para simular conversaciones naturales con un profesor de inglés. A diferencia de los chatbots tradicionales, nuestro sistema puede hablar y escuchar, proporcionando una experiencia de inmersión completa. Simplemente inicias sesión, eliges el tipo de clase que deseas Recibir, y comienzas a conversar con tu profesor AI. Después de cada clase, recibirás una evaluación detallada con puntos fuertes y áreas de mejora."
     },
     {
       question: "¿Es efectivo aprender inglés con un profesor de IA?",

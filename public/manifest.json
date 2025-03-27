@@ -1,7 +1,7 @@
 {
   "name": "MyBabbly - AI English Tutor",
   "short_name": "MyBabbly",
-  "description": "AI-powered English tutoring platform for students and professionals",
+  "description": "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111827",
@@ -9,52 +9,46 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/icons/icon-72x72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-96x96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-144x144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-152x152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-192x192.png",
+      "src": "/mybabbly_2.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-384x384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icons/icon-512x512.png",
+      "src": "/mybabbly_2.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "platform": "narrow",
+      "label": "Página principal de MyBabbly"
+    }
+  ],
+  "categories": ["education", "productivity"],
+  "lang": "es-ES",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "shortcuts": [
+    {
+      "name": "Nueva Clase",
+      "short_name": "Nueva Clase",
+      "description": "Comenzar una nueva clase de inglés",
+      "url": "/dashboard/interview/new",
+      "icons": [{ "src": "/mybabbly_2.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mi Progreso",
+      "short_name": "Progreso",
+      "description": "Ver tu progreso en el aprendizaje",
+      "url": "/dashboard/progress",
+      "icons": [{ "src": "/mybabbly_2.png", "sizes": "192x192" }]
     }
   ]
 }

@@ -176,7 +176,7 @@ const Feedback = async ({ params }: RouteParams) => {
           
           <Button asChild className="btn-primary">
             <Link href="/dashboard/interview">
-              Tomar otra clase
+              Recibir otra clase
             </Link>
           </Button>
           

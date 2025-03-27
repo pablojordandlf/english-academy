@@ -14,21 +14,21 @@ export async function GET() {
       }, { status: 401 });
     }
     
-    // Verificar si el usuario puede tomar clases
+    // Verificar si el usuario puede recibir clases
     const canTakeClasses = await canUserTakeClasses(user.id);
     
     return NextResponse.json({ 
       canTakeClasses,
       message: canTakeClasses 
-        ? "Usuario puede tomar clases" 
-        : "Usuario no puede tomar clases"
+        ? "Usuario puede recibir clases" 
+        : "Usuario no puede recibir clases"
     });
     
   } catch (error) {
-    console.error("Error al verificar si el usuario puede tomar clases:", error);
+    console.error("Error al verificar si el usuario puede recibir clases:", error);
     return NextResponse.json({ 
       canTakeClasses: false,
-      message: "Error al verificar si el usuario puede tomar clases" 
+      message: "Error al verificar si el usuario puede recibir clases" 
     }, { status: 500 });
   }
 } 
