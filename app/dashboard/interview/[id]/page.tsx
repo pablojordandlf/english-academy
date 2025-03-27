@@ -77,13 +77,12 @@ const InterviewDetails = async ({ params }: RouteParams) => {
             userName={user?.name!}
             userId={user?.id}
             interviewId={id}
+            
             type="interview"
             questions={interview.questions}
             feedbackId={feedback?.id}
           />
         </div>
-
-
 
 
         <div className="bg-gray-900/50 p-6 rounded-xl mb-6 mt-6">

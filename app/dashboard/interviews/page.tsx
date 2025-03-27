@@ -102,6 +102,7 @@ export default function InterviewsPage() {
                   interviewId={interview.id}
                   level={interview.level}
                   type={interview.type}
+                  duration={interview.duration}
                   topic={interview.topic}
                   createdAt={interview.createdAt}
                 />
