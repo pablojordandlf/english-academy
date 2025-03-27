@@ -12,7 +12,7 @@ const monaSans = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mybabbly.vercel.app'),
+  metadataBase: new URL('https://hi-gabby.vercel.app'),
   title: {
     default: "Gabby - Tu Profesor de Inglés con IA",
     template: "%s | Gabby"
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_ES",
-    url: "https://mybabbly.vercel.app",
+    url: "https://hi-gabby.vercel.app",
     siteName: "Gabby",
     title: "Gabby - Tu Profesor de Inglés con IA",
     description: "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales. Practica inglés conversacional con un profesor virtual inteligente.",
@@ -89,7 +89,7 @@ export const metadata: Metadata = {
     //yandex: "tu-codigo-de-verificacion-yandex",
   },
   alternates: {
-    canonical: "https://mybabbly.vercel.app",
+    canonical: "https://hi-gabby.vercel.app",
   },
   appleWebApp: {
     capable: true,
@@ -122,7 +122,7 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
         <link rel="shortcut icon" href="/gabby_2.png" />
-        <link rel="canonical" href="https://mybabbly.vercel.app" />
+        <link rel="canonical" href="https://hi-gabby.vercel.app" />
       </head>
       <body className={`${monaSans.className} antialiased pattern`}>
         {children}
