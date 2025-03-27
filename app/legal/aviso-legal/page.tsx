@@ -28,7 +28,7 @@ export default function AvisoLegal() {
                 de la Información y de Comercio Electrónico, se pone a disposición de los usuarios y visitantes 
                 la siguiente información general:
               </p>
-              <p className="mt-3">
+              {/*<p className="mt-3">
                 La titularidad de este sitio web corresponde a:
               </p>
               <p className="mt-2">
@@ -38,7 +38,7 @@ export default function AvisoLegal() {
                 <strong>Teléfono:</strong> +34 91 123 4567<br />
                 <strong>Email:</strong> info@english-academy.com<br />
                 <strong>Inscripción en el Registro Mercantil:</strong> Registro Mercantil de Madrid, Tomo 12345, Folio 67, Hoja M-123456, Inscripción 1ª
-              </p>
+              </p>*/}
             </section>
 
             <section>

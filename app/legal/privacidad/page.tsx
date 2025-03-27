@@ -43,10 +43,8 @@ export default function PoliticaPrivacidad() {
               </p>
               <p className="mt-2">
                 <strong>Datos de contacto:</strong><br />
-                Gabby S.L.<br />
-                Calle Principal 123, 28001 Madrid, España<br />
-                Email: privacidad@english-academy.com<br />
-                Teléfono: +34 91 123 4567
+                Email: hey-mygabby@gmail.com<br />
+                
               </p>
             </section>
 

@@ -134,9 +134,7 @@ export default function TerminosCondiciones() {
                 Si tiene alguna pregunta sobre estos Términos y Condiciones, puede contactarnos en:
               </p>
               <p className="mt-2">
-                Email: legal@english-academy.com<br />
-                Dirección: Calle Principal 123, 28001 Madrid, España<br />
-                Teléfono: +34 91 123 4567
+                Email: hey.mygabby@gmail.com<br />
               </p>
             </section>
           </div>

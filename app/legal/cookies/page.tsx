@@ -202,9 +202,7 @@ export default function PoliticaCookies() {
                 Si tiene alguna pregunta sobre nuestra política de cookies, puede contactarnos en:
               </p>
               <p className="mt-2">
-                Email: privacidad@english-academy.com<br />
-                Dirección: Calle Principal 123, 28001 Madrid, España<br />
-                Teléfono: +34 91 123 4567
+                Email: privacidadhey-mygabby@gmail.com<br />
               </p>
             </section>
           </div>
