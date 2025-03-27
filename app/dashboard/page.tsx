@@ -102,7 +102,7 @@ export default function Home() {
       <Header isDashboard={true} navLinks={dashboardNavLinks} userData={userData} />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <SubscriptionBanner className="md:top-8" />
+        <SubscriptionBanner className="md:top-22 md:right-8 md:left-auto md:w-[350px] md:fixed" />
         
         {/* Hero Section */}
         <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 p-6 sm:p-8 md:p-12 mb-8">

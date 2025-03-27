@@ -8,6 +8,7 @@ import Footer from "../components/landing/Footer";
 import Header from "@/components/layout/Header";
 import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/actions/auth.action";
+import DiscountBanner from "@/components/landing/DiscountBanner";
 
 export default async function LandingPage() {
   // Check if the user is authenticated
@@ -31,11 +32,12 @@ export default async function LandingPage() {
       <Header navLinks={navLinks} />
       
       <main className="flex-grow">
+        <DiscountBanner />
         <div id="home">
           <Hero />
         </div>
         <Features />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Pricing />
         <Faq />
         <Cta />

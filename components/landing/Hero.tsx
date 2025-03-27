@@ -103,7 +103,7 @@ export default function Hero() {
               className="inline-block rounded-full bg-gray-800/80 backdrop-blur-sm px-6 py-2 mb-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors"
             >
               <span className="text-gray-300">Lleva tu inglés al siguiente nivel</span>
-              <span className="text-primary-300 ml-1 font-medium">con IA</span>
+              <span className="text-primary-300 ml-1 font-medium">con MyBabbly</span>
             </motion.div>
             
             <motion.h1 
@@ -129,7 +129,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-xl sm:text-2xl text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Practica inglés en clases de conversación con nuestro profesor de IA que se adapta a tu nivel y teda feedback instantáneo para mejorar.
+              Mejora tu inglés en clases de conversación con nuestro profesor de IA Bubbly. Se adapta a tu nivel y te da feedback instantáneo.
             </motion.p>
             
             <motion.div 
@@ -161,7 +161,7 @@ export default function Hero() {
               </Button>
             </motion.div>
             
-            <motion.div 
+            {/*<motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -175,7 +175,7 @@ export default function Hero() {
               <div className="text-base text-gray-400">
                 <span className="font-semibold text-primary-300">+15,000</span> estudiantes ya están mejorando su inglés
               </div>
-            </motion.div>
+            </motion.div>*/}
           </motion.div>
           
           {/* Right content - AI Teacher with enhanced effects */}

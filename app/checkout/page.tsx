@@ -211,7 +211,7 @@ function CheckoutContent() {
               <div className="space-y-6">
                 <div className="flex gap-4 items-start pb-6 border-b border-gray-700">
                   <div className="bg-primary-500/10 p-3 rounded-lg">
-                    <Image src="/logo.svg" alt="Plan" width={40} height={40} />
+                    <Image src="/mybabbly_2.png" alt="Plan" width={40} height={40} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-semibold text-lg">Plan {plan}</h3>
@@ -224,7 +224,7 @@ function CheckoutContent() {
                     </div>
                   </div>
                   <div className="text-white font-semibold">
-                    €{getPrice()}<span className="text-gray-400 text-sm">/mes</span>
+                    {getPrice()} €<span className="text-gray-400 text-sm">/mes</span>
                   </div>
                 </div>
 
@@ -323,30 +323,7 @@ function CheckoutContent() {
                 )}
               </Button>
               
-              <div className="my-4 relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-700"></div>
-                </div>
-                <div className="relative flex justify-center text-xs">
-                  <span className="bg-gray-800/70 px-2 text-gray-400">O</span>
-                </div>
-              </div>
               
-              <Button
-                onClick={handleActivateTrial}
-                disabled={loading || activatingTrial || !userId}
-                variant="outline"
-                className="w-full py-6 bg-transparent border-primary-500 text-primary-400 hover:bg-primary-500/10 transition-colors"
-              >
-                {activatingTrial ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Activando prueba...
-                  </>
-                ) : (
-                  "Comenzar período de prueba sin pago"
-                )}
-              </Button>
               
               <p className="text-xs text-center text-gray-400 mt-3">
                 Podrás usar todas las funciones durante 7 días. Configura tu pago antes de que termine la prueba.
@@ -358,14 +335,7 @@ function CheckoutContent() {
                   <span>Pago seguro a través de Stripe</span>
                 </div>
                 
-                <div className="flex justify-between items-center pt-4 border-t border-gray-700">
-                  <span className="text-gray-400 text-sm">Métodos de pago aceptados:</span>
-                  <div className="flex gap-2">
-                    <Image src="/payment/visa.svg" alt="Visa" width={32} height={20} />
-                    <Image src="/payment/mastercard.svg" alt="Mastercard" width={32} height={20} />
-                    <Image src="/payment/amex.svg" alt="American Express" width={32} height={20} />
-                  </div>
-                </div>
+                
               </div>
             </div>
           </div>

@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Image src="/academy-logo.svg" alt="MyBabbly Logo" width={32} height={28} />
+              <Image src="/academy-mybabbly_2.png" alt="MyBabbly Logo" width={32} height={28} />
               <h3 className="text-xl font-bold text-primary-100">MyBabbly</h3>
             </div>
             <p className="text-gray-400 mb-4">
