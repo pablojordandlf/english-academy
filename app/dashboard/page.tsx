@@ -171,14 +171,17 @@ export default function Home() {
 
         {/* Recent Interviews Section */}
         <section className="mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Tus clases recientes</h2>
-            <Button asChild variant="ghost" className="text-primary-300 hover:text-primary-400">
-              <Link href="/dashboard/interviews" className="flex items-center gap-2">
-                Ver todas
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
+          <div className="flex flex-col gap-2 mb-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Tus clases recientes</h2>
+              <Button asChild variant="ghost" className="text-primary-300 hover:text-primary-400">
+                <Link href="/dashboard/interviews" className="flex items-center gap-2">
+                  Ver todas
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+            <p className="text-gray-400 text-sm">Aquí puedes ver todas las clases que has creado</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
