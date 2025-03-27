@@ -5,7 +5,7 @@ import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 
 export async function POST(request: Request) {
-  const { topic, level, userid } = await request.json();
+  const { topic, level, userid, duration } = await request.json();
 
   try {
     const { text: questions } = await generateText({
@@ -13,6 +13,7 @@ export async function POST(request: Request) {
       prompt: `Prepare an English class plan for a 1:1 conversation class with only one student.
         The proficiency level of the student is ${level}.
         The topic or theme of the class is: ${topic}.
+        Adjust the duration of the class to ${duration} minutes.
         Please return only the class plan, without any additional text.
         The plan should be formatted as a structured list like this:
         [
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
           ...
         ]
 
-        Only include the following sections adapted to the topic selected by the user (${topic}): 
+        Only include the following sections adapted to the topic and duration selected by the user (${topic} and ${duration} minutes): 
         - Introduction to Topic
         - Speaking activity 1
         - Vocabulary practice
@@ -40,6 +41,7 @@ export async function POST(request: Request) {
     const interview = {
       level: level,
       topic: topic.split(","),
+      duration: duration,
       questions: JSON.parse(questions),
       userId: userid,
       finalized: true,

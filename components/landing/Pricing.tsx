@@ -6,12 +6,13 @@ import { Check, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useInView } from "react-intersection-observer";
 
 // Definición del plan Premium
 const premiumPlan = {
   name: "Premium",
   icon: Zap,
-  price: "19.99",
+  price: "9.99",
   description: "Acceso completo a todas las funcionalidades",
   features: [
     "Clases ilimitadas",
@@ -36,6 +37,87 @@ type UserStatus = {
   canAccessClasses: boolean;
 };
 
+const PricingCard = ({ plan, isPopular, discount }: { plan: any; isPopular?: boolean; discount?: boolean }) => {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  const variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: plan.index * 0.1
+      }
+    }
+  };
+
+  const originalPrice = plan.price;
+  const discountedPrice = discount ? originalPrice * 0.5 : originalPrice;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={variants}
+      className={`relative group ${
+        isPopular ? "lg:scale-105" : ""
+      }`}
+    >
+      {isPopular && (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary-500 text-white px-4 py-1 rounded-full text-sm font-medium">
+          Más Popular
+        </div>
+      )}
+      
+      <div className="bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm p-8 rounded-2xl border border-gray-700/50 hover:border-primary-500/50 transition-all duration-500 hover:shadow-xl hover:shadow-primary-500/10">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold mb-2 text-white">{plan.name}</h3>
+          <div className="flex items-baseline gap-2">
+            <span className="text-4xl font-bold text-white">
+              ${discountedPrice}
+              {discount && (
+                <span className="text-lg text-primary-300 ml-2 line-through">
+                  ${originalPrice}
+                </span>
+              )}
+            </span>
+            <span className="text-gray-400">/mes</span>
+          </div>
+          {discount && (
+            <div className="mt-2 inline-block bg-primary-500/20 text-primary-300 text-sm px-2 py-1 rounded-full">
+              ¡50% OFF con el código WELCOME50!
+            </div>
+          )}
+        </div>
+
+        <ul className="space-y-4 mb-8">
+          {plan.features.map((feature: string, index: number) => (
+            <li key={index} className="flex items-center gap-3 text-gray-300">
+              <Check className="w-5 h-5 text-primary-300 flex-shrink-0" />
+              <span>{feature}</span>
+            </li>
+          ))}
+        </ul>
+
+        <button
+          className={`w-full py-3 px-6 rounded-xl font-medium transition-all duration-300 ${
+            isPopular
+              ? "bg-primary-500 hover:bg-primary-600 text-white"
+              : "bg-gray-700 hover:bg-gray-600 text-white"
+          }`}
+        >
+          Comenzar Ahora
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+
 export default function Pricing() {
   const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly");
   const [userStatus, setUserStatus] = useState<UserStatus>({
@@ -47,6 +129,10 @@ export default function Pricing() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
 
   useEffect(() => {
     const checkUserStatus = async () => {
@@ -62,7 +148,6 @@ export default function Pricing() {
           const hasTrial = !!data.user.trialEndsAt && data.user.trialActive === true;
           const trialEndsAt = data.user.trialEndsAt ? new Date(data.user.trialEndsAt) : null;
 
-          // Verificar si el usuario puede acceder a las clases
           if (hasActiveSubscription) {
             canAccessClasses = true;
           } else if (hasTrial && trialEndsAt) {
@@ -106,23 +191,17 @@ export default function Pricing() {
     try {
       if (userStatus.isAuthenticated) {
         if (userStatus.hasActiveSubscription) {
-          console.log("Usuario con suscripción activa, redirigiendo al dashboard");
           router.push('/dashboard');
         } else if (userStatus.hasTrial) {
-          // Si tiene período de prueba
           if (userStatus.trialEndsAt) {
             const now = new Date();
             if (userStatus.trialEndsAt > now) {
-              console.log("Usuario con prueba activa, redirigiendo al dashboard");
               router.push('/dashboard');
             } else {
-              console.log("Usuario con prueba expirada, redirigiendo al checkout");
-              router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}`);
+              router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}&code=WELCOME50`);
             }
           }
         } else {
-          // Si está autenticado pero no tiene período de prueba, activarlo
-          console.log("Usuario sin prueba, activando prueba gratuita");
           try {
             const response = await fetch('/api/subscription/activate-trial', {
               method: 'POST',
@@ -142,7 +221,6 @@ export default function Pricing() {
               router.push("/dashboard");
             } else {
               toast.error(data.message || "No se pudo activar el período de prueba");
-              console.error("Error al activar la prueba:", data);
             }
           } catch (error) {
             console.error("Error al activar la prueba:", error);
@@ -150,8 +228,6 @@ export default function Pricing() {
           }
         }
       } else {
-        // Si no está autenticado, redirigir al registro
-        console.log("Usuario no autenticado, redirigiendo al registro");
         router.push('/sign-up');
       }
     } catch (error) {
@@ -169,10 +245,10 @@ export default function Pricing() {
         if (userStatus.hasActiveSubscription) {
           router.push('/dashboard');
         } else {
-          router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}`);
+          router.push(`/checkout?plan=${premiumPlan.planId}&billing=${billingCycle}&code=WELCOME50`);
         }
       } else {
-        router.push(`/sign-up?plan=${premiumPlan.planId}&billing=${billingCycle}`);
+        router.push(`/sign-up?plan=${premiumPlan.planId}&billing=${billingCycle}&code=WELCOME50`);
       }
     } catch (error) {
       console.error("Error al procesar la suscripción:", error);
@@ -182,35 +258,41 @@ export default function Pricing() {
     }
   };
 
+  const originalPrice = Number(premiumPlan.price);
+  const discountedPrice = originalPrice * 0.5;
+
   return (
-    <section id="pricing" className="py-24 bg-gradient-to-b from-gray-900 to-gray-800 relative overflow-hidden">
-      {/* Background decorations */}
-      <div className="absolute -top-40 left-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl z-0"></div>
-      <div className="absolute -bottom-40 right-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl z-0"></div>
+    <section id="pricing" className="py-24 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+      {/* Efectos de fondo */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 left-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute -bottom-40 right-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
+      </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <motion.div 
+          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="text-center mb-16"
         >
           <div className="inline-block rounded-full bg-primary-500/10 px-4 py-1.5 mb-4">
-            <span className="text-primary-300 text-sm font-medium">PLAN PREMIUM</span>
+            <span className="text-primary-300 text-sm font-medium tracking-wider">PLAN PREMIUM</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-            Desbloquea tu potencial con MyBubbly
+          
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+            Desbloquea tu potencial con MyBabbly
           </h2>
-          <p className="text-gray-300 max-w-2xl mx-auto text-lg">
+          
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Incluye 7 días de prueba gratuita. Cancela cuando quieras.
           </p>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex justify-center mb-12"
         >
@@ -243,8 +325,7 @@ export default function Pricing() {
         <div className="max-w-xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.5 }}
             className="relative bg-gray-800/50 backdrop-blur-sm rounded-2xl p-8 flex flex-col border-2 border-primary-500 transform transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/10"
           >
@@ -264,12 +345,20 @@ export default function Pricing() {
             <div className="mb-6">
               <div className="flex items-baseline">
                 <span className="text-5xl font-bold text-white">
-                  ${billingCycle === "yearly" ? (Number(premiumPlan.price) * 0.8).toFixed(2) : premiumPlan.price}
+                  {billingCycle === "yearly" ? (Number(discountedPrice) * 0.8).toFixed(2) : discountedPrice.toFixed(2)} €
                 </span>
                 <span className="text-gray-400 ml-2">/mes</span>
               </div>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-lg text-gray-400 line-through">
+                  {billingCycle === "yearly" ? (Number(originalPrice) * 0.8).toFixed(2) : originalPrice.toFixed(2)} €
+                </span>
+                <span className="bg-primary-500/20 text-primary-300 text-sm px-2 py-1 rounded-full">
+                  50% OFF con el código WELCOME50
+                </span>
+              </div>
               {billingCycle === "yearly" && (
-                <p className="text-sm text-green-400 mt-1">Ahorra 20% con el plan anual</p>
+                <p className="text-sm text-green-400 mt-1">Ahorra 20% adicional con el plan anual</p>
               )}
             </div>
 
@@ -288,7 +377,8 @@ export default function Pricing() {
               <Button
                 onClick={handleTrialStart}
                 disabled={isLoading}
-                className="w-full py-6 text-lg font-semibold transition-all duration-300 bg-primary-500 hover:bg-primary-600 text-white"
+                variant="outline"
+                className="w-full py-6 text-lg font-semibold transition-all duration-300 border-primary-500 text-primary-500 hover:bg-primary-500/10"
               >
                 {isLoading ? (
                   <>
@@ -307,8 +397,9 @@ export default function Pricing() {
               <Button
                 onClick={handleSubscription}
                 disabled={isLoading}
-                variant="outline"
-                className="w-full py-6 text-lg font-semibold transition-all duration-300 border-primary-500 text-primary-500 hover:bg-primary-500/10"
+                
+                className="w-full py-6 text-lg font-semibold transition-all duration-300 bg-primary-500 hover:bg-primary-600 text-white"
+                
               >
                 {isLoading ? (
                   <>

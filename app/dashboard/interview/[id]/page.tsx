@@ -49,7 +49,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                   {interview.type}
                 </span>
               </div>
-              <p className="text-gray-400">Practica tu inglés con Bubbly</p>
+              <p className="text-gray-400">Practica tu inglés con Babbly</p>
             </div>
           </div>
           
@@ -71,7 +71,21 @@ const InterviewDetails = async ({ params }: RouteParams) => {
           )}
         </div>
 
-        <div className="bg-gray-900/50 p-6 rounded-xl mb-6">
+
+        <div id="conversation">
+          <Agent
+            userName={user?.name!}
+            userId={user?.id}
+            interviewId={id}
+            
+            type="interview"
+            questions={interview.questions}
+            feedbackId={feedback?.id}
+          />
+        </div>
+
+
+        <div className="bg-gray-900/50 p-6 rounded-xl mb-6 mt-6">
           <h3 className="text-lg font-medium mb-4 text-primary-100">Temas de conversación</h3>
           <ul className="space-y-3">
             {interview.questions.map((question, index) => (
@@ -93,7 +107,6 @@ const InterviewDetails = async ({ params }: RouteParams) => {
               </div>
               <h4 className="font-medium text-white">Duración estimada</h4>
             </div>
-            <p className="text-sm text-gray-400 pl-8">10-15 minutos</p>
           </div>
           
           <div className="bg-gray-900/40 p-4 rounded-lg">
@@ -164,16 +177,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
         </div>
       </div>
 
-      <div id="conversation">
-        <Agent
-          userName={user?.name!}
-          userId={user?.id}
-          interviewId={id}
-          type="interview"
-          questions={interview.questions}
-          feedbackId={feedback?.id}
-        />
-      </div>
+      
     </div>
   );
 };

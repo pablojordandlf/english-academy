@@ -25,7 +25,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       }),
       schema: feedbackSchema,
       prompt: `
-        Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es analizar el desempeño del estudiante y proporcionar feedback detallado basado en categorías específicas. Sé minucioso y específico en tu análisis. Se realista. Si hay errores o áreas que necesitan mejorar, señálalos de manera clara y constructiva. Es muy importante que ayudes al estudiante a mejorar su inglés con comentarios específicos y ejemplos.
+        Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es analizar el desempeño del estudiante y proporcionar feedback detallado basado en categorías específicas. Sé minucioso y específico en tu análisis. Se realista. Si hay errores o áreas que necesitan mejorar, señálalos de manera clara y constructiva. Es muy importante que ayudes al estudiante a mejorar su inglés con comentarios específicos y ejemplos de errores que haya cometido durante la clase basandote en el transcript.
 
         Claves de la calificación: 
         - La calificación del estudiante debe ser entre 0 y 100, donde 0 es un nivel muy bajo y 100 es un nivel bilingüe.
@@ -38,15 +38,15 @@ export async function createFeedback(params: CreateFeedbackParams) {
 
         Por favor, evalúa al estudiante en una escala de 0 a 100 en las siguientes áreas. No agregues categorías adicionales a las proporcionadas:
         
-        - **Fluidez y Pronunciación**: Capacidad para hablar con naturalidad, con buena entonación y pronunciación correcta de palabras y sonidos.
+        - **Fluidez y Pronunciación**: Capacidad para hablar con naturalidad, con buena entonación y pronunciación correcta de palabras y sonidos. Añade ejemplos de errores y pronunciaciones correctas que haya cometido el estudiante en la clase basandote en el transcript.
         
-        - **Gramática y Estructura**: Uso correcto de tiempos verbales, estructuras gramaticales y orden de palabras en oraciones.
+        - **Gramática y Estructura**: Uso correcto de tiempos verbales, estructuras gramaticales y orden de palabras en oraciones. Añade ejemplos de errores y gramáticas correctas que haya cometido el estudiante en la clase basandote en el transcript.
         
-        - **Vocabulario y Expresiones**: Riqueza y variedad del vocabulario utilizado, uso apropiado de expresiones idiomáticas y frases conversacionales.
+        - **Vocabulario y Expresiones**: Riqueza y variedad del vocabulario utilizado, uso apropiado de expresiones idiomáticas y frases conversacionales. Añade ejemplos de errores y vocabulario correcto que haya cometido el estudiante en la clase basandote en el transcript.
         
-        - **Comprensión Auditiva**: Capacidad para entender preguntas, instrucciones y comentarios sin necesidad de repeticiones excesivas.
+        - **Comprensión Auditiva**: Capacidad para entender preguntas, instrucciones y comentarios sin necesidad de repeticiones excesivas. Añade ejemplos de errores y comprensión correcta que haya cometido el estudiante en la clase basandote en el transcript.
         
-        - **Participación y Confianza**: Iniciativa para hablar, hacer preguntas y mantener la conversación, demostrando confianza al expresarse.
+        - **Participación y Confianza**: Iniciativa para hablar, hacer preguntas y mantener la conversación, demostrando confianza al expresarse. Añade ejemplos de errores y participación y confianza correcta que haya cometido el estudiante en la clase basandote en   el transcript.
         `,
       system:
         "Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de conversación en inglés. Tu tarea es proporcionar retroalimentación detallada y constructiva para ayudar al estudiante a mejorar sus habilidades.",

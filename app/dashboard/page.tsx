@@ -9,7 +9,7 @@ import Header from "@/components/layout/Header";
 import { Button } from "@/components/ui/button";
 import ClientInterviewCard from "@/components/ClientInterviewCard";
 import { useAccessControl } from "@/hooks/useAccessControl";
-import { Lock, ArrowRight, BarChart, Settings, Sparkles } from "lucide-react";
+import { ArrowRight, BarChart, Lock, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -31,6 +31,7 @@ export default function Home() {
 
   const dashboardNavLinks = [
     { name: "Inicio", href: "/dashboard" },
+    { name: "Clases", href: "/dashboard/interviews" },
     { name: "Progreso", href: "/dashboard/progress" },
   ];
 
@@ -101,7 +102,7 @@ export default function Home() {
       <Header isDashboard={true} navLinks={dashboardNavLinks} userData={userData} />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <SubscriptionBanner className="md:top-8" />
+        <SubscriptionBanner className="md:top-22 md:right-8 md:left-auto md:w-[350px] md:fixed" />
         
         {/* Hero Section */}
         <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 p-6 sm:p-8 md:p-12 mb-8">
@@ -114,7 +115,7 @@ export default function Home() {
               </div>
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Mejora tu inglés practicando con Bubbly
+                Mejora tu inglés practicando con Babbly
               </h1>
               
               <p className="text-base sm:text-lg text-gray-300 mb-8">
@@ -170,14 +171,17 @@ export default function Home() {
 
         {/* Recent Interviews Section */}
         <section className="mb-8">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-white">Tus clases recientes</h2>
-            <Button asChild variant="ghost" className="text-primary-300 hover:text-primary-400">
-              <Link href="/dashboard/interviews" className="flex items-center gap-2">
-                Ver todas
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
+          <div className="flex flex-col gap-2 mb-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Tus clases recientes</h2>
+              <Button asChild variant="ghost" className="text-primary-300 hover:text-primary-400">
+                <Link href="/dashboard/interviews" className="flex items-center gap-2">
+                  Ver todas
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+            <p className="text-gray-400 text-sm">Aquí puedes ver todas las clases que has creado</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -190,6 +194,7 @@ export default function Home() {
                   level={interview.level}
                   type={interview.type}
                   topic={interview.topic}
+                  duration={interview.duration}
                   createdAt={interview.createdAt}
                 />
               ))

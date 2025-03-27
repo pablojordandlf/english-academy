@@ -161,5 +161,4 @@ const SubscriptionBanner = ({ className }: SubscriptionBannerProps) => {
     </div>
   );
 }
-
 export default SubscriptionBanner;

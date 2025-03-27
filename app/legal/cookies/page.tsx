@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Política de Cookies | MyBubbly",
-  description: "Política de cookies de MyBubbly. Conoce cómo utilizamos las cookies en nuestra plataforma.",
+  title: "Política de Cookies | MyBabbly",
+  description: "Política de cookies de MyBabbly. Conoce cómo utilizamos las cookies en nuestra plataforma.",
 };
 
 export default function PoliticaCookies() {
@@ -117,7 +117,7 @@ export default function PoliticaCookies() {
                   <tbody className="divide-y divide-gray-700">
                     <tr>
                       <td className="px-4 py-3">_session</td>
-                      <td className="px-4 py-3">MyBubbly</td>
+                      <td className="px-4 py-3">MyBabbly</td>
                       <td className="px-4 py-3">Mantiene la sesión del usuario</td>
                       <td className="px-4 py-3">Sesión</td>
                     </tr>
@@ -141,13 +141,13 @@ export default function PoliticaCookies() {
                     </tr>
                     <tr>
                       <td className="px-4 py-3">cookieconsent_status</td>
-                      <td className="px-4 py-3">MyBubbly</td>
+                      <td className="px-4 py-3">MyBabbly</td>
                       <td className="px-4 py-3">Recuerda la elección de cookies</td>
                       <td className="px-4 py-3">1 año</td>
                     </tr>
                     <tr>
                       <td className="px-4 py-3">user_preferences</td>
-                      <td className="px-4 py-3">MyBubbly</td>
+                      <td className="px-4 py-3">MyBabbly</td>
                       <td className="px-4 py-3">Almacena preferencias del usuario</td>
                       <td className="px-4 py-3">1 año</td>
                     </tr>
