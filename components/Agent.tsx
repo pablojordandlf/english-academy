@@ -149,7 +149,7 @@ const Agent = ({
           <div className="card-interviewer">
             <div className="avatar">
               <Image
-                src="/myBabbly_2.png"
+                src="/mybabbly_2.png"
                 alt="AI Teacher"
                 width={65}
                 height={54}
@@ -239,7 +239,7 @@ const Agent = ({
                     <div className="size-8 sm:size-10 rounded-full overflow-hidden flex-shrink-0 hidden sm:block">
                       {message.role === "user" ? (
                         <Image 
-                          src="/myBabbly_2.png" 
+                          src="/mybabbly_2.png" 
                           alt="user" 
                           width={40} 
                           height={40} 

@@ -40,7 +40,7 @@ export default function Header({ isDashboard = false, navLinks = [], userData }:
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <Image src="/myBabbly_2.png" alt="MyBabbly Logo" width={40} height={32} />
+            <Image src="/mybabbly_2.png" alt="MyBabbly Logo" width={40} height={32} />
             <h1 className="text-2xl font-bold bg-gradient-to-r from-primary-300 to-primary-500 bg-clip-text text-transparent">
               MyBabbly
             </h1>
