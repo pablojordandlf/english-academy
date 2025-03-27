@@ -200,7 +200,7 @@ function CheckoutContent() {
               Finaliza tu compra
             </h1>
             <p className="text-gray-300">
-              Estás a un paso de mejorar tu inglés con MyBabbly
+              Estás a un paso de mejorar tu inglés con Gabby
             </p>
           </div>
 
@@ -211,7 +211,7 @@ function CheckoutContent() {
               <div className="space-y-6">
                 <div className="flex gap-4 items-start pb-6 border-b border-gray-700">
                   <div className="bg-primary-500/10 p-3 rounded-lg">
-                    <Image src="/mybabbly_2.png" alt="Plan" width={40} height={40} />
+                    <Image src="/gabby_2.png" alt="Plan" width={40} height={40} />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-semibold text-lg">Plan {plan}</h3>

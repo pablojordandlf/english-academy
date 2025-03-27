@@ -114,7 +114,7 @@ const Page = () => {
       
       <div className="bg-gray-800/70 backdrop-blur-sm p-6 rounded-xl border border-gray-700">
         <p className="text-center text-gray-400 max-w-xl mx-auto mb-8">
-          Habla con Babbly para definir tu nivel de inglés y los temas de conversación que quieres practicar en la clase.
+          Habla con Gabby para definir tu nivel de inglés y los temas de conversación que quieres practicar en la clase.
         </p>
         <Agent
           userName={user?.name}

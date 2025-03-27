@@ -282,7 +282,7 @@ export default function Pricing() {
           </div>
           
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-            Desbloquea tu potencial con MyBabbly
+            Desbloquea tu potencial con Gabby
           </h2>
           
           <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">

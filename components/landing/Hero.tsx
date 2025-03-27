@@ -103,7 +103,7 @@ export default function Hero() {
               className="inline-block rounded-full bg-gray-800/80 backdrop-blur-sm px-6 py-2 mb-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors"
             >
               <span className="text-gray-300">Lleva tu inglés al siguiente nivel</span>
-              <span className="text-primary-300 ml-1 font-medium">con MyBabbly</span>
+              <span className="text-primary-300 ml-1 font-medium">con Gabby</span>
             </motion.div>
             
             <motion.h1 

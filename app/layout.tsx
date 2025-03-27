@@ -13,8 +13,8 @@ const monaSans = Mona_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://mybabbly.vercel.app'),
   title: {
-    default: "MyBabbly - Tu Profesor de Inglés con IA",
-    template: "%s | MyBabbly"
+    default: "Gabby - Tu Profesor de Inglés con IA",
+    template: "%s | Gabby"
   },
   description: "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales. Practica inglés conversacional con un profesor virtual inteligente.",
   keywords: [
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     "inglés conversacional",
     "educación online"
   ],
-  authors: [{ name: "MyBabbly Team" }],
-  creator: "MyBabbly",
-  publisher: "MyBabbly",
+  authors: [{ name: "Gabby Team" }],
+  creator: "Gabby",
+  publisher: "Gabby",
   formatDetection: {
     email: false,
     address: false,
@@ -40,10 +40,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/mybabbly_2.png", sizes: "32x32", type: "image/png" },
-      { url: "/mybabbly_2.png", sizes: "16x16", type: "image/png" },
+      { url: "/gabby_2.png", sizes: "32x32", type: "image/png" },
+      { url: "/gabby_2.png", sizes: "16x16", type: "image/png" },
     ],
-    shortcut: "/mybabbly_2.png",
+    shortcut: "/gabby_2.png",
     apple: [
       { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
       { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
@@ -53,24 +53,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "es_ES",
     url: "https://mybabbly.vercel.app",
-    siteName: "MyBabbly",
-    title: "MyBabbly - Tu Profesor de Inglés con IA",
+    siteName: "Gabby",
+    title: "Gabby - Tu Profesor de Inglés con IA",
     description: "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales. Practica inglés conversacional con un profesor virtual inteligente.",
     images: [
       {
-        url: "/mybabbly_2.png",
+        url: "/gabby_2.png",
         width: 1200,
         height: 630,
-        alt: "MyBabbly - Plataforma de aprendizaje de inglés con IA",
+        alt: "Gabby - Plataforma de aprendizaje de inglés con IA",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MyBabbly - Tu Profesor de Inglés con IA",
+    title: "Gabby - Tu Profesor de Inglés con IA",
     description: "Plataforma de aprendizaje de inglés con tutores de IA para estudiantes y profesionales. Practica inglés conversacional con un profesor virtual inteligente.",
-    images: ["/mybabbly_2.png"],
-    creator: "@mybabbly",
+    images: ["/gabby_2.png"],
+    creator: "@Gabby",
   },
   robots: {
     index: true,
@@ -93,7 +93,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "MyBabbly",
+    title: "Gabby",
   },
 };
 
@@ -114,13 +114,13 @@ export default function RootLayout({
   return (
     <html lang="es" className="dark">
       <head>
-        <meta name="application-name" content="MyBabbly" />
+        <meta name="application-name" content="Gabby" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="MyBabbly" />
+        <meta name="apple-mobile-web-app-title" content="Gabby" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <link rel="shortcut icon" href="/mybabbly_2.png" />
+        <link rel="shortcut icon" href="/gabby_2.png" />
         <link rel="canonical" href="https://mybabbly.vercel.app" />
       </head>
       <body className={`${monaSans.className} antialiased pattern`}>

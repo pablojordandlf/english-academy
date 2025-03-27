@@ -2,8 +2,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Política de Privacidad | MyBabbly",
-  description: "Política de privacidad de MyBabbly. Conoce cómo recopilamos, utilizamos y protegemos tus datos personales.",
+  title: "Política de Privacidad | Gabby",
+  description: "Política de privacidad de Gabby. Conoce cómo recopilamos, utilizamos y protegemos tus datos personales.",
 };
 
 export default function PoliticaPrivacidad() {
@@ -24,7 +24,7 @@ export default function PoliticaPrivacidad() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">1. Introducción</h2>
               <p>
-                En MyBabbly ("nosotros", "nuestro" o "la empresa"), respetamos su privacidad y nos comprometemos a proteger 
+                En Gabby ("nosotros", "nuestro" o "la empresa"), respetamos su privacidad y nos comprometemos a proteger 
                 sus datos personales. Esta política de privacidad le informará sobre cómo cuidamos sus datos personales cuando 
                 visita nuestra plataforma y le informará sobre sus derechos de privacidad y cómo la ley le protege.
               </p>
@@ -38,12 +38,12 @@ export default function PoliticaPrivacidad() {
             <section>
               <h2 className="text-xl font-semibold text-white mb-3">2. Responsable del Tratamiento</h2>
               <p>
-                MyBabbly es el responsable del tratamiento de los datos personales que nos proporcione a través 
+                Gabby es el responsable del tratamiento de los datos personales que nos proporcione a través 
                 de nuestra plataforma.
               </p>
               <p className="mt-2">
                 <strong>Datos de contacto:</strong><br />
-                MyBabbly S.L.<br />
+                Gabby S.L.<br />
                 Calle Principal 123, 28001 Madrid, España<br />
                 Email: privacidad@english-academy.com<br />
                 Teléfono: +34 91 123 4567
