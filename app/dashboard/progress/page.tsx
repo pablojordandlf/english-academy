@@ -510,7 +510,7 @@ const Page = () => {
             {!userAccess.canAccessClasses && (
               <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
             )}
-            Tomar nueva clase
+            Nueva clase
           </Button>
         </div>
       </div>
