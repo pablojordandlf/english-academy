@@ -2,6 +2,7 @@ import { Toaster } from "sonner";
 import type { Metadata, Viewport } from "next";
 import { Mona_Sans } from "next/font/google";
 import CookieConsent from "@/components/CookieConsent";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 import "./globals.css";
 
@@ -127,6 +128,7 @@ export default function RootLayout({
         {children}
         <Toaster />
         <CookieConsent />
+        <GoogleAnalytics />
       </body>
     </html>
   );
