@@ -103,7 +103,7 @@ export default function Hero() {
               className="inline-block rounded-full bg-gray-800/80 backdrop-blur-sm px-6 py-2 mb-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors"
             >
               <span className="text-gray-300">Lleva tu inglés al siguiente nivel</span>
-              <span className="text-primary-300 ml-1 font-medium">con MyBabbly</span>
+              <span className="text-primary-300 ml-1 font-medium">con Gabby</span>
             </motion.div>
             
             <motion.h1 
@@ -129,7 +129,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-xl sm:text-2xl text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Mejora tu inglés en clases de conversación con nuestro profesor de IA Bubbly. Se adapta a tu nivel y te da feedback instantáneo.
+              Mejora tu inglés en clases de conversación con nuestro profesor de IA Gabby. Se adapta a tu nivel y te da feedback instantáneo.
             </motion.p>
             
             <motion.div 

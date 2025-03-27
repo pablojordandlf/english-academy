@@ -49,7 +49,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                   {interview.type}
                 </span>
               </div>
-              <p className="text-gray-400">Practica tu inglés con Babbly</p>
+              <p className="text-gray-400">Practica tu inglés con Gabby</p>
             </div>
           </div>
           

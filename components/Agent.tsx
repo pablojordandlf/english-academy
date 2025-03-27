@@ -149,7 +149,7 @@ const Agent = ({
           <div className="card-interviewer">
             <div className="avatar">
               <Image
-                src="/mybabbly_2.png"
+                src="/gabby_2.png"
                 alt="AI Teacher"
                 width={65}
                 height={54}
@@ -157,7 +157,7 @@ const Agent = ({
               />
               {isSpeaking && <span className="animate-speak" />}
             </div>
-            <h3 className="text-xl font-medium text-primary-300 mt-4">Babbly</h3>
+            <h3 className="text-xl font-medium text-primary-300 mt-4">Gabby</h3>
             
             {isSpeaking && (
               <div className="bg-primary-500/10 rounded-full px-3 py-1 text-primary-300 text-sm font-medium mt-2">
@@ -239,7 +239,7 @@ const Agent = ({
                     <div className="size-8 sm:size-10 rounded-full overflow-hidden flex-shrink-0 hidden sm:block">
                       {message.role === "user" ? (
                         <Image 
-                          src="/mybabbly_2.png" 
+                          src="/gabby_2.png" 
                           alt="user" 
                           width={40} 
                           height={40} 

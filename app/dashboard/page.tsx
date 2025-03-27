@@ -115,7 +115,7 @@ export default function Home() {
               </div>
               
               <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                Mejora tu inglés practicando con Babbly
+                Mejora tu inglés practicando con Gabby
               </h1>
               
               <p className="text-base sm:text-lg text-gray-300 mb-8">
