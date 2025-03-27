@@ -8,9 +8,12 @@ import { useRouter } from "next/navigation";
 
 import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { cn, getRandomInterviewCover } from "@/lib/utils";
 import { useAccessControl } from "@/hooks/useAccessControl";
-import { Lock, Trash2 } from "lucide-react";
+import { Lock, Trash2, Pencil } from "lucide-react";
 import { toast } from "sonner";
 
 interface ClientInterviewCardProps {
@@ -35,7 +38,14 @@ const ClientInterviewCard = ({
   const [feedback, setFeedback] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editForm, setEditForm] = useState({
+    level,
+    topic: topic.join(", "),
+    duration
+  });
   const { userAccess, handleAccessAttempt } = useAccessControl();
   const router = useRouter();
 
@@ -109,6 +119,41 @@ const ClientInterviewCard = ({
     }
   };
 
+  const handleEditInterview = async () => {
+    if (!interviewId || !userId) return;
+    
+    try {
+      setEditLoading(true);
+      const response = await fetch(`/api/interviews/update`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          interviewId,
+          userId,
+          level: editForm.level,
+          topic: editForm.topic.split(",").map(t => t.trim()),
+          duration: editForm.duration
+        }),
+      });
+      
+      if (response.ok) {
+        toast.success("Clase actualizada correctamente");
+        router.refresh();
+        setShowEditDialog(false);
+      } else {
+        const data = await response.json();
+        toast.error(data.error || "Error al actualizar la clase");
+      }
+    } catch (error) {
+      console.error("Error actualizando la clase:", error);
+      toast.error("Error al actualizar la clase");
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="bg-gray-800/70 backdrop-blur-sm p-6 rounded-xl border border-gray-700 hover:border-primary-500 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10 group">
@@ -153,14 +198,24 @@ const ClientInterviewCard = ({
             </div>
           </div>
           
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-gray-400 hover:text-destructive-100 hover:bg-destructive-100/10 h-8 w-8"
-            onClick={() => setShowDeleteDialog(true)}
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-gray-400 hover:text-primary-300 hover:bg-primary-500/10 h-8 w-8"
+              onClick={() => setShowEditDialog(true)}
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="text-gray-400 hover:text-destructive-100 hover:bg-destructive-100/10 h-8 w-8"
+              onClick={() => setShowDeleteDialog(true)}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
         
         <div className="mb-5">
@@ -248,7 +303,7 @@ const ClientInterviewCard = ({
               {!userAccess.canAccessClasses ? (
                 <>
                   <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
-                  Tomar clase
+                  Recibir clase
                   {!userAccess.canAccessClasses && userAccess.subscriptionStatus === 'expired' && (
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded-bl-md">
                       Expirado
@@ -257,13 +312,98 @@ const ClientInterviewCard = ({
                 </>
               ) : (
                 <Link href={`/dashboard/interview/${interviewId}`}>
-                  Tomar clase
+                  Recibir clase
                 </Link>
               )}
             </Button>
           )}
         </div>
       </div>
+
+      {/* Modal de edición */}
+      <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+        <DialogContent className="bg-gray-800 border border-gray-700 text-white">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-semibold">Editar clase</DialogTitle>
+            <DialogDescription className="text-gray-300">
+              Modifica los detalles de la clase. Los temas deben estar separados por comas.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="level">Nivel</Label>
+              <Select
+                value={editForm.level}
+                onValueChange={(value: string) => setEditForm(prev => ({ ...prev, level: value }))}
+              >
+                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectValue placeholder="Selecciona un nivel" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-800 border-gray-700">
+                  <SelectItem value="Básico">Básico</SelectItem>
+                  <SelectItem value="Intermedio">Intermedio</SelectItem>
+                  <SelectItem value="Alto">Alto</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="topic">Temas (separados por comas)</Label>
+              <Input
+                id="topic"
+                value={editForm.topic}
+                onChange={(e) => setEditForm(prev => ({ ...prev, topic: e.target.value }))}
+                className="bg-gray-700 border-gray-600 text-white"
+              />
+            </div>
+            
+            <div className="grid gap-2">
+              <Label htmlFor="duration">Duración</Label>
+              <Select
+                value={editForm.duration}
+                onValueChange={(value: string) => setEditForm(prev => ({ ...prev, duration: value }))}
+              >
+                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                  <SelectValue placeholder="Selecciona la duración" />
+                </SelectTrigger>
+                <SelectContent className="bg-gray-800 border-gray-700">
+                  <SelectItem value="10">10 minutos</SelectItem>
+                  <SelectItem value="20">20 minutos</SelectItem>
+                  <SelectItem value="30">30 minutos</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          
+          <DialogFooter className="flex gap-3 sm:gap-0">
+            <Button 
+              variant="ghost" 
+              className="border border-gray-700 hover:bg-gray-700 text-gray-300"
+              onClick={() => setShowEditDialog(false)}
+            >
+              Cancelar
+            </Button>
+            <Button 
+              className="bg-primary-500 hover:bg-primary-600 text-white"
+              onClick={handleEditInterview}
+              disabled={editLoading}
+            >
+              {editLoading ? (
+                <>
+                  <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                  Actualizando...
+                </>
+              ) : (
+                <>
+                  <Pencil className="h-4 w-4 mr-2" />
+                  Actualizar
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Modal de confirmación de eliminación */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>

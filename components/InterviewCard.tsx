@@ -111,7 +111,7 @@ const InterviewCard = async ({
         ) : (
           <Button asChild className="btn-primary">
             <Link href={`/dashboard/interview/${interviewId}`}>
-              Tomar clase
+              Recibir clase
             </Link>
           </Button>
         )}

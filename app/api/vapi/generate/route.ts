@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       prompt: `Prepare an English class plan for a 1:1 conversation class with only one student.
         The proficiency level of the student is ${level}.
         The topic or theme of the class is: ${topic}.
-        Adjust the duration of the class to ${duration} minutes.
+        Adjust the activitied planned for the lesson to theduration of the class to ${duration} minutes.
         Please return only the class plan, without any additional text.
         The plan should be formatted as a structured list like this:
         [

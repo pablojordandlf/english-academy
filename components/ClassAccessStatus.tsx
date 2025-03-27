@@ -208,7 +208,7 @@ export default function ClassAccessStatus({ showCta = true }: ClassAccessStatusP
             onClick={() => router.push('/dashboard/new-class')}
             className="bg-primary-500 hover:bg-primary-600 text-white"
           >
-            Tomar una clase
+            Recibir una clase
           </Button>
         </div>
       ) : (

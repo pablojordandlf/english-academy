@@ -217,7 +217,7 @@ export default function Home() {
                   {!userAccess.canAccessClasses && (
                     <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
                   )}
-                  Tomar tu primera clase
+                  recibir tu primera clase
                 </Button>
               </div>
             )}
