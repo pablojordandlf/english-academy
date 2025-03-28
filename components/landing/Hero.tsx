@@ -5,8 +5,36 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useRouter } from "next/navigation";
+
+// Hook personalizado para obtener las dimensiones de la ventana
+function useWindowSize() {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Establecer el tamaño inicial
+    handleResize();
+
+    // Agregar el event listener
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar el event listener
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return size;
+}
 
 export default function Hero() {
+  const router = useRouter();
+  const { width, height } = useWindowSize();
   const [typedText, setTypedText] = useState("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -47,6 +75,14 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [typedText, isDeleting, currentPhraseIndex, phrases]);
 
+  // Generar puntos de fondo
+  const backgroundPoints = Array.from({ length: 50 }).map((_, i) => ({
+    id: i,
+    x: Math.random() * width,
+    y: Math.random() * height,
+    scale: Math.random() * 0.5 + 0.5,
+  }));
+
   return (
     <section className="relative min-h-screen flex items-center py-20 overflow-hidden">
       {/* Animated background with parallax effect */}
@@ -65,23 +101,24 @@ export default function Hero() {
       
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {backgroundPoints.map((point) => (
           <motion.div
-            key={i}
+            key={point.id}
             className="absolute w-1 h-1 bg-primary-500/30 rounded-full"
             initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-              scale: Math.random() * 0.5 + 0.5,
+              x: point.x,
+              y: point.y,
+              scale: point.scale,
             }}
             animate={{
-              y: [0, -100],
-              opacity: [0, 1, 0],
+              x: [point.x, point.x + 50, point.x],
+              y: [point.y, point.y + 50, point.y],
+              scale: [point.scale, point.scale * 1.5, point.scale],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: Math.random() * 5 + 5,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              ease: "linear",
             }}
           />
         ))}
