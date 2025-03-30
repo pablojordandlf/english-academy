@@ -86,6 +86,12 @@ export async function getInterviewById(id: string): Promise<Interview | null> {
   return interview.data() as Interview | null;
 }
 
+export async function getGeneralClasses(id: string): Promise<Interview | null> {
+  const interview = await db.collection("general_classes").doc(id).get();
+  console.log("general classes: ", interview.data());
+  return interview.data() as Interview | null;
+}
+
 export async function getFeedbackByInterviewId(
   params: GetFeedbackByInterviewIdParams
 ): Promise<Feedback | null> {
@@ -199,3 +205,39 @@ export const getAllFeedbackByUserId = async (userId: string): Promise<Feedback[]
     return [];
   }
 };
+
+export async function getAllGeneralClasses(): Promise<Interview[] | null> {
+  try {
+    console.log("Iniciando búsqueda de clases generales...");
+    
+    const interviews = await db
+      .collection("general_classes")
+      .orderBy("createdAt", "desc")
+      .get();
+
+    console.log(`Se encontraron ${interviews.size} documentos en la colección general_classes`);
+
+    const mappedInterviews = interviews.docs.map((doc) => {
+      const data = doc.data();
+      console.log(`Documento ${doc.id}:`, data);
+      
+      // Normalizar los timestamps de Firestore a strings ISO
+      let createdAt = data.createdAt;
+      if (createdAt && typeof createdAt.toDate === 'function') {
+        createdAt = createdAt.toDate().toISOString();
+      }
+      
+      return {
+        id: doc.id,
+        ...data,
+        createdAt
+      };
+    }) as Interview[];
+
+    console.log("Clases generales procesadas:", mappedInterviews);
+    return mappedInterviews;
+  } catch (error) {
+    console.error("Error al obtener clases generales:", error);
+    return null;
+  }
+}

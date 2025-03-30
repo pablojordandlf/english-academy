@@ -8,6 +8,7 @@ import Header from "@/components/layout/Header";
 
 import { Button } from "@/components/ui/button";
 import ClientInterviewCard from "@/components/ClientInterviewCard";
+import GeneralClassCard from "@/components/GeneralClassCard";
 import { useAccessControl } from "@/hooks/useAccessControl";
 import { ArrowRight, BarChart, Lock, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -24,7 +25,7 @@ interface DashboardProps {
 export default function Home() {
   const [userData, setUserData] = useState<any>(null);
   const [userInterviews, setUserInterviews] = useState<any[]>([]);
-  const [allInterview, setAllInterview] = useState<any[]>([]);
+  const [generalClasses, setGeneralClasses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { userAccess, handleAccessAttempt } = useAccessControl();
   const router = useRouter();
@@ -57,13 +58,13 @@ export default function Home() {
           setUserInterviews([]);
         }
         
-        const latestResponse = await fetch(`/api/interviews/latest?userId=${userData.user.id}`);
-        const latestData = await latestResponse.json();
+        const generalClassesResponse = await fetch('/api/general-class');
+        const generalClassesData = await generalClassesResponse.json();
         
-        if (latestData && latestData.interviews) {
-          setAllInterview(latestData.interviews);
+        if (generalClassesData && generalClassesData.interviews) {
+          setGeneralClasses(generalClassesData.interviews);
         } else {
-          setAllInterview([]);
+          setGeneralClasses([]);
         }
       } catch (error) {
         console.error("Error al cargar los datos:", error);
@@ -95,7 +96,7 @@ export default function Home() {
   }
 
   const hasPastInterviews = userInterviews?.length > 0;
-  const hasUpcomingInterviews = allInterview?.length > 0;
+  const hasUpcomingInterviews = generalClasses?.length > 0;
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -219,6 +220,48 @@ export default function Home() {
                   )}
                   recibir tu primera clase
                 </Button>
+              </div>
+            )}
+          </div>
+        </section>
+        
+        {/* General Classes Section */}
+        <section className="mb-8">
+          <div className="flex flex-col gap-2 mb-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Clases generales</h2>
+              <Button asChild variant="ghost" className="text-primary-300 hover:text-primary-400">
+                <Link href="/dashboard/general-classes" className="flex items-center gap-2">
+                  Ver todas
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Button>
+            </div>
+            <p className="text-gray-400 text-sm">Explora nuestras clases generales disponibles</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {generalClasses.length > 0 ? (
+              generalClasses.map((interview) => (
+                <GeneralClassCard
+                  key={interview.id}
+                  userId={userData?.id}
+                  interviewId={interview.id}
+                  level={interview.level}
+                  type={interview.type}
+                  topic={interview.topic}
+                  duration={interview.duration}
+                  createdAt={interview.createdAt}
+                />
+              ))
+            ) : (
+              <div className="col-span-full bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-gray-700 text-center">
+                <h3 className="text-lg sm:text-xl font-medium mb-3 text-primary-300">
+                  No hay clases generales disponibles
+                </h3>
+                <p className="text-gray-300 mb-6">
+                  ¡Vuelve pronto para ver nuevas clases generales!
+                </p>
               </div>
             )}
           </div>

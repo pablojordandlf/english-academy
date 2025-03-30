@@ -285,233 +285,233 @@ const Page = () => {
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="bg-gray-800/70 backdrop-blur-sm p-8 rounded-2xl border border-gray-700 shadow-lg mb-4">
-        <div className="text-center mb-8">
-          <div className="inline-block rounded-full bg-primary-500/10 px-4 py-1.5 mb-2">
-            <span className="text-primary-300 text-sm font-medium">TU PROGRESO</span>
+    <div className="flex flex-col gap-4 sm:gap-8">
+      {/* Back Button */}
+      <div className="flex items-center gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="text-gray-300 hover:text-white hover:bg-gray-800/50"
+          onClick={() => router.push('/dashboard')}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Volver al Dashboard
+        </Button>
+      </div>
+
+      {/* Header Section */}
+      <div className="bg-gray-800/70 backdrop-blur-sm p-4 sm:p-8 rounded-2xl border border-gray-700 shadow-lg">
+        <div className="text-center mb-4 sm:mb-8">
+          <div className="inline-block rounded-full bg-primary-500/10 px-3 sm:px-4 py-1 sm:py-1.5 mb-2 sm:mb-3">
+            <span className="text-primary-300 text-xs sm:text-sm font-medium">TU PROGRESO</span>
           </div>
           
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h1 className="text-xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Análisis de tu aprendizaje
           </h1>
           
-          <p className="text-lg text-gray-300 max-w-xl mx-auto">
+          <p className="text-sm sm:text-lg text-gray-300 max-w-xl mx-auto">
             Monitoriza tu evolución en inglés, identifica fortalezas y áreas de mejora
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gray-900/60 p-6 rounded-lg">
-            <div className="rounded-full bg-primary-500/20 p-3 w-14 h-14 mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="bg-gray-900/60 p-3 sm:p-6 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+            <div className="rounded-full bg-primary-500/20 p-2 sm:p-3 w-10 h-10 sm:w-14 sm:h-14 mb-2 sm:mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-8 sm:w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
               </svg>
             </div>
-            <h3 className="text-white text-lg font-semibold mb-1">Clases Completadas</h3>
-            <p className="text-4xl font-bold text-primary-300">{stats?.totalClasses}</p>
+            <h3 className="text-white text-sm sm:text-lg font-semibold mb-1">Clases Completadas</h3>
+            <p className="text-2xl sm:text-4xl font-bold text-primary-300">{stats?.totalClasses}</p>
           </div>
 
-          <div className="bg-gray-900/60 p-6 rounded-lg">
-            <div className="rounded-full bg-primary-500/20 p-3 w-14 h-14 mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="bg-gray-900/60 p-3 sm:p-6 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+            <div className="rounded-full bg-primary-500/20 p-2 sm:p-3 w-10 h-10 sm:w-14 sm:h-14 mb-2 sm:mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-8 sm:w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
               </svg>
             </div>
-            <h3 className="text-white text-lg font-semibold mb-1">Puntuación Media</h3>
-            <p className="text-4xl font-bold text-primary-300">{stats?.averageScore}</p>
+            <h3 className="text-white text-sm sm:text-lg font-semibold mb-1">Puntuación Media</h3>
+            <p className="text-2xl sm:text-4xl font-bold text-primary-300">{stats?.averageScore}</p>
           </div>
 
-          <div className="bg-gray-900/60 p-6 rounded-lg">
-            <div className="rounded-full bg-primary-500/20 p-3 w-14 h-14 mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="bg-gray-900/60 p-3 sm:p-6 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+            <div className="rounded-full bg-primary-500/20 p-2 sm:p-3 w-10 h-10 sm:w-14 sm:h-14 mb-2 sm:mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-8 sm:w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
               </svg>
             </div>
-            <h3 className="text-white text-lg font-semibold mb-1">Mejor Puntuación</h3>
-            <p className="text-4xl font-bold text-primary-300">{stats?.bestScore}</p>
+            <h3 className="text-white text-sm sm:text-lg font-semibold mb-1">Mejor Puntuación</h3>
+            <p className="text-2xl sm:text-4xl font-bold text-primary-300">{stats?.bestScore}</p>
           </div>
 
-          <div className="bg-gray-900/60 p-6 rounded-lg">
-            <div className="rounded-full bg-primary-500/20 p-3 w-14 h-14 mb-4 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <div className="bg-gray-900/60 p-3 sm:p-6 rounded-xl hover:bg-gray-900/70 transition-all duration-300 group">
+            <div className="rounded-full bg-primary-500/20 p-2 sm:p-3 w-10 h-10 sm:w-14 sm:h-14 mb-2 sm:mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 sm:h-8 sm:w-8 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
               </svg>
             </div>
-            <h3 className="text-white text-lg font-semibold mb-1">Progreso</h3>
+            <h3 className="text-white text-sm sm:text-lg font-semibold mb-1">Progreso</h3>
             <div className="flex items-end gap-1">
-              <p className="text-4xl font-bold text-primary-300">
+              <p className="text-2xl sm:text-4xl font-bold text-primary-300">
                 {stats && typeof stats.improvementRate === 'number' && stats.improvementRate > 0 ? "+" : ""}
                 {stats?.improvementRate ?? 0}%
               </p>
-              <span className="text-gray-400 text-sm pb-1">desde tu inicio</span>
+              <span className="text-gray-400 text-[10px] sm:text-sm pb-1">desde tu inicio</span>
             </div>
           </div>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="bg-gray-900/50 p-6 rounded-xl lg:col-span-2">
-            <h3 className="text-xl font-semibold mb-4 text-white">Evolución de tus puntuaciones</h3>
-            
-            {stats?.recentScores && stats.recentScores.length > 1 ? (
-              <div className="h-64 flex items-end justify-between gap-2 px-2">
-                {stats.recentScores.map((data, index) => (
-                  <div key={index} className="flex flex-col items-center">
-                    <div className="w-full flex justify-center mb-2">
-                      <span className="text-sm text-primary-300 font-medium">{data.score}</span>
-                    </div>
-                    <div 
-                      className="w-12 bg-gradient-to-t from-primary-700 to-primary-500 rounded-t-md"
-                      style={{ height: `${(data.score / 100) * 200}px` }}
-                    ></div>
-                    <div className="w-full mt-2 text-center">
-                      <span className="text-xs text-gray-400">{data.date}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center text-gray-400 py-10">
-                Completa más clases para ver la evolución de tus puntuaciones
-              </div>
-            )}
-          </div>
-
-          <div className="bg-gray-900/50 p-6 rounded-xl">
-            <h3 className="text-xl font-semibold mb-4 text-white">Distribución por Nivel</h3>
-            
-            {Object.keys(stats?.classesByLevel || {}).length > 0 ? (
-              <div className="space-y-4">
-                {Object.entries(stats?.classesByLevel || {}).map(([level, count], index) => (
-                  <div key={index} className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-gray-300 capitalize">{level}</span>
-                      <span className="text-primary-300 font-medium">{count} {count === 1 ? 'clase' : 'clases'}</span>
-                    </div>
-                    <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-gradient-to-r from-primary-500 to-primary-700 rounded-full"
-                        style={{ width: `${(count / stats!.totalClasses) * 100}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center text-gray-400 py-10">
-                No hay datos disponibles
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="bg-gray-900/50 p-6 rounded-xl mb-8">
-          <h3 className="text-xl font-semibold mb-6 text-white">Progreso por Habilidades</h3>
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+        {/* Evolution Chart */}
+        <div className="bg-gray-800/70 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-gray-700 shadow-lg lg:col-span-2">
+          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white">Evolución de tus puntuaciones</h3>
           
-          {stats?.skillProgress && stats.skillProgress.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {stats.skillProgress.map((skill, index) => (
-                <div key={index} className="bg-gray-900/40 p-4 rounded-lg">
-                  <div className="flex justify-between items-center mb-2">
-                    <h4 className="font-medium text-white">{skill.name}</h4>
-                    <div className="flex items-center gap-2">
-                      <span className="text-primary-300 font-bold">{skill.average}</span>
-                      <div className={`flex items-center ${skill.improvement > 0 ? 'text-green-400' : 'text-red-400'}`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path 
-                            strokeLinecap="round" 
-                            strokeLinejoin="round" 
-                            strokeWidth={2} 
-                            d={skill.improvement > 0 
-                              ? "M5 15l7-7 7 7" 
-                              : "M19 9l-7 7-7-7"} 
-                          />
-                        </svg>
-                        <span className="text-xs">{skill.improvement > 0 ? "+" : ""}{skill.improvement}%</span>
-                      </div>
-                    </div>
+          {stats?.recentScores && stats.recentScores.length > 1 ? (
+            <div className="h-48 sm:h-64 flex items-end justify-between gap-1 sm:gap-2 px-1 sm:px-2">
+              {stats.recentScores.map((data, index) => (
+                <div key={index} className="flex flex-col items-center group">
+                  <div className="w-full flex justify-center mb-1 sm:mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <span className="text-xs sm:text-sm text-primary-300 font-medium">{data.score}</span>
                   </div>
-                  <div className="w-full h-2 bg-gray-800 rounded-full mb-1 overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-primary-500 to-primary-700 rounded-full"
-                      style={{ width: `${skill.average}%` }}
-                    ></div>
+                  <div 
+                    className="w-8 sm:w-12 bg-gradient-to-t from-primary-700 to-primary-500 rounded-t-md transition-all duration-300 group-hover:from-primary-600 group-hover:to-primary-400"
+                    style={{ height: `${(data.score / 100) * 200}px` }}
+                  ></div>
+                  <div className="w-full mt-1 sm:mt-2 text-center">
+                    <span className="text-[10px] sm:text-xs text-gray-400">{data.date}</span>
                   </div>
-                  <p className="text-xs text-gray-400">Basado en {skill.scores.length} evaluaciones</p>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="text-center text-gray-400 py-10">
-              Completa más clases para obtener análisis detallados por habilidades
+            <div className="text-center text-gray-400 py-8 sm:py-10 text-sm">
+              Completa más clases para ver la evolución de tus puntuaciones
             </div>
           )}
         </div>
 
-        <div className="bg-primary-500/10 border border-primary-500/20 rounded-lg p-6 mb-8">
-          <div className="flex items-start gap-3">
-            <div className="rounded-full bg-primary-500/20 p-2 mt-0.5">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
+        {/* Level Distribution */}
+        <div className="bg-gray-800/70 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-gray-700 shadow-lg">
+          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white">Distribución por Nivel</h3>
+          
+          {Object.keys(stats?.classesByLevel || {}).length > 0 ? (
+            <div className="space-y-3 sm:space-y-4">
+              {Object.entries(stats?.classesByLevel || {}).map(([level, count], index) => (
+                <div key={index} className="space-y-1.5 sm:space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm sm:text-base text-gray-300 capitalize">{level}</span>
+                    <span className="text-xs sm:text-sm text-primary-300 font-medium">{count} {count === 1 ? 'clase' : 'clases'}</span>
+                  </div>
+                  <div className="w-full h-1.5 sm:h-2 bg-gray-800 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500"
+                      style={{ width: `${(count / stats!.totalClasses) * 100}%` }}
+                    ></div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div>
-              <h4 className="font-medium text-primary-300 mb-1">Recomendaciones para seguir mejorando</h4>
-              <p className="text-sm text-gray-300 mb-4">
-                En base a tu desempeño, te recomendamos concentrarte en las siguientes áreas:
-              </p>
-              <ul className="space-y-2">
-                {stats?.skillProgress && stats.skillProgress.length > 0 ? (
-                  stats.skillProgress
-                    .sort((a, b) => a.average - b.average)
-                    .slice(0, 2)
-                    .map((skill, index) => (
-                      <li key={index} className="flex items-start">
-                        <span className="text-primary-300 mr-2 text-lg">•</span>
-                        <span className="text-gray-300">
-                          Practica más tu <strong>{skill.name.toLowerCase()}</strong> - Tu puntuación actual es {skill.average}/100
-                        </span>
-                      </li>
-                    ))
-                ) : (
-                  <li className="flex items-start">
-                    <span className="text-primary-300 mr-2 text-lg">•</span>
-                    <span className="text-gray-300">
-                      Continúa tomando clases regularmente para obtener recomendaciones personalizadas
-                    </span>
-                  </li>
-                )}
-                <li className="flex items-start">
-                  <span className="text-primary-300 mr-2 text-lg">•</span>
-                  <span className="text-gray-300">
-                    Programa al menos 3 sesiones de práctica semanales para mantener un progreso constante
+          ) : (
+            <div className="text-center text-gray-400 py-8 sm:py-10 text-sm">
+              No hay datos disponibles
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Skills Progress */}
+      <div className="bg-gray-800/70 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-gray-700 shadow-lg">
+        <h3 className="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-white">Progreso por Habilidades</h3>
+        
+        {stats?.skillProgress && stats.skillProgress.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-6">
+            {stats.skillProgress.map((skill, index) => (
+              <div key={index} className="bg-gray-900/40 p-3 sm:p-4 rounded-lg hover:bg-gray-900/50 transition-all duration-300">
+                <div className="flex justify-between items-center mb-2">
+                  <h4 className="font-medium text-white text-sm sm:text-base">{skill.name}</h4>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    <span className="text-primary-300 font-bold text-sm sm:text-base">{skill.average}</span>
+                    <div className={`flex items-center ${skill.improvement > 0 ? 'text-green-400' : 'text-red-400'}`}>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 sm:h-4 sm:w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path 
+                          strokeLinecap="round" 
+                          strokeLinejoin="round" 
+                          strokeWidth={2} 
+                          d={skill.improvement > 0 
+                            ? "M5 15l7-7 7 7" 
+                            : "M19 9l-7 7-7-7"} 
+                        />
+                      </svg>
+                      <span className="text-[10px] sm:text-xs">{skill.improvement > 0 ? "+" : ""}{skill.improvement}%</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full h-1.5 sm:h-2 bg-gray-800 rounded-full mb-1 overflow-hidden">
+                  <div 
+                    className="h-full bg-gradient-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500"
+                    style={{ width: `${skill.average}%` }}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-gray-400 py-8 sm:py-10 text-sm">
+            Completa más clases para obtener análisis detallados por habilidades
+          </div>
+        )}
+      </div>
+
+      {/* Recommendations */}
+      <div className="bg-primary-500/10 border border-primary-500/20 rounded-xl p-4 sm:p-6">
+        <div className="flex items-start gap-2 sm:gap-3">
+          <div className="rounded-full bg-primary-500/20 p-1.5 sm:p-2 mt-0.5">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 text-primary-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+          
+          <div>
+            <h4 className="font-medium text-primary-300 mb-1.5 sm:mb-2 text-sm sm:text-base">Recomendaciones para seguir mejorando</h4>
+            <p className="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4">
+              En base a tu desempeño, te recomendamos concentrarte en las siguientes áreas:
+            </p>
+            <ul className="space-y-1.5 sm:space-y-2">
+              {stats?.skillProgress && stats.skillProgress.length > 0 ? (
+                stats.skillProgress
+                  .sort((a, b) => a.average - b.average)
+                  .slice(0, 2)
+                  .map((skill, index) => (
+                    <li key={index} className="flex items-start group">
+                      <span className="text-primary-300 mr-1.5 sm:mr-2 text-base sm:text-lg group-hover:text-primary-400 transition-colors duration-200">•</span>
+                      <span className="text-xs sm:text-sm text-gray-300 group-hover:text-gray-200 transition-colors duration-200">
+                        Practica más tu <strong>{skill.name.toLowerCase()}</strong> - Tu puntuación actual es {skill.average}/100
+                      </span>
+                    </li>
+                  ))
+              ) : (
+                <li className="flex items-start group">
+                  <span className="text-primary-300 mr-1.5 sm:mr-2 text-base sm:text-lg group-hover:text-primary-400 transition-colors duration-200">•</span>
+                  <span className="text-xs sm:text-sm text-gray-300 group-hover:text-gray-200 transition-colors duration-200">
+                    Continúa tomando clases regularmente para obtener recomendaciones personalizadas
                   </span>
                 </li>
-              </ul>
-            </div>
+              )}
+              <li className="flex items-start group">
+                <span className="text-primary-300 mr-1.5 sm:mr-2 text-base sm:text-lg group-hover:text-primary-400 transition-colors duration-200">•</span>
+                <span className="text-xs sm:text-sm text-gray-300 group-hover:text-gray-200 transition-colors duration-200">
+                  Programa al menos 3 sesiones de práctica semanales para mantener un progreso constante
+                </span>
+              </li>
+            </ul>
           </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button asChild variant="outline" className="btn-secondary">
-            <Link href="/dashboard">
-              Volver al Dashboard
-            </Link>
-          </Button>
-
-          <Button 
-            onClick={handleStartClass}
-            className={cn(
-              "btn-primary relative overflow-hidden",
-              !userAccess.canAccessClasses && "!bg-gray-700 !text-gray-400 border-red-500/30 hover:!bg-gray-700"
-            )}
-            disabled={!userAccess.canAccessClasses}
-          >
-            {!userAccess.canAccessClasses && (
-              <Lock className="w-3.5 h-3.5 mr-2 text-red-500" />
-            )}
-            Nueva clase
-          </Button>
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@ interface ClientInterviewCardProps {
   userId: string;
   level: string;
   type: string;
-  topic: string[];
+  topic: string | string[];
   duration: string;
   createdAt?: string;
 }
@@ -43,7 +43,7 @@ const ClientInterviewCard = ({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const [editForm, setEditForm] = useState({
     level,
-    topic: topic.join(", "),
+    topic: typeof topic === 'string' ? topic : Array.isArray(topic) ? topic.join(", ") : "",
     duration
   });
   const { userAccess, handleAccessAttempt } = useAccessControl();
@@ -133,7 +133,7 @@ const ClientInterviewCard = ({
           interviewId,
           userId,
           level: editForm.level,
-          topic: editForm.topic.split(",").map(t => t.trim()),
+          topic: editForm.topic.split(",").map(t => t.trim()).filter(t => t.length > 0),
           duration: editForm.duration
         }),
       });
@@ -221,9 +221,11 @@ const ClientInterviewCard = ({
         <div className="mb-5">
           <h4 className="text-sm font-medium text-gray-200 mb-1">Temas de Conversación:</h4>
           <p className="text-gray-400 text-sm line-clamp-2">
-            {Array.isArray(topic) && topic.length > 0 
-              ? topic.join(", ") 
-              : "Temas de conversación generales adaptados a tu nivel."}
+            {typeof topic === 'string' 
+              ? topic 
+              : Array.isArray(topic) && topic.length > 0 
+                ? topic.join(", ") 
+                : "Temas de conversación generales adaptados a tu nivel."}
           </p>
         </div>
         
@@ -335,7 +337,7 @@ const ClientInterviewCard = ({
               <Label htmlFor="level">Nivel</Label>
               <Select
                 value={editForm.level}
-                onValueChange={(value: string) => setEditForm(prev => ({ ...prev, level: value }))}
+                onValueChange={(value) => setEditForm(prev => ({ ...prev, level: value }))}
               >
                 <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                   <SelectValue placeholder="Selecciona un nivel" />
@@ -362,7 +364,7 @@ const ClientInterviewCard = ({
               <Label htmlFor="duration">Duración</Label>
               <Select
                 value={editForm.duration}
-                onValueChange={(value: string) => setEditForm(prev => ({ ...prev, duration: value }))}
+                onValueChange={(value) => setEditForm(prev => ({ ...prev, duration: value }))}
               >
                 <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                   <SelectValue placeholder="Selecciona la duración" />

@@ -106,7 +106,7 @@ const Agent = ({
       });
 
       if (success && id) {
-        router.push(`/dashboard/interview/${interviewId}/feedback`);
+        router.push(`/dashboard/general-class/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
         router.push("/dashboard");
@@ -290,7 +290,7 @@ const Agent = ({
                   <div className="flex-1">
                     <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
                       <p className="text-[10px] sm:text-sm font-medium text-primary-300">
-                        {message.role === "user" ? `${userName}` : `Profesor`}
+                        {message.role === "user" ? `${userName}` : `Gabby`}
                       </p>
                       <span className="text-[10px] sm:text-xs text-gray-500">
                         {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
