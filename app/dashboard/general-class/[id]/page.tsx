@@ -7,7 +7,6 @@ import { getRandomInterviewCover } from "@/lib/utils";
 
 import {
   getFeedbackByInterviewId,
-  getInterviewById,
   getGeneralClasses
 } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
@@ -15,9 +14,7 @@ import { Button } from "@/components/ui/button";
 
 const InterviewDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
-
   const user = await getCurrentUser();
-
   const interview = await getGeneralClasses(id);
   if (!interview) redirect("/dashboard");
 
@@ -25,6 +22,8 @@ const InterviewDetails = async ({ params }: RouteParams) => {
     interviewId: id,
     userId: user?.id!,
   });
+
+  console.log("Feedback: ", feedback);
 
   return (
     <div className="flex flex-col gap-8">

@@ -12,7 +12,6 @@ export default function Footer() {
       links: [
         { name: "Características", href: "#features" },
         { name: "Precios", href: "#pricing" },
-        { name: "Testimonios", href: "#testimonials" },
         { name: "FAQ", href: "#faq" }
       ]
     },

@@ -78,9 +78,9 @@ export default function Hero() {
   // Generar puntos de fondo
   const backgroundPoints = Array.from({ length: 50 }).map((_, i) => ({
     id: i,
-    x: Math.random() * width,
-    y: Math.random() * height,
-    scale: Math.random() * 0.5 + 0.5,
+    x: (i % 10) * 100, // Distribuir puntos en una cuadrícula
+    y: Math.floor(i / 10) * 100, // Distribuir puntos en una cuadrícula
+    scale: 0.5 + (i % 3) * 0.2, // Alternar entre 3 tamaños fijos
   }));
 
   return (
