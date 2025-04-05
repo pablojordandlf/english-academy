@@ -4,14 +4,22 @@ import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { toast } from 'sonner';
 
-export const NotificationPrompt = () => {
+const useNotificationPermission = () => {
   const [permission, setPermission] = useState<NotificationPermission>('default');
+  const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
-    if ('Notification' in window) {
+    if (typeof window !== 'undefined' && 'Notification' in window) {
+      setIsSupported(true);
       setPermission(Notification.permission);
     }
   }, []);
+
+  return { permission, setPermission, isSupported };
+};
+
+export const NotificationPrompt = () => {
+  const { permission, setPermission, isSupported } = useNotificationPermission();
 
   const requestPermission = async () => {
     try {
@@ -30,7 +38,7 @@ export const NotificationPrompt = () => {
     }
   };
 
-  if (!('Notification' in window)) {
+  if (!isSupported) {
     return null;
   }
 
