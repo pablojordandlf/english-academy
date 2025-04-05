@@ -187,7 +187,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {hasPastInterviews ? (
-              userInterviews.map((interview) => (
+              userInterviews.slice(0, 3).map((interview) => (
                 <ClientInterviewCard
                   key={interview.id}
                   userId={userData?.id}
@@ -242,7 +242,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {generalClasses.length > 0 ? (
-              generalClasses.map((interview) => (
+              generalClasses.slice(0, 3).map((interview) => (
                 <GeneralClassCard
                   key={interview.id}
                   userId={userData?.id}
