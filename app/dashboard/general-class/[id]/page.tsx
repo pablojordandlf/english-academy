@@ -7,23 +7,23 @@ import { getRandomInterviewCover } from "@/lib/utils";
 
 import {
   getFeedbackByInterviewId,
-  getInterviewById,
+  getGeneralClasses
 } from "@/lib/actions/general.action";
 import { getCurrentUser } from "@/lib/actions/auth.action";
 import { Button } from "@/components/ui/button";
 
 const InterviewDetails = async ({ params }: RouteParams) => {
   const { id } = await params;
-
   const user = await getCurrentUser();
-
-  const interview = await getInterviewById(id);
+  const interview = await getGeneralClasses(id);
   if (!interview) redirect("/dashboard");
 
   const feedback = await getFeedbackByInterviewId({
     interviewId: id,
     userId: user?.id!,
   });
+
+  console.log("Feedback: ", feedback);
 
   return (
     <div className="flex flex-col gap-8">
@@ -53,6 +53,22 @@ const InterviewDetails = async ({ params }: RouteParams) => {
             </div>
           </div>
           
+          {feedback && (
+            <div className="flex items-center bg-gray-900/60 px-5 py-3 rounded-lg">
+              <div className="text-center mr-4">
+                <span className="block text-3xl font-bold text-primary-300">{feedback.totalScore}</span>
+                <span className="text-xs text-gray-400">Puntuación</span>
+              </div>
+              
+              <div className="h-12 w-0.5 bg-gray-700 mr-4"></div>
+              
+              <Button asChild className="btn-primary">
+                <Link href={`/dashboard/interview/${id}/feedback`}>
+                  Ver evaluación
+                </Link>
+              </Button>
+            </div>
+          )}
         </div>
 
 

@@ -14,8 +14,8 @@ export const teacher: ExtendedCreateAssistantDTO = {
   firstMessage:
     "Hello! Thank you for joining today’s class. I’m excited to work with you and help you improve your English skills. Let’s get started!",
   transcriber: {
-    provider: "deepgram",
-    model: "nova-2",
+    provider: "talkscriber",
+    model: "whisper",
     language: "en",
   },
   voice: {

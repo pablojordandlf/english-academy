@@ -51,7 +51,7 @@ interface InterviewCardProps {
   userId?: string;
   level: string;
   type: string;
-  topic: string[];
+  topic: string | string[];
   createdAt?: string;
 }
 
@@ -101,7 +101,7 @@ interface InterviewFormProps {
   interviewId: string;
   level: string;
   type: string;
-  topic: string[];
+  topic: string | string[];
   amount: number;
 }
 
