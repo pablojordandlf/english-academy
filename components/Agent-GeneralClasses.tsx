@@ -238,9 +238,9 @@ const Agent = ({
           )}
         </div>
 
-        {/* User Profile Card */}
+        {/* User Profile Card - Hidden on mobile */}
         <div className={cn(
-          "card-border w-full sm:w-auto flex flex-col items-center p-3 sm:p-6 rounded-xl border transition-all duration-300",
+          "card-border hidden sm:flex flex-col items-center p-3 sm:p-6 rounded-xl border transition-all duration-300",
           "bg-gray-800/50 border-primary-500/20 hover:bg-gray-800/70"
         )}>
           <div className="card-content text-center">
