@@ -3,7 +3,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowLeft, Clock, BookOpen, Target, Repeat, Star, BarChart } from "lucide-react";
 
-import Agent from "@/components/Agent";
+import AgentPronunciation from "@/components/Agent-Pronunciation";
 import { getRandomInterviewCover } from "@/lib/utils";
 
 import {
@@ -68,7 +68,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
         </h3>
         
         <div className="bg-gray-900/40 rounded-xl p-4 sm:p-6 border border-gray-700">
-          <Agent
+          <AgentPronunciation
             userName={user.name}
             userId={user.id}
             interviewId={id}

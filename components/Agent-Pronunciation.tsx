@@ -21,7 +21,7 @@ interface SavedMessage {
   content: string;
 }
 
-const Agent = ({
+const AgentPronunciation = ({
   userName,
   userId,
   interviewId,
@@ -324,4 +324,4 @@ const Agent = ({
   );
 };
 
-export default Agent;
+export default AgentPronunciation;
