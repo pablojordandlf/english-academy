@@ -171,7 +171,7 @@ const ClientInterviewCard = ({
             <div>
               <div className="flex items-center gap-2 mb-1">
                 <h3 className="text-lg font-medium capitalize text-white">
-                  Clase de Inglés {level}
+                  Clase de Conversación: {level}
                 </h3>
                 <span className={`text-xs px-2 py-1 rounded-full ${badgeColor}`}>
                   {normalizedType}
