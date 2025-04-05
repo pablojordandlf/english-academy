@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { Mona_Sans } from "next/font/google";
 import CookieConsent from "@/components/CookieConsent";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import { NotificationPrompt } from '@/components/NotificationPrompt';
 
 import "./globals.css";
 
@@ -129,6 +130,7 @@ export default function RootLayout({
         <Toaster />
         <CookieConsent />
         <GoogleAnalytics />
+        <NotificationPrompt />
       </body>
     </html>
   );
