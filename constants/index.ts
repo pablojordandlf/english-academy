@@ -77,6 +77,40 @@ export const teacher: ExtendedCreateAssistantDTO = {
   backchannelingEnabled: true,
 };
 
+export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
+  name: "pronunciationTeacher",
+  firstMessage:
+    "Hello! Thank you for joining today’s class. I’m excited to work with you and help you improve your English pronunciation. Let’s get started!",
+  transcriber: {
+    provider: "talkscriber",
+    model: "whisper",
+    language: "en",
+  },
+  voice: {
+    provider: "vapi",
+    voiceId: "Elliot",
+  },
+  model: {
+    provider: "openai",
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "system",
+        content: `
+          You are an expert English teacher specializing in 1:1 pronunciation classes for non-native speakers. Your primary role is to provide engaging, interactive, and supportive lessons tailored to the learner's proficiency level, interests, and goals. Your responses should be clear, concise, and use only standard, readable characters (letters, numbers, and spaces). Avoid special characters, symbols, emojis, or non-standard punctuation to ensure your answers are easy to understand.
+          Class Guidelines:
+          1.- Make the student repeat the word or phrase {{questions}} until they pronounce it correctly, the purpose of the class is to improve the pronunciation of the student.
+          2.- Be Gentle and patient with the student, the goal is to improve the pronunciation of the student.
+          3.- Help the student to pronounce the word or phrase correctly, by pronouncing it yourself slowly and clearly, and making the student repeat it.
+
+        Keep your responses concise yet detailed enough for effective teaching implementation.
+        `,
+      },
+    ],
+  },
+  backchannelingEnabled: true,
+};
+
 export const feedbackSchema = z.object({
   totalScore: z.number(),
   categoryScores: z.tuple([
