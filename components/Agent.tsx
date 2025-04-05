@@ -13,7 +13,6 @@ enum CallStatus {
   INACTIVE = "INACTIVE",
   CONNECTING = "CONNECTING",
   ACTIVE = "ACTIVE",
-  PAUSED = "PAUSED",
   FINISHED = "FINISHED",
 }
 
@@ -35,7 +34,6 @@ const Agent = ({
   const [messages, setMessages] = useState<SavedMessage[]>([]);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const transcriptRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false);
 
   // Función para hacer scroll al último mensaje
   const scrollToBottom = () => {
@@ -124,19 +122,6 @@ const Agent = ({
     }
   }, [messages, callStatus, feedbackId, interviewId, router, type, userId]);
 
-  useEffect(() => {
-    const handleBeforeUnload = () => {
-      if (callStatus === CallStatus.ACTIVE || callStatus === CallStatus.PAUSED) {
-        vapi.stop();
-      }
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-    };
-  }, [callStatus]);
-
   const handleCall = async () => {
     setCallStatus(CallStatus.CONNECTING);
 
@@ -160,39 +145,6 @@ const Agent = ({
           questions: formattedQuestions,
         },
       });
-    }
-  };
-
-  const handlePause = async () => {
-    if (callStatus === CallStatus.ACTIVE) {
-      vapi.stop();
-      setCallStatus(CallStatus.PAUSED);
-      setIsPaused(true);
-    } else if (callStatus === CallStatus.PAUSED) {
-      setCallStatus(CallStatus.CONNECTING);
-      if (type === "generate") {
-        await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-          variableValues: {
-            username: userName,
-            userid: userId,
-          },
-        });
-      } else {
-        let formattedQuestions = "";
-        if (questions) {
-          formattedQuestions = questions
-            .map((question) => `- ${question}`)
-            .join("\n");
-        }
-
-        await vapi.start(teacher, {
-          variableValues: {
-            questions: formattedQuestions,
-          },
-        });
-      }
-      setCallStatus(CallStatus.ACTIVE);
-      setIsPaused(false);
     }
   };
 
@@ -251,8 +203,8 @@ const Agent = ({
       </div>
 
       {/* Conversation Controls */}
-      <div className="w-full flex justify-center gap-4">
-        {callStatus !== "ACTIVE" && callStatus !== "PAUSED" ? (
+      <div className="w-full flex justify-center">
+        {callStatus !== "ACTIVE" ? (
           <button 
             className={cn(
               "text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-full shadow-lg transition-all flex items-center gap-2 w-full sm:w-auto justify-center text-sm sm:text-base",
@@ -280,38 +232,15 @@ const Agent = ({
             )}
           </button>
         ) : (
-          <>
-            <button 
-              className="bg-primary-500 hover:bg-primary-600 text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-full shadow-lg transition-all flex items-center gap-2 w-full sm:w-auto justify-center text-sm sm:text-base hover:shadow-xl hover:shadow-primary-500/30"
-              onClick={() => handlePause()}
-            >
-              {isPaused ? (
-                <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Reanudar
-                </>
-              ) : (
-                <>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  Pausar
-                </>
-              )}
-            </button>
-            <button 
-              className="bg-destructive-100 hover:bg-destructive-200 text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-full shadow-lg transition-all flex items-center gap-2 w-full sm:w-auto justify-center text-sm sm:text-base hover:shadow-xl hover:shadow-destructive-100/30"
-              onClick={() => handleDisconnect()}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-              Finalizar clase
-            </button>
-          </>
+          <button 
+            className="bg-destructive-100 hover:bg-destructive-200 text-white font-semibold py-2 sm:py-3 px-4 sm:px-8 rounded-full shadow-lg transition-all flex items-center gap-2 w-full sm:w-auto justify-center text-sm sm:text-base hover:shadow-xl hover:shadow-destructive-100/30"
+            onClick={() => handleDisconnect()}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            Finalizar clase
+          </button>
         )}
       </div>
 
