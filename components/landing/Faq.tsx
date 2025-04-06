@@ -51,7 +51,7 @@ export default function Faq() {
   const faqs = [
     {
       question: "¿Cómo funciona la plataforma de clases de inglés con IA?",
-      answer: "Nuestra plataforma utiliza inteligencia artificial generativa para simular conversaciones naturales con un profesor de inglés. A diferencia de los chatbots tradicionales, nuestro sistema puede hablar y escuchar, proporcionando una experiencia de inmersión completa. Simplemente inicias sesión, eliges el tipo de clase que deseas tomar, y comienzas a conversar con tu profesor AI. Después de cada clase, recibirás una evaluación detallada con puntos fuertes y áreas de mejora."
+      answer: "Nuestra plataforma utiliza inteligencia artificial generativa para simular conversaciones naturales con un profesor de inglés. A diferencia de los chatbots tradicionales, nuestro sistema puede hablar y escuchar, proporcionando una experiencia de inmersión completa. Simplemente inicias sesión, eliges el tipo de clase que deseas Recibir, y comienzas a conversar con tu profesor AI. Después de cada clase, recibirás una evaluación detallada con puntos fuertes y áreas de mejora."
     },
     {
       question: "¿Es efectivo aprender inglés con un profesor de IA?",
@@ -59,11 +59,11 @@ export default function Faq() {
     },
     {
       question: "¿Qué nivel de inglés necesito para empezar?",
-      answer: "Nuestra plataforma es adecuada para todos los niveles, desde principiantes hasta avanzados. El profesor de IA evaluará tu nivel inicial y adaptará las conversaciones y el vocabulario según tus habilidades actuales. A medida que mejores, las lecciones se volverán progresivamente más desafiantes para seguir estimulando tu crecimiento."
+      answer: "Nuestra plataforma es adecuada para todos los niveles, desde principiantes hasta avanzados. Sin embargo, Gabby está diseñado para poner en práctica tus conocimientos, por lo que un mínimo nivel de inglés es necesario. El profesor de IA evaluará tu nivel inicial y adaptará las conversaciones y el vocabulario según tus habilidades actuales. A medida que mejores, las lecciones se volverán progresivamente más desafiantes para seguir estimulando tu crecimiento."
     },
     {
       question: "¿Cuánto tiempo necesito dedicar para ver resultados?",
-      answer: "Los usuarios que practican al menos 3-4 veces por semana durante 20-30 minutos por sesión suelen ver mejoras notables en su fluidez y confianza en aproximadamente un mes. Sin embargo, el progreso varía según el nivel inicial, la consistencia de la práctica y los objetivos personales. Nuestra plataforma está diseñada para ser flexible, permitiéndote practicar en cualquier momento que tengas disponible."
+      answer: "Los usuarios que practican al menos 3-4 veces por semana durante 10-20 minutos por sesión suelen ver mejoras notables en su fluidez y confianza en aproximadamente un mes. Sin embargo, el progreso varía según el nivel inicial, la consistencia de la práctica y los objetivos personales. Nuestra plataforma está diseñada para ser flexible, permitiéndote practicar en cualquier momento que tengas disponible."
     },
     {
       question: "¿Puedo cancelar mi suscripción en cualquier momento?",

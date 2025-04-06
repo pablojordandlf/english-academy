@@ -12,14 +12,14 @@ const Navbar = async () => {
         <Link href="/" className="flex items-center gap-2">
           <div className="relative w-8 h-8">
             <Image 
-              src="/academy-logo.svg" 
-              alt="MyBubbly Logo" 
+              src="/gabby_2.png" 
+              alt="Gabby Logo" 
               fill 
               className="object-contain"
             />
           </div>
           <h1 className="text-xl font-bold bg-gradient-to-r from-primary-300 to-primary-500 bg-clip-text text-transparent">
-            MyBubbly
+            Gabby
           </h1>
         </Link>
 

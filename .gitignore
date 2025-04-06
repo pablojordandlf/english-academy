@@ -39,3 +39,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Evitar commits accidentales de claves y secretos
+**/*.pem
+**/*.key
+**/*-secrets.json
+**/*-credentials.json
+**/*-firebase-adminsdk-*.json

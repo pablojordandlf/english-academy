@@ -259,7 +259,7 @@ export async function createPortalLink({
   }
 }
 
-// Verificar si el usuario puede tomar clases
+// Verificar si el usuario puede Recibir clases
 export async function canUserTakeClasses(userId: string) {
   try {
     const userRef = db.collection("users").doc(userId);
@@ -304,7 +304,7 @@ export async function canUserTakeClasses(userId: string) {
     
     return false;
   } catch (error) {
-    console.error("Error al verificar si el usuario puede tomar clases:", error);
+    console.error("Error al verificar si el usuario puede Recibir clases:", error);
     return false;
   }
 }

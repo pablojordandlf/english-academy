@@ -166,6 +166,43 @@
   }
 }
 
+/* Estilos específicos para PWA */
+@media all and (display-mode: standalone) {
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .root-layout {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .auth-layout {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .call-view {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+  .root-layout {
+    @apply pt-4;
+  }
+  
+  .auth-layout {
+    @apply pt-4;
+  }
+  
+  .call-view {
+    @apply pt-4;
+  }
+}
+
 @layer components {
   .blue-gradient {
     @apply bg-gradient-to-r from-primary-500 to-primary-700;

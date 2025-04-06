@@ -107,7 +107,7 @@ export default function SubscriptionPage() {
     };
     
     const prices: Record<string, Record<string, string>> = {
-      'PREMIUM': { 'monthly': '€19.99', 'yearly': '€15.99' }
+      'PREMIUM': { 'monthly': '€9.99', 'yearly': '€7.99' }
     };
     
     return {

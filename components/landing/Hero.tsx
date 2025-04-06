@@ -5,8 +5,36 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useRouter } from "next/navigation";
+
+// Hook personalizado para obtener las dimensiones de la ventana
+function useWindowSize() {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    // Establecer el tamaño inicial
+    handleResize();
+
+    // Agregar el event listener
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar el event listener
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return size;
+}
 
 export default function Hero() {
+  const router = useRouter();
+  const { width, height } = useWindowSize();
   const [typedText, setTypedText] = useState("");
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -47,6 +75,14 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [typedText, isDeleting, currentPhraseIndex, phrases]);
 
+  // Generar puntos de fondo
+  const backgroundPoints = Array.from({ length: 50 }).map((_, i) => ({
+    id: i,
+    x: (i % 10) * 100, // Distribuir puntos en una cuadrícula
+    y: Math.floor(i / 10) * 100, // Distribuir puntos en una cuadrícula
+    scale: 0.5 + (i % 3) * 0.2, // Alternar entre 3 tamaños fijos
+  }));
+
   return (
     <section className="relative min-h-screen flex items-center py-20 overflow-hidden">
       {/* Animated background with parallax effect */}
@@ -65,23 +101,24 @@ export default function Hero() {
       
       {/* Floating particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {backgroundPoints.map((point) => (
           <motion.div
-            key={i}
+            key={point.id}
             className="absolute w-1 h-1 bg-primary-500/30 rounded-full"
             initial={{
-              x: Math.random() * window.innerWidth,
-              y: Math.random() * window.innerHeight,
-              scale: Math.random() * 0.5 + 0.5,
+              x: point.x,
+              y: point.y,
+              scale: point.scale,
             }}
             animate={{
-              y: [0, -100],
-              opacity: [0, 1, 0],
+              x: [point.x, point.x + 50, point.x],
+              y: [point.y, point.y + 50, point.y],
+              scale: [point.scale, point.scale * 1.5, point.scale],
             }}
             transition={{
-              duration: Math.random() * 3 + 2,
+              duration: Math.random() * 5 + 5,
               repeat: Infinity,
-              delay: Math.random() * 2,
+              ease: "linear",
             }}
           />
         ))}
@@ -103,7 +140,7 @@ export default function Hero() {
               className="inline-block rounded-full bg-gray-800/80 backdrop-blur-sm px-6 py-2 mb-4 border border-gray-700/50 hover:border-primary-500/50 transition-colors"
             >
               <span className="text-gray-300">Lleva tu inglés al siguiente nivel</span>
-              <span className="text-primary-300 ml-1 font-medium">con IA</span>
+              <span className="text-primary-300 ml-1 font-medium">con Gabby</span>
             </motion.div>
             
             <motion.h1 
@@ -129,7 +166,7 @@ export default function Hero() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-xl sm:text-2xl text-gray-300 max-w-xl mx-auto lg:mx-0 leading-relaxed"
             >
-              Practica inglés en clases de conversación con nuestro profesor de IA que se adapta a tu nivel y teda feedback instantáneo para mejorar.
+              Mejora tu inglés en clases de conversación con nuestro profesor de IA Gabby. Se adapta a tu nivel y te da feedback instantáneo.
             </motion.p>
             
             <motion.div 
@@ -161,7 +198,7 @@ export default function Hero() {
               </Button>
             </motion.div>
             
-            <motion.div 
+            {/*<motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.8 }}
@@ -175,7 +212,7 @@ export default function Hero() {
               <div className="text-base text-gray-400">
                 <span className="font-semibold text-primary-300">+15,000</span> estudiantes ya están mejorando su inglés
               </div>
-            </motion.div>
+            </motion.div>*/}
           </motion.div>
           
           {/* Right content - AI Teacher with enhanced effects */}

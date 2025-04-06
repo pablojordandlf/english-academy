@@ -33,8 +33,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
   const searchParams = useSearchParams();
   
   // Obtenemos información del plan de los parámetros de búsqueda
-  const plan = searchParams.get('plan');
-  const billingCycle = searchParams.get('billing') as 'monthly' | 'yearly';
+  const plan = searchParams?.get('plan');
+  const billingCycle = searchParams?.get('billing') as 'monthly' | 'yearly';
 
   const formSchema = authFormSchema(type);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -133,7 +133,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
           
           // Redirigimos al dashboard
           console.log("Redirigiendo al dashboard");
-          router.push("/dashboard");
+          router.push("/plans");
         }
       } else {
         const { email, password } = data;
@@ -182,11 +182,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
     <div className="card-border lg:min-w-[566px]">
       <div className="flex flex-col gap-6 card py-14 px-10">
         <div className="flex flex-row gap-2 justify-center">
-          <Image src="/logo.svg" alt="logo" height={32} width={38} />
-          <h2 className="text-primary-100">MyBubbly</h2>
+          <Image src="/gabby_2.png" alt="logo" height={32} width={38} />
+          <h2 className="text-primary-100">Gabby</h2>
         </div>
-
-        <h3>Practica conversaciones en inglés con IA</h3>
 
         {plan && billingCycle && type === "sign-up" && (
           <div className="bg-gray-800/50 p-4 rounded-lg mb-2">
