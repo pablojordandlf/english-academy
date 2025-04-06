@@ -29,16 +29,36 @@ const InterviewDetails = async ({ params }: RouteParams) => {
     <div className="flex flex-col gap-4 sm:gap-6 md:gap-8">
       <div className="bg-gray-800/70 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-xl sm:rounded-2xl border border-gray-700 shadow-lg">
         <div className="flex justify-between items-start mb-4 sm:mb-6 md:mb-8 flex-col md:flex-row gap-4 sm:gap-6">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 w-full">
-            <Button asChild variant="outline" size="sm" className="border-gray-700 hover:border-primary-500">
+          
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center p-4 sm:p-6 rounded-lg w-full">
+            {/* Back Button */}
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="border-gray-700 hover:border-primary-500 flex items-center gap-2 w-full sm:w-auto"
+            >
               <Link href="/dashboard">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
                 </svg>
                 Volver
               </Link>
             </Button>
-            <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden border-2 border-primary-500">
+
+            {/* Profile Image */}
+            <div className="relative h-16 w-16 sm:h-20 sm:w-20 rounded-full overflow-hidden border-2 border-primary-500 mx-auto sm:mx-0">
               <Image
                 src={getRandomInterviewCover()}
                 alt="cover-image"
@@ -46,36 +66,21 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                 className="object-cover"
               />
             </div>
-            
-            <div>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-1">
-                <h2 className="text-xl sm:text-2xl font-bold text-white capitalize">
+
+            {/* Class Info */}
+            <div className="text-center sm:text-left flex flex-col items-center sm:items-start gap-2">
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                <h2 className="text-lg sm:text-xl font-bold text-white capitalize">
                   Clase: {interview.level}
                 </h2>
-                <span className="bg-primary-500/20 text-primary-300 text-xs sm:text-sm font-medium px-2 sm:px-3 py-1 rounded-full">
+                <span className="bg-primary-500/20 text-primary-300 text-xs sm:text-sm font-medium px-3 py-1 rounded-full">
                   {interview.type}
                 </span>
               </div>
-              <p className="text-sm sm:text-base text-gray-400">Practica tu inglés con Gabby</p>
+              <p className="text-sm text-gray-400">Practica tu inglés con Gabby</p>
             </div>
           </div>
-          
-          {feedback && (
-            <div className="flex items-center bg-gray-900/60 px-3 sm:px-5 py-2 sm:py-3 rounded-lg w-full sm:w-auto mt-4 sm:mt-0">
-              <div className="text-center mr-3 sm:mr-4">
-                <span className="block text-2xl sm:text-3xl font-bold text-primary-300">{feedback.totalScore}</span>
-                <span className="text-xs text-gray-400">Puntuación</span>
-              </div>
-              
-              <div className="h-10 sm:h-12 w-0.5 bg-gray-700 mr-3 sm:mr-4"></div>
-              
-              <Button asChild className="btn-primary w-full sm:w-auto">
-                <Link href={`/dashboard/interview/${id}/feedback`}>
-                  Ver evaluación
-                </Link>
-              </Button>
-            </div>
-          )}
+
         </div>
 
 
@@ -173,11 +178,7 @@ const InterviewDetails = async ({ params }: RouteParams) => {
                   Ver evaluación detallada
                 </Link>
               </Button>
-              <Button asChild className="btn-primary w-full sm:w-auto">
-                <Link href="#conversation">
-                  Repetir esta clase
-                </Link>
-              </Button>
+              
             </>
           )}
         </div>

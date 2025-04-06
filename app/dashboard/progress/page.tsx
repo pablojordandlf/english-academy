@@ -397,33 +397,7 @@ const Page = () => {
           )}
         </div>
 
-        {/* Level Distribution */}
-        <div className="bg-gray-800/70 backdrop-blur-sm p-4 sm:p-6 rounded-xl border border-gray-700 shadow-lg">
-          <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white">Distribución por Nivel</h3>
-          
-          {Object.keys(stats?.classesByLevel || {}).length > 0 ? (
-            <div className="space-y-3 sm:space-y-4">
-              {Object.entries(stats?.classesByLevel || {}).map(([level, count], index) => (
-                <div key={index} className="space-y-1.5 sm:space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm sm:text-base text-gray-300 capitalize">{level}</span>
-                    <span className="text-xs sm:text-sm text-primary-300 font-medium">{count} {count === 1 ? 'clase' : 'clases'}</span>
-                  </div>
-                  <div className="w-full h-1.5 sm:h-2 bg-gray-800 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-primary-500 to-primary-700 rounded-full transition-all duration-500"
-                      style={{ width: `${(count / stats!.totalClasses) * 100}%` }}
-                    ></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center text-gray-400 py-8 sm:py-10 text-sm">
-              No hay datos disponibles
-            </div>
-          )}
-        </div>
+        
       </div>
 
       {/* Skills Progress */}
