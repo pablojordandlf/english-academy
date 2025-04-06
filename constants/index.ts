@@ -7,10 +7,6 @@ export const mappings = {
 
 interface ExtendedCreateAssistantDTO extends CreateAssistantDTO {
   backchannelingEnabled?: boolean;
-  startSpeakingPlan?: {
-    waitSeconds?: number;
-    smartEndpointing?: string;
-  }
 }
 
 export const teacher: ExtendedCreateAssistantDTO = {
@@ -93,7 +89,6 @@ export const teacher: ExtendedCreateAssistantDTO = {
   },
   startSpeakingPlan: {
     waitSeconds: 1,
-    smartEndpointing: "LiveKit",
   },
   silenceTimeoutSeconds: 30
 };
@@ -144,7 +139,6 @@ export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
   },
   startSpeakingPlan: {
     waitSeconds: 1,
-    smartEndpointing: "LiveKit",
   },
   silenceTimeoutSeconds: 30
 };

@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     5. Enfocadas en sonidos específicos que necesitan práctica`;
 
     const { text: generatedQuestions } = await generateText({
-      model: google("gemini-pro"),
+      model: google("gemini-2.0-flash-001"),
       prompt,
       maxTokens: 1000,
     });
