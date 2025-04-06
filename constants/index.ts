@@ -88,7 +88,7 @@ export const teacher: ExtendedCreateAssistantDTO = {
     backoffSeconds: 1
   },
   startSpeakingPlan: {
-    waitSeconds: 1,
+    waitSeconds: 1
   },
   silenceTimeoutSeconds: 30
 };
@@ -138,7 +138,7 @@ export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
     backoffSeconds: 1
   },
   startSpeakingPlan: {
-    waitSeconds: 1,
+    waitSeconds: 1
   },
   silenceTimeoutSeconds: 30
 };
