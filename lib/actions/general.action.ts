@@ -166,6 +166,12 @@ export async function getGeneralClasses(id: string): Promise<Interview | null> {
   return interview.data() as Interview | null;
 }
 
+export async function getPronunciationClasses(id: string): Promise<Interview | null> {
+  const interview = await db.collection("pronunciation").doc(id).get();
+  console.log("Pronunciation classes: ", interview.data());
+  return interview.data() as Interview | null;
+}
+
 export async function getFeedbackByInterviewId(
   params: GetFeedbackByInterviewIdParams
 ): Promise<Feedback | null> {
