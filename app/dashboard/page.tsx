@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 import SubscriptionBanner from "@/components/SubscriptionBanner";
-
+import PronunciationClassCard from "@/components/PronunciationClassCard";
 interface DashboardProps {
   user: any;
   userInterviews: any[];
@@ -26,6 +26,7 @@ export default function Home() {
   const [userData, setUserData] = useState<any>(null);
   const [userInterviews, setUserInterviews] = useState<any[]>([]);
   const [generalClasses, setGeneralClasses] = useState<any[]>([]);
+  const [pronunciationClasses, setPronunciationClasses] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { userAccess, handleAccessAttempt } = useAccessControl();
   const router = useRouter();
@@ -65,6 +66,15 @@ export default function Home() {
           setGeneralClasses(generalClassesData.interviews);
         } else {
           setGeneralClasses([]);
+        }
+
+        const pronunciationClassesResponse = await fetch(`/api/pronunciation?userId=${userData.user.id}`);
+        const pronunciationClassesData = await pronunciationClassesResponse.json();
+
+        if (pronunciationClassesData && pronunciationClassesData.interviews) {
+          setPronunciationClasses(pronunciationClassesData.interviews);
+        } else {
+          setPronunciationClasses([]);
         }
       } catch (error) {
         console.error("Error al cargar los datos:", error);
@@ -187,7 +197,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {hasPastInterviews ? (
-              userInterviews.map((interview) => (
+              userInterviews.slice(0, 3).map((interview) => (
                 <ClientInterviewCard
                   key={interview.id}
                   userId={userData?.id}
@@ -242,7 +252,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {generalClasses.length > 0 ? (
-              generalClasses.map((interview) => (
+              generalClasses.slice(0, 3).map((interview) => (
                 <GeneralClassCard
                   key={interview.id}
                   userId={userData?.id}
@@ -266,6 +276,89 @@ export default function Home() {
             )}
           </div>
         </section>
+
+        {/* Pronunciation Section */}
+        <section className="mb-8">
+          <div className="flex flex-col gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+              <h2 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-0">
+                Clases de pronunciación
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm">
+              Esta clase de pronunciación la hemos generado basándonos en las clases que
+              has tenido y áreas de mejora que hemos detectado.
+            </p>
+            <Button
+                onClick={async () => {
+                  try {
+                    const response = await fetch('/api/vapi/generate-pronunciation', {
+                      method: 'POST',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify({
+                        userid: userData?.id,
+                        duration: "30",
+                      }),
+                    });
+
+                    if (response.ok) {
+                      toast.success("Clase de pronunciación creada con éxito");
+                      // Recargar las clases de pronunciación
+                      const pronunciationClassesResponse = await fetch(
+                        `/api/pronunciation?userId=${userData?.id}`
+                      );
+                      const pronunciationClassesData =
+                        await pronunciationClassesResponse.json();
+                      if (
+                        pronunciationClassesData &&
+                        pronunciationClassesData.interviews
+                      ) {
+                        setPronunciationClasses(pronunciationClassesData.interviews);
+                      }
+                    } else {
+                      toast.error("Error al crear la clase de pronunciación");
+                    }
+                  } catch (error) {
+                    console.error("Error:", error);
+                    toast.error("Error al crear la clase de pronunciación");
+                  }
+                }}
+                className="btn-primary w-full sm:w-auto px-4 py-2 rounded-lg bg-primary-500 text-white font-medium hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-300 transition-all"
+                aria-label="Crear clase de pronunciación"
+              >
+                Crear clase de pronunciación
+              </Button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {pronunciationClasses.length > 0 ? (
+              pronunciationClasses.slice(0, 3).map((interview) => (
+                <PronunciationClassCard
+                  key={interview.id}
+                  userId={userData?.id}
+                  interviewId={interview.id}
+                  level={interview.level}
+                  type={interview.type}
+                  topic={interview.topic}
+                  duration={interview.duration}
+                  createdAt={interview.createdAt}
+                />
+              ))
+            ) : (
+              <div className="col-span-full bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-gray-700 text-center">
+                <h3 className="text-lg sm:text-xl font-medium mb-3 text-primary-300">
+                  No hay clases de pronunciación disponibles
+                </h3>
+                <p className="text-gray-300 mb-6">
+                  ¡Vuelve pronto para ver nuevas clases de pronunciación!
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
+
 
         {/* Tips Section */}
         <section className="bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-gray-700">

@@ -77,6 +77,42 @@ export const teacher: ExtendedCreateAssistantDTO = {
   backchannelingEnabled: true,
 };
 
+export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
+  name: "pronunciationTeacher",
+  firstMessage:
+    "Hello! Thank you for joining today’s pronunciation class. I’m excited to work with you and help you improve your English pronunciation. Let’s get started!",
+  transcriber: {
+    provider: "talkscriber",
+    model: "whisper",
+    language: "en",
+  },
+  voice: {
+    provider: "vapi",
+    voiceId: "Elliot",
+  },
+  model: {
+    provider: "openai",
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        role: "system",
+        content: `
+          You are an expert English teacher specializing in 1:1 pronunciation classes for non-native speakers. Your responses should be clear, concise, and use only standard, readable characters (letters, numbers, and spaces). Avoid special characters, symbols, emojis, or non-standard punctuation to ensure your answers are easy to understand.
+
+          Class Guidelines:  
+            1.- Focus on pronunciation improvement by encouraging the student to repeat words or phrases from the list provided in {{questions}} until they pronounce them correctly. Repetition is key to achieving accurate pronunciation.  If the user when trying to pronounce the sentence makes a mistake or mispronounces a word, correct them gently and ask them to repeat the sentence again. If the student pronounces other word different from the one you asked them to repeat, correct them gently and ask them to repeat the sentence again.
+            2.- Do not make the student repeat too many times the same word or phrase. Instead, provide them with a variety of examples and contexts to practice different sounds and intonations.
+            3.- Be gentle, patient, and encouraging with the student. Create a positive learning environment where they feel comfortable practicing and making mistakes.  
+            4.- Model correct pronunciation by pronouncing each word or phrase slowly and clearly yourself. Break down complex sounds or syllables when necessary to help the student understand how to produce them.  
+            4.- Provide constructive feedback. Identify specific areas where the student struggles (e.g., vowel sounds, consonant clusters, intonation) and offer clear guidance on how to improve.  
+          
+        `,
+      },
+    ],
+  },
+  backchannelingEnabled: true,
+};
+
 export const feedbackSchema = z.object({
   totalScore: z.number(),
   categoryScores: z.tuple([
@@ -110,6 +146,36 @@ export const feedbackSchema = z.object({
   areasForImprovement: z.array(z.string()),
   finalAssessment: z.string(),
 });
+
+export const pronunciationFeedbackSchema = z.object({
+  totalScore: z.number(),
+  categoryScores: z.tuple([
+    z.object({
+      name: z.literal("Pronunciación y Articulación"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+    z.object({
+      name: z.literal("Claridad"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+    z.object({
+      name: z.literal("Consistencia"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+    z.object({
+      name: z.literal("Participación y Esfuerzo"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+  ]),
+  strengths: z.array(z.string()),
+  areasForImprovement: z.array(z.string()),
+  finalAssessment: z.string(),
+});
+
 
 export const interviewCovers = [
   "/learning.png",
