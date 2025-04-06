@@ -7,6 +7,10 @@ export const mappings = {
 
 interface ExtendedCreateAssistantDTO extends CreateAssistantDTO {
   backchannelingEnabled?: boolean;
+  startSpeakingPlan?: {
+    waitSeconds?: number;
+    smartEndpointing?: string;
+  }
 }
 
 export const teacher: ExtendedCreateAssistantDTO = {
@@ -24,7 +28,7 @@ export const teacher: ExtendedCreateAssistantDTO = {
   },
   model: {
     provider: "openai",
-    model: "gpt-4o-mini",
+    model: "gpt-4o",
     messages: [
       {
         role: "system",
@@ -82,6 +86,16 @@ export const teacher: ExtendedCreateAssistantDTO = {
     ],
   },
   backchannelingEnabled: true,
+  stopSpeakingPlan: {
+    numWords: 2,
+    voiceSeconds: 0,
+    backoffSeconds: 1
+  },
+  startSpeakingPlan: {
+    waitSeconds: 1,
+    smartEndpointing: "LiveKit",
+  },
+  silenceTimeoutSeconds: 30
 };
 
 export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
@@ -123,6 +137,16 @@ export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
     ],
   },
   backchannelingEnabled: true,
+  stopSpeakingPlan: {
+    numWords: 2,
+    voiceSeconds: 0,
+    backoffSeconds: 1
+  },
+  startSpeakingPlan: {
+    waitSeconds: 1,
+    smartEndpointing: "LiveKit",
+  },
+  silenceTimeoutSeconds: 30
 };
 
 export const feedbackSchema = z.object({
