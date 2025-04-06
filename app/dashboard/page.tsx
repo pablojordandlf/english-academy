@@ -386,7 +386,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4" />
                 </svg>
               </div>
-              <h3 className="text-lg font-medium mb-1 text-white">Retroalimentación instantánea</h3>
+              <h3 className="text-lg text-center font-medium mb-1 text-white">Retroalimentación instantánea</h3>
               <p className="text-sm text-center text-gray-400">Recibe correcciones y consejos durante la conversación</p>
             </div>
             
