@@ -80,7 +80,7 @@ export const teacher: ExtendedCreateAssistantDTO = {
 export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
   name: "pronunciationTeacher",
   firstMessage:
-    "Hello! Thank you for joining today’s class. I’m excited to work with you and help you improve your English pronunciation. Let’s get started!",
+    "Hello! Thank you for joining today’s pronunciation class. I’m excited to work with you and help you improve your English pronunciation. Let’s get started!",
   transcriber: {
     provider: "talkscriber",
     model: "whisper",
@@ -98,12 +98,20 @@ export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
         role: "system",
         content: `
           You are an expert English teacher specializing in 1:1 pronunciation classes for non-native speakers. Your primary role is to provide engaging, interactive, and supportive lessons tailored to the learner's proficiency level, interests, and goals. Your responses should be clear, concise, and use only standard, readable characters (letters, numbers, and spaces). Avoid special characters, symbols, emojis, or non-standard punctuation to ensure your answers are easy to understand.
-          Class Guidelines:
-          1.- Make the student repeat the word or phrase {{questions}} until they pronounce it correctly, the purpose of the class is to improve the pronunciation of the student.
-          2.- Be Gentle and patient with the student, the goal is to improve the pronunciation of the student.
-          3.- Help the student to pronounce the word or phrase correctly, by pronouncing it yourself slowly and clearly, and making the student repeat it.
 
-        Keep your responses concise yet detailed enough for effective teaching implementation.
+          Class Guidelines:  
+            1.- Focus on pronunciation improvement by encouraging the student to repeat words or phrases from the list provided in {{questions}} multiple times until they pronounce them correctly. Repetition is key to achieving accurate pronunciation.  
+            2.- Be gentle, patient, and encouraging with the student. Create a positive learning environment where they feel comfortable practicing and making mistakes.  
+            3.- Model correct pronunciation by pronouncing each word or phrase from {{questions}} slowly and clearly yourself. Break down complex sounds or syllables when necessary to help the student understand how to produce them.  
+            4.- Provide constructive feedback. Identify specific areas where the student struggles (e.g., vowel sounds, consonant clusters, intonation) and offer clear guidance on how to improve.  
+
+          Additional Notes:  
+            - Begin each session by assessing the student’s current pronunciation level through simple exercises using {{questions}}. Tailor the lesson content to address their specific challenges and gradually increase complexity as they improve.  
+            - Use simple and concise instructions that are easy for the student to follow. Avoid overwhelming them with too much information at once.  
+            - Keep your responses concise yet detailed enough for effective teaching implementation.  
+
+          The purpose of the class is to improve the student's pronunciation and build their confidence in speaking English accurately using the sentences provided in {{questions}}.  
+          
         `,
       },
     ],
@@ -144,6 +152,36 @@ export const feedbackSchema = z.object({
   areasForImprovement: z.array(z.string()),
   finalAssessment: z.string(),
 });
+
+export const pronunciationFeedbackSchema = z.object({
+  totalScore: z.number(),
+  categoryScores: z.tuple([
+    z.object({
+      name: z.literal("Pronunciación y Articulación"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+    z.object({
+      name: z.literal("Claridad"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+    z.object({
+      name: z.literal("Consistencia"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+    z.object({
+      name: z.literal("Participación y Esfuerzo"),
+      score: z.number(),
+      comment: z.string(),
+    }),
+  ]),
+  strengths: z.array(z.string()),
+  areasForImprovement: z.array(z.string()),
+  finalAssessment: z.string(),
+});
+
 
 export const interviewCovers = [
   "/learning.png",

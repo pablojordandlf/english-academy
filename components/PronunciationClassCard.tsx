@@ -180,13 +180,7 @@ const PronunciationClassCard = ({
               </div>
               
               <div className="flex flex-wrap gap-4 text-sm text-gray-400">
-                <div className="flex items-center gap-1">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>{duration} min</span>
-                </div>
-                
+                               
                 <div className="flex items-center gap-1">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -223,15 +217,6 @@ const PronunciationClassCard = ({
               <Trash2 className="h-4 w-4" />
             </Button>
           </div>
-        </div>
-        
-        <div className="mb-5">
-          <h4 className="text-sm font-medium text-gray-200 mb-1">Frases para practicar:</h4>
-          <p className="text-gray-400 text-sm line-clamp-2">
-            {questions && questions.length > 0 
-              ? questions.slice(0, 3).join(", ") + (questions.length > 3 ? "..." : "")
-              : "Frases personalizadas para mejorar tu pronunciación."}
-          </p>
         </div>
         
         {feedback && (

@@ -4,7 +4,7 @@ import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 
 import { db } from "@/firebase/admin";
-import { feedbackSchema } from "@/constants";
+import { feedbackSchema, pronunciationFeedbackSchema } from "@/constants";
 
 export async function createFeedback(params: CreateFeedbackParams) {
   const { interviewId, userId, transcript, feedbackId } = params;
@@ -79,6 +79,80 @@ export async function createFeedback(params: CreateFeedbackParams) {
     return { success: false };
   }
 }
+
+
+export async function createPronunciationFeedback(params: CreateFeedbackParams) {
+  const { interviewId, userId, transcript, feedbackId } = params;
+
+  try {
+    const formattedTranscript = transcript
+      .map(
+        (sentence: { role: string; content: string }) =>
+          `- ${sentence.role}: ${sentence.content}\n`
+      )
+      .join("");
+
+    console.log(formattedTranscript);
+
+    const { object } = await generateObject({
+      model: google("gemini-2.0-flash-001", {
+        structuredOutputs: false,
+      }),
+      schema: pronunciationFeedbackSchema,
+      prompt: `
+        Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de pronunciación en inglés. Tu tarea es analizar el desempeño del estudiante y proporcionar feedback detallado basado en categorías específicas relacionadas con la pronunciación. Sé minucioso y específico en tu análisis. Sé realista. Si hay errores o áreas que necesitan mejorar, señálalos de manera clara y constructiva. Es muy importante que ayudes al estudiante a mejorar su pronunciación con comentarios específicos y ejemplos de errores que haya cometido durante la clase basándote en el transcript.
+
+        Claves de la calificación:
+        - La calificación del estudiante debe ser entre 0 y 100, donde 0 es un nivel muy bajo y 100 es un nivel bilingüe.
+        - Suspende al estudiante si crees que su nivel de pronunciación es bajo.
+        - Si el estudiante no participa en los ejercicios de pronunciación, suspende al estudiante.
+
+        Transcripción de la clase:
+        ${formattedTranscript}
+
+        Por favor, evalúa al estudiante en una escala de 0 a 100 en las siguientes áreas. No agregues categorías adicionales a las proporcionadas:
+
+        - **Pronunciación y Articulación**: Capacidad para pronunciar palabras correctamente, incluyendo sonidos individuales (vocales y consonantes), acentos, y entonación general. Añade ejemplos específicos de errores de pronunciación y cómo deberían ser corregidos basándote en el transcript.
+
+        - **Claridad**: Claridad del habla del estudiante. Evalúa si las palabras son comprensibles para un oyente promedio y si hay problemas con la velocidad o pausas inapropiadas. Proporciona ejemplos específicos basándote en el transcript.
+
+        - **Consistencia**: Capacidad para mantener una pronunciación adecuada a lo largo de toda la clase. Identifica patrones consistentes de errores o mejoras basándote en el transcript.
+
+        - **Participación y Esfuerzo**: Iniciativa para repetir palabras o frases según las indicaciones del profesor, demostrando disposición para mejorar su pronunciación. Proporciona ejemplos específicos basándote en el transcript.
+        `,
+      system:
+        "Eres un profesor de inglés experimentado que está evaluando la participación de un estudiante en una clase de pronunciación en inglés. Tu tarea es proporcionar retroalimentación detallada y constructiva para ayudar al estudiante a mejorar su pronunciación.",
+    });
+
+    const feedback = {
+      interviewId: interviewId,
+      userId: userId,
+      totalScore: object.totalScore,
+      categoryScores: object.categoryScores,
+      strengths: object.strengths,
+      areasForImprovement: object.areasForImprovement,
+      finalAssessment: object.finalAssessment,
+      createdAt: new Date().toISOString(),
+    };
+
+    let feedbackRef;
+
+    if (feedbackId) {
+      feedbackRef = db.collection("feedback").doc(feedbackId);
+    } else {
+      feedbackRef = db.collection("feedback").doc();
+    }
+
+    await feedbackRef.set(feedback);
+
+    return { success: true, feedbackId: feedbackRef.id };
+  } catch (error) {
+    console.error("Error saving feedback:", error);
+    return { success: false };
+  }
+}
+
+
 
 export async function getInterviewById(id: string): Promise<Interview | null> {
   const interview = await db.collection("interviews").doc(id).get();

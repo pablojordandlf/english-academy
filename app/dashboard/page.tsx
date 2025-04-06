@@ -279,10 +279,17 @@ export default function Home() {
 
         {/* Pronunciation Section */}
         <section className="mb-8">
-          <div className="flex flex-col gap-2 mb-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl sm:text-2xl font-bold text-white">Clases de pronunciación</h2>
-              <Button 
+          <div className="flex flex-col gap-4 mb-6">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+              <h2 className="text-lg sm:text-2xl font-bold text-white mb-2 sm:mb-0">
+                Clases de pronunciación
+              </h2>
+            </div>
+            <p className="text-gray-400 text-sm">
+              Esta clase de pronunciación la hemos generado basándonos en las clases que
+              has tenido y áreas de mejora que hemos detectado.
+            </p>
+            <Button
                 onClick={async () => {
                   try {
                     const response = await fetch('/api/vapi/generate-pronunciation', {
@@ -292,16 +299,22 @@ export default function Home() {
                       },
                       body: JSON.stringify({
                         userid: userData?.id,
-                        duration: "30"
+                        duration: "30",
                       }),
                     });
-                    
+
                     if (response.ok) {
                       toast.success("Clase de pronunciación creada con éxito");
                       // Recargar las clases de pronunciación
-                      const pronunciationClassesResponse = await fetch(`/api/pronunciation?userId=${userData?.id}`);
-                      const pronunciationClassesData = await pronunciationClassesResponse.json();
-                      if (pronunciationClassesData && pronunciationClassesData.interviews) {
+                      const pronunciationClassesResponse = await fetch(
+                        `/api/pronunciation?userId=${userData?.id}`
+                      );
+                      const pronunciationClassesData =
+                        await pronunciationClassesResponse.json();
+                      if (
+                        pronunciationClassesData &&
+                        pronunciationClassesData.interviews
+                      ) {
                         setPronunciationClasses(pronunciationClassesData.interviews);
                       }
                     } else {
@@ -312,12 +325,11 @@ export default function Home() {
                     toast.error("Error al crear la clase de pronunciación");
                   }
                 }}
-                className="btn-primary"
+                className="btn-primary w-full sm:w-auto px-4 py-2 rounded-lg bg-primary-500 text-white font-medium hover:bg-primary-600 focus:outline-none focus:ring focus:ring-primary-300 transition-all"
+                aria-label="Crear clase de pronunciación"
               >
                 Crear clase de pronunciación
               </Button>
-            </div>
-            <p className="text-gray-400 text-sm">Esta clase de pronunciación la hemos generado basándonos en las clases que has tenido y áreas de mejora que hemos detectado.</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -346,6 +358,7 @@ export default function Home() {
             )}
           </div>
         </section>
+
 
         {/* Tips Section */}
         <section className="bg-gray-800/50 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-gray-700">
