@@ -6,10 +6,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
-import { Label } from "./ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-import { Input } from "./ui/input";
-
 
 import { Button } from "./ui/button";
 import { cn, getRandomInterviewCover } from "@/lib/utils";
@@ -34,7 +30,7 @@ const PronunciationClassCard = ({
   level = "Intermedio",
   type = "Pronunciación",
   topic,
-  duration = "30",
+  duration = "10",
   createdAt,
   questions = [],
 }: PronunciationClassCardProps) => {
@@ -97,7 +93,7 @@ const PronunciationClassCard = ({
     
     try {
       setDeleteLoading(true);
-      const response = await fetch(`/api/interviews/delete?interviewId=${interviewId}&userId=${userId}`, {
+      const response = await fetch(`/api/pronunciation/delete?interviewId=${interviewId}&userId=${userId}`, {
         method: 'DELETE',
       });
       
@@ -107,7 +103,7 @@ const PronunciationClassCard = ({
         router.refresh();
         // Si estamos en la página de detalles, volver al dashboard
         if (window.location.pathname.includes(interviewId)) {
-          router.push('/dashboard/interviews');
+          router.push('/dashboard');
         }
       } else {
         const data = await response.json();
@@ -122,40 +118,6 @@ const PronunciationClassCard = ({
     }
   };
 
-  const handleEditInterview = async () => {
-    if (!interviewId || !userId) return;
-    
-    try {
-      setEditLoading(true);
-      const response = await fetch(`/api/interviews/update`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          interviewId,
-          userId,
-          level: editForm.level,
-          topic: editForm.topic.split(",").map(t => t.trim()).filter(t => t.length > 0),
-          duration: editForm.duration
-        }),
-      });
-      
-      if (response.ok) {
-        toast.success("Clase actualizada correctamente");
-        router.refresh();
-        setShowEditDialog(false);
-      } else {
-        const data = await response.json();
-        toast.error(data.error || "Error al actualizar la clase");
-      }
-    } catch (error) {
-      console.error("Error actualizando la clase:", error);
-      toast.error("Error al actualizar la clase");
-    } finally {
-      setEditLoading(false);
-    }
-  };
 
   return (
     <>
@@ -200,14 +162,6 @@ const PronunciationClassCard = ({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-gray-400 hover:text-primary-300 hover:bg-primary-500/10 h-8 w-8"
-              onClick={() => setShowEditDialog(true)}
-            >
-              <Pencil className="h-4 w-4" />
-            </Button>
             <Button
               variant="ghost"
               size="icon"
@@ -306,91 +260,6 @@ const PronunciationClassCard = ({
           )}
         </div>
       </div>
-
-      {/* Modal de edición */}
-      <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
-        <DialogContent className="bg-gray-800 border border-gray-700 text-white">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-semibold">Editar clase</DialogTitle>
-            <DialogDescription className="text-gray-300">
-              Modifica los detalles de la clase. Los temas deben estar separados por comas.
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="level">Nivel</Label>
-              <Select
-                value={editForm.level}
-                onValueChange={(value) => setEditForm(prev => ({ ...prev, level: value }))}
-              >
-                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                  <SelectValue placeholder="Selecciona un nivel" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-700">
-                  <SelectItem value="Básico">Básico</SelectItem>
-                  <SelectItem value="Intermedio">Intermedio</SelectItem>
-                  <SelectItem value="Alto">Alto</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="grid gap-2">
-              <Label htmlFor="topic">Temas (separados por comas)</Label>
-              <Input
-                id="topic"
-                value={editForm.topic}
-                onChange={(e) => setEditForm(prev => ({ ...prev, topic: e.target.value }))}
-                className="bg-gray-700 border-gray-600 text-white"
-              />
-            </div>
-            
-            <div className="grid gap-2">
-              <Label htmlFor="duration">Duración</Label>
-              <Select
-                value={editForm.duration}
-                onValueChange={(value) => setEditForm(prev => ({ ...prev, duration: value }))}
-              >
-                <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                  <SelectValue placeholder="Selecciona la duración" />
-                </SelectTrigger>
-                <SelectContent className="bg-gray-800 border-gray-700">
-                  <SelectItem value="10">10 minutos</SelectItem>
-                  <SelectItem value="20">20 minutos</SelectItem>
-                  <SelectItem value="30">30 minutos</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-          
-          <DialogFooter className="flex gap-3 sm:gap-0">
-            <Button 
-              variant="ghost" 
-              className="border border-gray-700 hover:bg-gray-700 text-gray-300"
-              onClick={() => setShowEditDialog(false)}
-            >
-              Cancelar
-            </Button>
-            <Button 
-              className="bg-primary-500 hover:bg-primary-600 text-white"
-              onClick={handleEditInterview}
-              disabled={editLoading}
-            >
-              {editLoading ? (
-                <>
-                  <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                  Actualizando...
-                </>
-              ) : (
-                <>
-                  <Pencil className="h-4 w-4 mr-2" />
-                  Actualizar
-                </>
-              )}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
 
       {/* Modal de confirmación de eliminación */}
       <Dialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
