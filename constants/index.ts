@@ -108,7 +108,7 @@ export const pronunciationTeacher: ExtendedCreateAssistantDTO = {
   },
   model: {
     provider: "openai",
-    model: "gpt-4o-mini",
+    model: "gpt-4o",
     messages: [
       {
         role: "system",

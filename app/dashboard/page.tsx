@@ -292,14 +292,14 @@ export default function Home() {
             <Button
                 onClick={async () => {
                   try {
-                    const response = await fetch('/api/vapi/generate-pronunciation', {
+                    const response = await fetch('/api/generate-pronunciation', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
                       },
                       body: JSON.stringify({
                         userid: userData?.id,
-                        duration: "30",
+                        duration: "10",
                       }),
                     });
 

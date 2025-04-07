@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       createdAt: new Date().toISOString(),
     };
 
-    console.log("Interview:", interview);
+    console.log("Interview: ", interview);
 
     await db.collection("interviews").add(interview);
 
